@@ -22,11 +22,11 @@
     // of different video formats to add
     src: [
       {
-        src: 'night.mp4',
+        src: 'https://cdn.jsdelivr.net/gh/inchoong/zh-CN/night.mp4',
         type: 'video/mp4'
       },
       {
-        src: 'night.webm',
+        src: 'https://cdn.jsdelivr.net/gh/inchoong/zh-CN/night.webm',
         type: 'video/webm;codecs="vp8, vorbis"'
       }
     ],
