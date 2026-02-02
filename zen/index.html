@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>五行调息·龙抬头 | 逻辑自愈系统</title>
+    <style>
+        :root {
+            --wood-green: #2ecc71;
+            --fire-red: #e74c3c;
+            --earth-yellow: #f1c40f;
+            --bg-black: #0a0a0a;
+            --breath-speed: 8s; /* 呼吸总周期 */
+            --ease-breath: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            overflow-y: auto;
+            /* 增加背景微光，模拟五行流动 */
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        /* 呼吸圆环容器 */
+        .zen-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 60px;
+            flex-shrink: 0;
+        }
+
+        .breath-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 3px solid var(--wood-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            /* 动画同步：缩放与颜色切换 */
+            animation: breathe var(--breath-speed) infinite var(--ease-breath);
+        }
+
+        .inner-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 2px #fff;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { 
+                transform: scale(0.85); 
+                border-color: var(--earth-yellow);
+                box-shadow: 0 0 20px rgba(241, 196, 15, 0.3);
+            }
+            50% { 
+                transform: scale(1.25); 
+                border-color: var(--fire-red);
+                box-shadow: 0 0 50px rgba(231, 76, 60, 0.5);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.3); opacity: 1; }
+        }
+
+        /* 文字引导区 */
+        .guide-text {
+            margin-top: 40px;
+            text-align: center;
+            min-height: 100px;
+        }
+
+        #action-hint {
+            font-size: 1.8rem;
+            letter-spacing: 6px;
+            font-weight: bold;
+            transition: color 1s ease;
+        }
+
+        #visual-hint {
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 15px;
+            max-width: 80vw;
+            line-height: 1.6;
+            min-height: 3em;
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #555;
+            letter-spacing: 2px;
+            border: 1px solid #222;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        /* 代码指令区 */
+        .code-box {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            border-left: 4px solid #00ff41;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            color: #00ff41;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* 建议详情区 */
+        .zen-info {
+            margin-top: 40px;
+            padding: 0 25px 100px; /* 留出底部空间 */
+            max-width: 600px;
+            color: #888;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .zen-info h3 {
+            color: #ccc;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .highlight-text {
+            color: var(--wood-green);
+            font-weight: bold;
+        }
+
+        /* 底部版权 */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            z-index: 100;
+        }
+
+        .footer a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        /* 移动端适配：缩小字体防止溢出 */
+        @media (max-width: 480px) {
+            .breath-circle { width: 180px; height: 180px; }
+            #action-hint { font-size: 1.4rem; }
+            .code-box { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="zen-container">
+        <div class="breath-circle">
+            <div class="inner-dot"></div>
+        </div>
+
+        <div class="status-bar">
+            东方甲乙木 · 辰时龙抬头 · 系统自愈中
+        </div>
+
+        <div class="guide-text">
+            <div id="action-hint">加载指令...</div>
+            <div id="visual-hint">准备进入逻辑脱敏状态</div>
+        </div>
+    </div>
+
+    <div class="code-box">
+        <span style="color: #666;">// 认知防御层：逻辑守卫指令已就绪</span><br>
+        <span style="color: #ff79c6;">if</span> (input.type == <span style="color: #f1fa8c;">"hostility"</span>) {<br>
+        &nbsp;&nbsp;<span style="color: #8be9fd;">LogicGuard</span>.sanitize(input);<br>
+        &nbsp;&nbsp;<span style="color: #ff79c6;">return</span> <span style="color: #f1fa8c;">"Data ignored. Mind clear."</span>;<br>
+        }<br>
+		<span style="color: #666;">// 数据解构层：将攻击转化为数据流</span><br>
+		<span style="color: #666;">// 策略执行层：数据流匹配最优防御协议</span><br>
+		<span style="color: #666;">// 反馈迭代层：防御结果回写架构日志，优化防御参数</span>
+		<span style="color: #666;text-align:center;"><a href="https://choong.net.cn/logs/" title="生命架构日志 | @乐哥创事记" style="color: #f1fa8c;text-decoration:none;" target="_blank"> ———— 生命架构日志 | @乐哥创事记</a></span>
+    </div>
+
+    <div class="zen-info">
+        <h3>💡 调息建议</h3>
+        <p>1. <strong>心流节奏</strong>：圆环<span class="highlight-text">扩张</span>时吸气，感受胸膛如甲木生发；圆环<span style="color:var(--earth-yellow)">收缩</span>时呼气，感受杂念如尘埃落定。</p>
+        <p>2. <strong>意识锚点</strong>：注视中心白点。那是你的“核心服务”，周围的一切扰动都只是外挂程序的异常报错，不影响内核运行。</p>
+        <p>3. <strong>逻辑重构</strong>：当你在脑海中执行上述代码，对方的推诿与愤怒就不再是情感伤害，而是一个<strong>待处理的 null 指针异常</strong>。你可以修复它，也可以忽略它，但你不必成为它。</p>
+
+        <p style="margin-top: 30px; border-left: 2px solid #444; padding-left: 15px;">
+            <strong>乐哥，工具已调优。</strong><br>
+            这套可视化系统旨在帮你建立一套“心理防火墙”。当逻辑足够强大，情绪就失去了攻击的目标。祝你系统运行稳定，万事凯旋。
+        </p>
+    </div>
+
+    <div class="footer">
+        <strong>
+            <a target="_blank" href="https://rlxmt.cn/">技术支持</a> :
+            <a target="_blank" href="https://choong.net">创客乐哥</a> ©
+            <script>document.write(new Date().getFullYear());</script>
+        </strong>
+    </div>
+
+    <script>
+        const actionHint = document.getElementById('action-hint');
+        const visualHint = document.getElementById('visual-hint');
+
+        // 定义状态数据
+        const states = [
+            { 
+                action: "吸气 · 木生火", 
+                visual: "想象胸中之“堵”化为烈火，<br>燃尽一切匮乏与委屈。",
+                color: "#e74c3c"
+            },
+            { 
+                action: "呼气 · 火生土", 
+                visual: "想象余烬沉淀为脚下厚土，<br>脊梁如甲木，岿然不动。",
+                color: "#f1c40f"
+            }
+        ];
+
+        let stateIndex = 0;
+
+        function updateGuide() {
+            const current = states[stateIndex];
+            
+            // 文本切换时的平滑过渡
+            actionHint.style.opacity = 0;
+            visualHint.style.opacity = 0;
+
+            setTimeout(() => {
+                actionHint.innerText = current.action;
+                actionHint.style.color = current.color;
+                visualHint.innerHTML = current.visual;
+                actionHint.style.opacity = 1;
+                visualHint.style.opacity = 1;
+            }, 500);
+
+            stateIndex = (stateIndex + 1) % states.length;
+        }
+
+        // 初始化
+        updateGuide();
+        
+        /**
+         * 逻辑说明：
+         * CSS 动画周期为 8s (var(--breath-speed))
+         * 0s -> 4s 是吸气过程（变大）
+         * 4s -> 8s 是呼气过程（变小）
+         * 这里的 setInterval 设为 4000ms，完美契合半个周期
+         */
+        setInterval(updateGuide, 4000);
+
+        // 禁止双击缩放（移动端优化）
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+    </script>
+</body>
+</html>
