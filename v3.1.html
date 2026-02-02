@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="dynamic-title">虫虫物语 - 乐哥在线</title>
+
+  <link rel="icon" href="https://choong.net.cn/images/favicon.png" /> 
+  
+  <style>
+    /* =========================================
+       1. 全局变量与主题定义
+       ========================================= */
+    :root {
+      /* 浅色/专业主题变量 */
+      --light-bg: #f0f4f8;
+      --light-text: #2c3e50;
+      --light-accent: #3498db;
+      
+      /* 暗黑/生命架构主题变量 */
+      --dark-bg: #0d0d0d;
+      --dark-panel: #1a1a1a;
+      --dark-accent: #00ff41; /* 架构师绿 */
+      --dark-text: #e0e0e0;
+      
+      --transition-speed: 0.8s;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Courier New', 'PingFang SC', "Microsoft YaHei", monospace;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* =========================================
+       2. 动态背景系统 (v1.1 浅色模式专属)
+       ========================================= */
+    .dynamic-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      display: none; /* 默认隐藏，由主题控制 */
+    }
+
+    .theme-light .dynamic-bg { display: block; }
+
+    /* 底层天空 */
+    .sky-base {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: url('https://choong.net.cn/video_cover.jpeg') center/cover no-repeat;
+    }
+
+    /* 渐变氛围层 */
+    .sky-overlay {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(52, 152, 219, 0.3), rgba(142, 68, 173, 0.4)),
+                  url('https://choong.net.cn/night-sky.jpg') center/cover no-repeat;
+      mix-blend-mode: overlay;
+    }
+
+    /* 移动云层：模拟风云际动 */
+    .clouds {
+      position: absolute;
+      width: 400%; height: 100%;
+      background: url('https://choong.net.cn/clouds-transparent.png') repeat-x center;
+      background-size: contain;
+      animation: cloudMove 120s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes cloudMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* =========================================
+       3. 主题切换按钮 (logs.html 风格)
+       ========================================= */
+    .theme-toggle {
+      position: fixed;
+      top: 20px; right: 20px;
+      z-index: 100;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 1px solid currentColor;
+      background: transparent;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    /* =========================================
+       4. 内容布局区
+       ========================================= */
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 900px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    /* 浅色模式样式 */
+    .theme-light { background-color: var(--light-bg); color: var(--light-text); }
+    .theme-light .glass-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    /* 暗黑模式样式 (v1.2) */
+    .theme-dark { background-color: var(--dark-bg); color: var(--dark-text); }
+    .theme-dark .system-panel {
+      background: var(--dark-panel);
+      border: 1px solid #333;
+      padding: 30px;
+      text-align: left;
+      position: relative;
+    }
+    .theme-dark .accent { color: var(--dark-accent); }
+
+    /* 打字机文字样式 */
+    .typer-container {
+      margin: 20px 0;
+      min-height: 60px;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      background-color: currentColor;
+      margin-left: 5px;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* 导航链接 */
+    .nav-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .nav-links a {
+      padding: 12px;
+      text-decoration: none;
+      border: 1px solid currentColor;
+      transition: all 0.3s;
+      color: inherit;
+    }
+    .theme-dark .nav-links a:hover { background: var(--dark-accent); color: #000; }
+    .theme-light .nav-links a:hover { background: var(--light-accent); color: #fff; }
+
+    /* 页脚备案 */
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body class="theme-light"> <div class="dynamic-bg">
+    <div class="sky-base"></div>
+    <div class="sky-overlay"></div>
+    <div class="clouds"></div>
+  </div>
+
+  <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">切换至：内核驱动模式</button>
+
+  <div class="container">
+    
+    <header style="margin-bottom: 40px;">
+      <h1 id="main-title" style="font-size: 2.2rem; letter-spacing: 2px;">虫虫物语</h1>
+      <p id="sub-title" style="margin-top:10px; opacity: 0.8;">乐哥在线 | 做时间的朋友</p>
+    </header>
+
+    <div class="typer-container">
+      <span id="typer-text"></span><span class="cursor">|</span>
+    </div>
+
+    <div id="content-card" class="glass-card">
+      
+      <div id="dark-system-info" style="display: none; margin-bottom: 20px; border-left: 3px solid var(--dark-accent); padding-left: 15px;">
+        <p>> 硬件运行年限: <span class="accent" id="age">--</span> years</p>
+        <p>> 抗灾容灾年数: <span class="accent" id="cancer-years">--</span> years</p>
+        <p>> 子节点运行状态: <span class="accent" id="kids-age">--</span> years</p>
+        <p>> 系统当前指令: <span class="accent">STAY HUNGRY, STAY AWAKE</span></p>
+      </div>
+
+      <div class="nav-links">
+        <a href="https://choong.net.cn/data" target="_blank">数据摄取</a>
+        <a href="https://choong.net.cn/resonance" target="_blank">系统共振</a>
+        <a href="https://choong.net.cn/core" target="_blank">内核驱动</a>
+        <a href="https://choong.net.cn/legacy" target="_blank">代码继承</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> @乐哥创事记 | 粤ICP备XXXXXXXX号</p>
+  </footer>
+
+  <script>
+    /* --- A. 主题切换逻辑 --- */
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById('theme-btn');
+      const card = document.getElementById('content-card');
+      const sysInfo = document.getElementById('dark-system-info');
+      const title = document.getElementById('main-title');
+      const pageTitle = document.getElementById('dynamic-title');
+
+      if (body.classList.contains('theme-light')) {
+        // 切换到：暗黑/对内模式
+        body.classList.replace('theme-light', 'theme-dark');
+        btn.innerText = "切换至：专业社交模式";
+        card.className = "system-panel";
+        sysInfo.style.display = "block";
+        title.innerText = "生命架构师";
+        pageTitle.innerText = "生命架构师 | choong.net";
+      } else {
+        // 切换到：浅色/对外模式
+        body.classList.replace('theme-dark', 'theme-light');
+        btn.innerText = "切换至：内核驱动模式";
+        card.className = "glass-card";
+        sysInfo.style.display = "none";
+        title.innerText = "虫虫物语";
+        pageTitle.innerText = "虫虫物语 - 乐哥在线";
+      }
+    }
+
+    /* --- B. 打字机语录逻辑 --- */
+    const quotes = [
+      "Take action to think, to change, to create.",
+      "用行动去思考，去改变、去创造。",
+      "现状不可描述，未来无法预测，一切皆有可能。———易中天",
+      "庄敬自强，处变不惊",
+      "书犹药也，善读之可以医愚 <br>——— 西汉·经学家刘向《说苑》",
+      "愿你被这个世界温柔以待 ❤ 即使生命总以刻薄荒芜相欺",
+      "淋过雨的人，总想着给别人撑伞。其实没安全感的人，才会买伞，有经历过的，才懂得珍惜，特别会给别人安全感。",
+      "世间所有相遇，都是久别重逢"
+    ];
+
+    let qIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typerSpeed = 100;
+    const pauseTime = 2000;
+
+    function typeEffect() {
+      const currentFullText = quotes[qIndex];
+      const displayContainer = document.getElementById('typer-text');
+      
+      if (isDeleting) {
+        // 删除逻辑：如果是HTML标签（如<br>），需要一次性处理（简单处理：截断）
+        charIndex--;
+      } else {
+        charIndex++;
+      }
+
+      // 处理包含HTML标签的情况
+      let currentDisplay = currentFullText.substring(0, charIndex);
+      displayContainer.innerHTML = currentDisplay;
+
+      let delta = isDeleting ? 50 : typerSpeed;
+
+      if (!isDeleting && charIndex === currentFullText.length) {
+        isDeleting = true;
+        delta = pauseTime; // 句末停顿
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        qIndex = (qIndex + 1) % quotes.length;
+        delta = 500;
+      }
+
+      setTimeout(typeEffect, delta);
+    }
+
+    /* --- C. 系统数据计算 (v1.2 逻辑) --- */
+    function calculateAges() {
+      const now = new Date();
+      const getYears = (dateStr) => {
+        const start = new Date(dateStr);
+        let y = now.getFullYear() - start.getFullYear();
+        if (now.getMonth() < start.getMonth() || (now.getMonth() === start.getMonth() && now.getDate() < start.getDate())) y--;
+        return y;
+      };
+
+      document.getElementById('age').textContent = getYears('1984-04-11');
+      document.getElementById('cancer-years').textContent = getYears('2008-02-28');
+      document.getElementById('kids-age').textContent = getYears('2019-06-13');
+      document.getElementById('year').textContent = now.getFullYear();
+    }
+
+    // 初始化运行
+    window.onload = () => {
+      typeEffect();
+      calculateAges();
+    };
+  </script>
+</body>
+</html>

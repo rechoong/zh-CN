@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命架构师 | 乐哥在线 · 双态系统</title>
+    <link rel="icon" href="https://choong.net.cn/images/favicon.png" />
+    <style>
+        /* 1. 基础变量定义 */
+        :root {
+            /* 浅色/风云模式变量 */
+            --light-text: #2c3e50;
+            --light-accent: #3498db;
+            /* 暗黑/内核模式变量 */
+            --dark-bg: #0a0a0a;
+            --dark-accent: #00ff41;
+            --dark-text: #e0e0e0;
+            /* 共有动画时间 */
+            --transition-speed: 0.6s;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            overflow-x: hidden;
+            transition: background var(--transition-speed);
+        }
+
+        /* 2. 浅色模式背景：风云际动效果 */
+        body.light-mode {
+            background-color: #f0f4f8;
+            color: var(--light-text);
+        }
+
+        .sky-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity var(--transition-speed);
+            /* 叠加夜空图与蓝紫渐变 */
+            background: 
+                linear-gradient(135deg, rgba(102, 126, 234, 0.6) 0%, rgba(118, 75, 162, 0.6) 100%),
+                url('https://choong.net.cn/video_cover.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cloud-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 200%; height: 100%;
+            background: url('https://choong.net.cn/clouds-transparent.png') repeat-x;
+            background-size: contain;
+            opacity: 0.4;
+            animation: cloudMove 60s linear infinite;
+        }
+
+        @keyframes cloudMove {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        body.light-mode .sky-bg { opacity: 1; }
+
+        /* 3. 暗黑模式背景：内核逻辑效果 */
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0;
+            background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), 
+                        radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+        
+        body.dark-mode .matrix-bg { opacity: 1; }
+
+        /* 4. 模式切换器 */
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid currentColor;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .toggle-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.2); }
+
+        /* 5. 页面布局容器 */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* 标题样式切换 */
+        .system-title {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        body.dark-mode .system-title { color: var(--dark-accent); }
+        body.light-mode .system-title { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+
+        /* 6. 打字机组件 */
+        .typewriter-container {
+            min-height: 60px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--dark-accent);
+        }
+        body.light-mode .typewriter-container { color: #fff; }
+        
+        #typewriter::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* 7. 核心网格展示块 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .data-card {
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        .data-card:hover { transform: translateY(-5px); border-color: var(--dark-accent); }
+        
+        .data-card h3 { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7; }
+        .data-card .value { font-size: 1.8rem; font-weight: bold; }
+
+        /* 8. 底部链接区域 */
+        .link-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .nav-links a:hover { color: var(--dark-accent); border-color: var(--dark-accent); }
+        body.light-mode .nav-links a:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
+
+        /* 响应式适配 */
+        @media (max-width: 600px) {
+            .system-title { font-size: 1.6rem; }
+            .data-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body class="dark-mode"> <div class="sky-bg"><div class="cloud-overlay"></div></div>
+    <div class="matrix-bg"></div>
+
+    <button class="toggle-btn" onclick="toggleMode()" id="modeBtn">切换至：风云模式</button>
+
+    <div class="main-container">
+        <h1 class="system-title" id="mainTitle">SYSTEM KERNEL :: 乐哥</h1>
+        <div class="system-status" style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 10px;">
+            Hardware: v1984 | Status: <span style="color:var(--dark-accent)">RUNNING</span>
+        </div>
+
+        <div class="typewriter-container">
+            <span id="typewriter"></span>
+        </div>
+
+        <div class="data-grid">
+            <div class="data-card">
+                <h3>硬件运行年限</h3>
+                <div class="value" id="age">0</div>
+            </div>
+            <div class="data-card">
+                <h3>抗灾容灾年数</h3>
+                <div class="value" id="cancer-years">0</div>
+            </div>
+            <div class="data-card">
+                <h3>子节点运行期</h3>
+                <div class="value" id="kids-age">0</div>
+            </div>
+            <div class="data-card">
+                <h3>系统共振频率</h3>
+                <div class="value">2019Hz</div>
+            </div>
+        </div>
+
+        <div class="link-section">
+            <div class="nav-links">
+                <a href="https://choong.net" title="数据摄取">数据摄取</a>
+                <a href="https://choong.net.cn" title="系统共振">系统共振</a>
+                <a href="https://rlxmt.cn" title="内核驱动">内核驱动</a>
+                <a href="https://go.choong.net" title="代码继承">代码继承</a>
+            </div>
+        </div>
+
+        <footer style="margin-top: 60px; font-size: 0.75rem; opacity: 0.5;">
+            <strong>
+                创客乐哥 © <script>document.write(new Date().getFullYear());</script> | 
+                做时间的朋友，探索重生的力量
+            </strong>
+        </footer>
+    </div>
+
+    <script>
+        /* --- 1. 模式切换逻辑 --- */
+        function toggleMode() {
+            const body = document.body;
+            const btn = document.getElementById('modeBtn');
+            const title = document.getElementById('mainTitle');
+
+            if (body.classList.contains('dark-mode')) {
+                body.classList.replace('dark-mode', 'light-mode');
+                btn.innerText = "切换至：内核模式";
+                title.innerText = "生命架构师 · 风云际动";
+            } else {
+                body.classList.replace('light-mode', 'dark-mode');
+                btn.innerText = "切换至：风云模式";
+                title.innerText = "SYSTEM KERNEL :: 乐哥";
+            }
+        }
+
+        /* --- 2. 生命数据计算逻辑 (保留 v1.2 计算逻辑) --- */
+        function getFullYears(startDateStr) {
+            const now = new Date();
+            const start = new Date(startDateStr);
+            let years = now.getFullYear() - start.getFullYear();
+            const monthDiff = now.getMonth() - start.getMonth();
+            const dayDiff = now.getDate() - start.getDate();
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) years--;
+            return years;
+        }
+
+        // 初始化数据
+        document.getElementById('age').textContent = getFullYears('1984-04-11');
+        document.getElementById('cancer-years').textContent = getFullYears('2008-02-28');
+        document.getElementById('kids-age').textContent = getFullYears('2019-06-13');
+
+        /* --- 3. 打字机效果逻辑 --- */
+        const quotes = [
+            "Take action to think, to change, to create.",
+            "用行动去思考，去改变、去创造。",
+            "现状不可描述，未来无法预测，一切皆有可能。———易中天",
+            "庄敬自强，处变不惊",
+            "书犹药也，善读之可以医愚 ——— 西汉·刘向",
+            "愿你被这个世界温柔以待 ❤ 即使生命总以刻薄荒芜相欺",
+            "淋过雨的人，总想着给别人撑伞...",
+            "世间所有相遇，都是久别重逢"
+        ];
+
+        let quoteIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById('typewriter');
+        const typingSpeed = 100; // 打字速度
+        const pauseTime = 2000;  // 句子完成后停顿时间
+
+        function type() {
+            const currentQuote = quotes[quoteIndex];
+            
+            if (isDeleting) {
+                // 删除字符
+                typewriterEl.innerHTML = currentQuote.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                // 增加字符
+                typewriterEl.innerHTML = currentQuote.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let nextSpeed = isDeleting ? typingSpeed / 2 : typingSpeed;
+
+            if (!isDeleting && charIndex === currentQuote.length) {
+                // 一句打完，停顿
+                isDeleting = true;
+                nextSpeed = pauseTime;
+            } else if (isDeleting && charIndex === 0) {
+                // 一句删完，换下一句
+                isDeleting = false;
+                quoteIndex = (quoteIndex + 1) % quotes.length;
+                nextSpeed = 500;
+            }
+
+            setTimeout(type, nextSpeed);
+        }
+
+        // 启动打字机
+        window.onload = type;
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生命架构师 | choong.net</title>
+  
+  <style>
+    :root {
+      /* 浅色主题变量 (Sky Mode) */
+      --sky-bg: #f0f4f8;
+      --sky-text: #2c3e50;
+      --sky-accent: #3498db;
+      
+      /* 深色主题变量 (Core Mode) */
+      --core-bg: #0d0d0d;
+      --core-panel: #1a1a1a;
+      --core-accent: #00ff41;
+      --core-text: #e0e0e0;
+    }
+
+    /* 基础样式复位 */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Courier New', monospace;
+      transition: background 0.5s ease;
+      overflow-x: hidden;
+    }
+
+    /* --- 主题 1: 浅色/风云际动背景 --- */
+    body.light-mode {
+      background-color: var(--sky-bg);
+      color: var(--sky-text);
+    }
+
+    .sky-container {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      background: url('https://choong.net.cn/video_cover.jpeg') no-repeat center center/cover;
+      display: none; /* 默认隐藏，由 JS 控制显示 */
+    }
+
+    .sky-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(52, 152, 219, 0.4), rgba(155, 89, 182, 0.4)); /* 蓝紫渐变叠加 */
+      mix-blend-mode: overlay;
+    }
+
+    .clouds {
+      position: absolute;
+      top: 0; left: 0; width: 200%; height: 100%;
+      background: url('https://choong.net.cn/clouds-transparent.png') repeat-x center bottom/contain;
+      opacity: 0.6;
+      animation: cloudMove 60s linear infinite;
+    }
+
+    @keyframes cloudMove {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* --- 主题 2: 深色/架构内核背景 --- */
+    body.dark-mode {
+      background-color: var(--core-bg);
+      color: var(--core-text);
+    }
+
+    /* 主内容包装器 */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 主题切换开关 */
+    .theme-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      cursor: pointer;
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 50%;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: all 0.3s;
+    }
+    .theme-switch:hover { transform: rotate(180deg); }
+
+    /* 打字机区域 */
+    .typewriter-box {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 20px 0;
+      font-style: italic;
+      font-weight: 300;
+    }
+    #typewriter {
+      font-size: 1.2rem;
+      border-right: 2px solid var(--core-accent);
+      padding-right: 5px;
+      white-space: pre-wrap;
+    }
+
+    /* 核心数据板 (Dashboard) */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      width: 100%;
+      margin-top: 30px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .dark-mode .stat-card { border-color: var(--core-accent); }
+    .stat-value { font-size: 2rem; font-weight: bold; color: var(--core-accent); display: block;}
+    .light-mode .stat-value { color: #2980b9; }
+
+    /* 架构四维度模块 */
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-top: 40px;
+      width: 100%;
+    }
+    .module {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid var(--core-accent);
+      padding: 20px;
+      transition: 0.3s;
+    }
+    .light-mode .module { border-left-color: #3498db; background: rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+    .module h4 { margin: 0 0 10px 0; font-size: 1.1rem; }
+    .module p { font-size: 0.85rem; line-height: 1.6; opacity: 0.8; }
+
+    footer {
+      margin-top: auto;
+      padding: 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      .architecture-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="light-mode"> <div id="sky-bg" class="sky-container" style="display: block;">
+    <div class="sky-overlay"></div>
+    <div class="clouds"></div>
+  </div>
+
+  <div class="theme-switch" onclick="toggleTheme()" title="切换系统模式">
+    <span id="theme-icon">🌙</span>
+  </div>
+
+  <div class="wrapper">
+    <header style="text-align: center;">
+      <h1 id="main-title" style="letter-spacing: 5px;">CHOONG.NET</h1>
+      <p id="sub-title">生命架构实验室 // 做时间的朋友</p>
+    </header>
+
+    <div class="typewriter-box">
+      <span id="typewriter"></span>
+    </div>
+
+    <div class="dashboard">
+      <div class="stat-card">
+        <span class="stat-value" id="age">--</span>
+        <span class="stat-label">硬件运行时长 (Years)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="resilience">--</span>
+        <span class="stat-label">抗灾容灾年数 (Safety)</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value" id="nodes">2</span>
+        <span class="stat-label">分布式子节点 (Nodes)</span>
+      </div>
+    </div>
+
+    <div class="architecture-grid">
+      <div class="module">
+        <h4>数据输入 (Reading)</h4>
+        <p>阅读不是消遣，而是认知代码的重构。在海量协议中筛选逻辑模型，为生命系统持续扩容。</p>
+      </div>
+      <div class="module">
+        <h4>频率校准 (Music)</h4>
+        <p>音乐是生命系统的低频保护色。在旋律震荡中校准疲惫硬件，实现情感数据的无损释放。</p>
+      </div>
+      <div class="module">
+        <h4>底层驱动 (Kernel)</h4>
+        <p>龙梅守护稳态，铭媛扩展接口。在家庭与事业的深度耦合中，运行着最坚韧的共生协议。</p>
+      </div>
+      <div class="module">
+        <h4>代码遗传 (Inheritance)</h4>
+        <p>将硬核逻辑封装成锦囊，部署于后继基因。让智慧跨代递归，“忠于自己”永不宕机。</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© <span id="current-year"></span> @乐哥创事记 | 联系: 13025048639</p>
+      <div id="beian-info">
+        <a href="https://beian.miit.gov.cn/" target="_blank" style="color: inherit; text-decoration: none;">粤ICP备2025141075号</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* 打字机效果系统 (Typewriter Engine)
+    */
+    const quotes = [
+      "Take action to think, to change, to create.",
+      "用行动去思考，去改变、去创造。",
+      "现状不可描述，未来无法预测，一切皆有可能。 —— 易中天",
+      "庄敬自强，处变不惊",
+      "书犹药也，善读之可以医愚。 —— 刘向《说苑》",
+      "愿你被这个世界温柔以待 ❤ 即使生命总以刻薄荒芜相欺",
+      "淋过雨的人，总想着给别人撑伞。懂得珍惜，才特别会给别人安全感。",
+      "世间所有相遇，都是久别重逢"
+    ];
+
+    let qIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 100;
+    const deleteSpeed = 50;
+    const waitTime = 2000;
+
+    function type() {
+      const currentQuote = quotes[qIndex];
+      const typewriter = document.getElementById("typewriter");
+      
+      if (isDeleting) {
+        typewriter.textContent = currentQuote.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typewriter.textContent = currentQuote.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let speed = isDeleting ? deleteSpeed : typeSpeed;
+
+      if (!isDeleting && charIndex === currentQuote.length) {
+        isDeleting = true;
+        speed = waitTime;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        qIndex = (qIndex + 1) % quotes.length;
+      }
+
+      setTimeout(type, speed);
+    }
+
+    /* 主题切换系统 (Theme Switcher)
+    */
+    function toggleTheme() {
+      const body = document.body;
+      const skyBg = document.getElementById("sky-bg");
+      const icon = document.getElementById("theme-icon");
+      const title = document.getElementById("main-title");
+
+      if (body.classList.contains('light-mode')) {
+        // 切换到深色代码模式
+        body.classList.replace('light-mode', 'dark-mode');
+        skyBg.style.display = 'none';
+        icon.textContent = '☀️';
+        title.textContent = "LIFE_ARCHITECT_OS";
+      } else {
+        // 切换到浅色风云模式
+        body.classList.replace('dark-mode', 'light-mode');
+        skyBg.style.display = 'block';
+        icon.textContent = '🌙';
+        title.textContent = "CHOONG.NET";
+      }
+    }
+
+    /* 生命数据计算逻辑 (Life Data Logic)
+    */
+    const now = new Date();
+    document.getElementById('current-year').textContent = now.getFullYear();
+
+    function getFullYears(startDateStr) {
+      const start = new Date(startDateStr);
+      let years = now.getFullYear() - start.getFullYear();
+      const m = now.getMonth() - start.getMonth();
+      if (m < 0 || (m === 0 && now.getDate() < start.getDate())) years--;
+      return years;
+    }
+
+    // 初始化数据
+    document.getElementById('age').textContent = getFullYears('1984-04-11');
+    document.getElementById('resilience').textContent = getFullYears('2008-02-28');
+
+    // 启动打字机
+    window.onload = type;
+  </script>
+</body>
+</html>
