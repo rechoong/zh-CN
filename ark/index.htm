@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>方舟领地：荒野中的真实索引</title>
+  <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAZCAYAAAArK+5dAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDkvMjkvMTSS+0sBAAAHmnByVld4nO1aTa7kNBCOnfASOwtW7GfFhhWaDeIErNEcAAEaCYnFSCOWSNxiGM7AGTgAegtuwZILIJr6qmzHTpy0k3a/p5FS/X66O46/+srlcrmcP//745/mTfPmAnm8XN5fLq8vl5eXS4NPj4+Xx/eXx9eXx5eXx+aUU045xYv10qinByfIzpqO8dVzKOD4kwZd8/T4ALSdsc/HXzVMHr93hVckpqUX3iTf2nGkH5LFldZobl5DL+qE..." />
+  <style>
+    /* ========== 基础变量与自适应标签页样式 ========= */
+    :root {
+      --bg-color: #f5f7fa;
+      --container-bg: #ffffff;
+      --text-color: #333333;
+      --border-color: #eaeaea;
+      --tab-active-color: #007aff;
+      --offline-color: #ff9500;
+    }
+
+    /* 夜间模式变量覆盖 */
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --container-bg: #2d2d2d;
+      --text-color: #e0e0e0;
+      --border-color: #404040;
+      --tab-active-color: #0a84ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      padding: 12px;
+    }
+
+    /* 离线状态提示栏 */
+    #offline-banner {
+      display: none;
+      background: var(--offline-color);
+      color: white;
+      text-align: center;
+      padding: 8px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto 0; /* 为提示栏预留空间 */
+      background: var(--container-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    /* 标签导航栏 */
+    .tab-nav {
+      display: flex;
+      list-style: none;
+      background: var(--container-bg);
+      border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+
+    .tab-nav li {
+      flex: 1;
+      text-align: center;
+      padding: 14px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      color: #888;
+      border-bottom: 2px solid transparent;
+      font-weight: 500;
+    }
+    .tab-nav li.active {
+      color: var(--tab-active-color);
+      border-bottom-color: var(--tab-active-color);
+    }
+
+    /* 内容区域 */
+    .tab-content {
+      display: none;
+      padding: 24px;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* 昼夜切换按钮 */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--container-bg);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 999;
+      font-size: 20px;
+    }
+
+    /* 时间显示样式 */
+    #show_time {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="offline-banner">⚠️ 处于离线状态：已自动为您切换至离线生存操作指南</div>
+
+  <button class="theme-toggle" id="theme-toggle" title="切换昼夜模式">🌓</button>
+
+  <div class="container">
+    <ul class="tab-nav">
+      <li class="active" data-tab="tab-home">概览</li>
+      <li data-tab="tab-ark">方舟服务</li>
+      <li data-tab="tab-survival">生存指南</li>
+      <li data-tab="tab-logs">荒野记录</li>
+    </ul>
+
+    <div id="tab-home" class="tab-content active">
+      <h2>欢迎来到方舟控制台</h2>
+      <p style="margin-top: 15px;">当前系统处于“正常/监控”状态。这里是你在数字化荒野中的固定坐标。</p>
+      <div id="show_time"></div>
+    </div>
+
+    <div id="tab-ark" class="tab-content">
+      <h2>本地自动化服务</h2>
+      <p style="margin-top: 10px;">• 离线维基百科: 192.168.x.x:8080</p>
+      <p>• 私有云堡垒: 192.168.x.x:8081</p>
+      <p>• 局域网广播: 运行中</p>
+    </div>
+
+    <div id="tab-survival" class="tab-content">
+      <h2>离线生存 SOP</h2>
+      <div style="background: rgba(255,149,0,0.1); border-left: 4px solid var(--offline-color); padding: 15px; margin-top: 10px;">
+        <p><strong>1. 唤醒：</strong>运行 <code>./wake_up.sh</code> 脚本。</p>
+        <p><strong>2. 密钥：</strong>精神密钥藏在《XXX》书第 X 页。</p>
+        <p><strong>3. 能源：</strong>检查太阳能板角度，保持树莓派供电。</p>
+      </div>
+    </div>
+
+    <div id="tab-logs" class="tab-content">
+      <h2>真实的记录</h2>
+      <p style="margin-top: 10px;">“杀掉那个追求完美的自己，让混乱但真实、在荒野中跌倒的自己活过来。”</p>
+    </div>
+  </div>
+
+  <script>
+    /* ========== 标签页切换逻辑 (保留原始逻辑) ========= */
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.tab-nav li');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          const targetId = tab.getAttribute('data-tab');
+          document.getElementById(targetId).classList.add('active');
+        });
+      });
+
+      /* ========== 夜间模式逻辑 ========= */
+      const themeToggle = document.getElementById('theme-toggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+
+      themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+
+      /* ========== 离线自愈监测逻辑 ========= */
+      const offlineBanner = document.getElementById('offline-banner');
+      
+      function updateOnlineStatus() {
+        if (!navigator.onLine) {
+          offlineBanner.style.display = 'block';
+          // 自动跳转到生存指南标签页
+          document.querySelector('[data-tab="tab-survival"]').click();
+        } else {
+          offlineBanner.style.display = 'none';
+        }
+      }
+
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+      updateOnlineStatus(); // 初始化检查
+    });
+  </script>
+
+  <script type="text/javascript">
+    window.onload = function() {
+      window.requestAnimationFrame(getDate)
+    }
+
+    function getDate() {
+      window.setTimeout(function() {
+        window.requestAnimationFrame(getDate)
+      }, 1000 / 2)
+      var d = new Date();
+      var year = d.getFullYear() //获取年	
+      var month = d.getMonth() + 1; //获取月，从 Date 对象返回月份 (0 ~ 11)，故在此处+1	
+      var day = d.getDay() //获取日	
+      var days = d.getDate() //获取日期	
+      var hour = d.getHours() //获取小时	
+      var minute = d.getMinutes() //获取分钟	
+      var second = d.getSeconds() //获取秒	
+      if (month < 10) month = "0" + month
+      if (days < 10) days = "0" + days
+      if (hour < 10) hour = "0" + hour
+      if (minute < 10) minute = "0" + minute
+      if (second < 10) second = "0" + second
+      var tools = document.getElementById("show_time");
+      if (tools) {
+        tools.innerHTML = year + "年" + month + "月" + days + "日 " + hour + ":" + minute + ":" + second;
+      }
+    }
+  </script>
+</body>
+</html>
