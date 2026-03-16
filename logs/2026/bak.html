@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 自适应视口 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026马年 | 辰时龙抬头 · 乙木向阳生</title>
+    <!-- 引入字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f7f8fa;
+            color: #222;
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        /* 页面容器：居中 + 最大宽度 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        /* 头部：藏青色主题 */
+        header {
+            background-color: #1f3052; /* 藏青色 */
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* 内容区块通用样式 */
+        section {
+            padding: 30px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #1f3052;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 6px;
+            height: 22px;
+            background-color: #1f3052;
+            border-radius: 4px;
+        }
+
+        /* 文本段落 */
+        p {
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+
+        /* 列表样式 */
+        ul {
+            padding-left: 22px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        /* 高亮文字 */
+        .highlight {
+            color: #1f3052;
+            font-weight: 700;
+        }
+
+        /* 自愈口诀样式 */
+        .mantra {
+            background-color: #f0f2f7;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 17px;
+            color: #1f3052;
+            font-weight: 500;
+            margin: 20px 0;
+        }
+
+        /* 穿搭卡片 */
+        .suit-card {
+            background-color: #f7f8fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .suit-title {
+            font-weight: 700;
+            color: #1f3052;
+            margin-bottom: 10px;
+        }
+
+        /* ======================
+           标签页切换样式（新增）
+        ====================== */
+        .tab-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #eaeef5;
+            color: #1f3052;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: "Noto Serif SC", serif;
+        }
+
+        .tab-btn.active {
+            background: #1f3052;
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .tab-content.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 底部 */
+        footer {
+            text-align: center;
+            padding: 25px;
+            font-size: 14px;
+            color: #666;
+            background-color: #f7f8fa;
+        }
+
+        /* 响应式：小屏优化 */
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 21px;
+            }
+
+            section {
+                padding: 25px 20px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 头部区域 -->
+    <header>
+        <h1>2026丙午马年 · 开运指南</h1>
+        <p>辰时龙抬头 · 乙木向阳生 · 上海同仁堂 · 稳行致远</p>
+    </header>
+
+    <!-- 年度总运 -->
+    <section>
+        <h2 class="section-title">年度总运</h2>
+        <p>2026年是你<strong class="highlight">翻身、起运、立住</strong>的关键一年。</p>
+        <p>八字乙木日主，水旺土重，喜火调候；
+        丙午年旺火补命，同仁堂属土为财，新媒体属火为用神，
+        <strong class="highlight">天运、地利、人和三者齐备</strong>。</p>
+        <p>本年核心：守、暖、定。
+        守身体，暖阳气，定心神，万事顺遂。</p>
+    </section>
+
+    <!-- ==============================
+         新增：三段开运文案标签切换
+    =============================== -->
+    <section>
+        <h2 class="section-title">2026马年专属开运文案</h2>
+        <div class="tab-group">
+            <button class="tab-btn active" data-tab="1">极简签名</button>
+            <button class="tab-btn" data-tab="2">标准版</button>
+            <button class="tab-btn" data-tab="3">完整版</button>
+        </div>
+
+        <!-- 短版 -->
+        <div class="tab-content show" id="tab1">
+            <div class="mantra">
+                2026 丙午马年，辰时龙抬头，乙木向阳生。<br>
+                守正养心，稳行致远，<br>
+                东方甲乙木，系统自愈，万事顺遂。
+            </div>
+        </div>
+
+        <!-- 中版 -->
+        <div class="tab-content" id="tab2">
+            <div class="mantra">
+                <strong>2026马年 · 开运心语</strong><br><br>
+                岁在丙午，火暖木荣。<br>
+                生于辰时，龙气在身；扎根沪上，立身同仁堂。<br>
+                以文化为根，以新媒体为翼，<br>
+                以自愈为盾，以稳静为舵。<br>
+                工作有序，生活有度，身心安康，家庭和睦。<br>
+                东方甲乙木，辰时龙抬头，系统自愈中。<br>
+                步步登高，岁岁平安。
+            </div>
+        </div>
+
+        <!-- 长版 -->
+        <div class="tab-content" id="tab3">
+            <div class="mantra">
+                <strong>2026 马年 · 开运完整版</strong><br><br>
+                2026，丙午火旺，乙木逢春，正是厚积薄发之年。<br>
+                辰时本命，龙抬头，启新程；<br>
+                入沪上福地，居同仁堂祖庭，承百年正气，掌新媒体新局。<br>
+                心定则事顺，身安则运昌。<br>
+                工作守正创新，生活张弛有度；<br>
+                学习日进一寸，家庭温暖相依。<br>
+                常念：东方甲乙木，辰时龙抬头，系统自愈中。<br>
+                凝神定气，固本培元，<br>
+                所求皆如愿，所行皆坦途，福泽绵长，万事兴隆。
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作指南 -->
+    <section>
+        <h2 class="section-title">工作｜同仁堂新媒体负责人</h2>
+        <ul>
+            <li>少冲锋，多搭体系：定方向、定流程、定风格</li>
+            <li>走稳、雅、正路线，贴合百年老字号底蕴</li>
+            <li>压力大时启动自愈系统，稳定心神再决策</li>
+            <li>重要会议坐朝南、东南方位，提升气场</li>
+        </ul>
+    </section>
+
+    <!-- 学习成长 -->
+    <section>
+        <h2 class="section-title">学习｜今年只学三样</h2>
+        <ul>
+            <li>新媒体运营与品牌传播（本职核心）</li>
+            <li>中医养生、食疗基础（职业+护命）</li>
+            <li>情绪管理、极简决策（减少内耗）</li>
+        </ul>
+        <p>学习时间：白天15-30分钟，不熬夜学习。</p>
+    </section>
+
+    <!-- 生活健康 -->
+    <section>
+        <h2 class="section-title">生活与健康｜重中之重</h2>
+        <ul>
+            <li>23:00前入睡，养肝木，固元气</li>
+            <li>辰时（7-9点）做最重要的事，契合本命</li>
+            <li>多晒太阳、多走路，补足命中喜火</li>
+            <li>少吃生冷，多温平食物，借同仁堂优势养生</li>
+        </ul>
+    </section>
+
+    <!-- 家庭平衡 -->
+    <section>
+        <h2 class="section-title">家庭｜你稳，全家就稳</h2>
+        <p>你是家庭的定海神针，不必事事完美。</p>
+        <p>情绪稳定，就是对家庭最大的贡献。</p>
+        <p>多陪伴，少说教；用自愈能量影响家人。</p>
+    </section>
+
+    <!-- 专属自愈口诀 -->
+    <section>
+        <h2 class="section-title">心神自愈系统</h2>
+        <div class="mantra">
+            东方甲乙木，辰时龙抬头，系统自愈中
+        </div>
+        <p>紧张焦虑时默念，配合呼吸，立刻回归稳定状态。</p>
+    </section>
+
+    <!-- 藏青色西服穿搭指南 -->
+    <section>
+        <h2 class="section-title">职场形象｜藏青色西服套装</h2>
+        <div class="suit-card">
+            <p class="suit-title">✅ 推荐款式</p>
+            <ul>
+                <li>经典平驳领 · 单排两粒扣（商务正式）</li>
+                <li>戗驳领 · 气场更强（谈判、对外亮相）</li>
+                <li>细竖条纹 · 低调高级（日常通勤）</li>
+            </ul>
+        </div>
+        <div class="suit-card">
+            <p class="suit-title">✅ 最佳搭配</p>
+            <ul>
+                <li>内搭：白衬衫 / 浅蓝衬衫</li>
+                <li>领带：深蓝、深灰、酒红、细条纹</li>
+                <li>鞋履：黑色/深棕牛津鞋、德比鞋</li>
+            </ul>
+        </div>
+        <p>藏青色 = 你的幸运主色，稳重、高级、旺运。</p>
+    </section>
+
+    <!-- 年度开运金句 -->
+    <section>
+        <h2 class="section-title">年度金句</h2>
+        <div class="mantra">
+            龙抬头，风正顺<br>
+            乙木向阳自生春<br>
+            上海同仁堂立住身<br>
+            一步一稳一乾坤
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer>
+        2026 丙午马年 · 身心安定 · 万事顺遂
+    </footer>
+</div>
+
+<!-- ======================
+     标签页切换JS逻辑
+====================== -->
+<script>
+    // 获取所有标签按钮
+    const btns = document.querySelectorAll('.tab-btn');
+    // 获取所有内容面板
+    const contents = document.querySelectorAll('.tab-content');
+
+    // 为每个按钮添加点击事件
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 移除所有按钮的激活状态
+            btns.forEach(b => b.classList.remove('active'));
+            // 隐藏所有内容
+            contents.forEach(c => c.classList.remove('show'));
+
+            // 激活当前按钮
+            btn.classList.add('active');
+            // 显示对应内容
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById('tab' + tabId).classList.add('show');
+        });
+    });
+</script>
+
+</body>
+</html>
