@@ -940,5 +940,72 @@
     // 每秒更新一次
     setInterval(setTime, 1000);
   </script>
+  
+<!-- ========== 右上角名言滚动逻辑（核心修复） ========== -->
+  <script>
+    // 定义名言名句内容（修复换行符语法，统一使用\n）
+    const quoteList = [
+      "<b>上海乐氏迁年中药有限公司</b>\n地址：上海市松江区佘北公路3000弄258号\n电话：021-57793357",
+      "<b>使命</b>：\n用我千年古方 护您百年健康\n\n<b>愿景</b>：\n复兴乐氏辉煌，再现中药荣光。\n——到 2030 年，实现门店 1 万家；\n——培育专业人才 5 万人；\n——守护用户 200 万。 \n\n<b>价值观</b>：\n忠孝勤俭 信立天下\n坚韧聚焦 内求不怨\n敬畏感恩 利他共赢\n\n<b>祖训</b>：\n制虽繁，不省人工；\n品虽贵，不减物力；\n修合无人见 存心有天知。\n\n<b>口号</b>：\n正统正宗安心安宫\n京城乐氏仁者道同\n同心同行共创共赢\n共赢共赢共赢"
+    ];
+
+    // 获取DOM元素（防错：元素不存在则终止）
+    const quoteScrollEl = document.getElementById("quote-scroll");
+    const quoteContentEl = document.getElementById("quote-content");
+    if(!quoteScrollEl || !quoteContentEl) {
+      console.warn("名言模块DOM元素未找到");
+    } else {
+      let currentQuoteIndex = 0; // 当前显示的名言索引
+      let scrollPosition = 0;    // 滚动位置
+      const scrollSpeed = 1;     // 滚动速度（像素/帧）
+      const pauseDuration = 5000; // 每段名言暂停时间（5秒）
+      const fadeInDelay = 1000;  // 页面加载后渐显延迟（1秒）
+
+      // 初始化：页面加载后渐显模块
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          quoteScrollEl.classList.add("fade-in"); // 添加渐显类
+          renderCurrentQuote(); // 渲染第一条名言
+          startScrollAnimation(); // 启动滚动动画
+        }, fadeInDelay);
+      });
+
+      // 渲染当前索引的名言内容
+      function renderCurrentQuote() {
+        quoteContentEl.innerHTML = quoteList[currentQuoteIndex];
+        // 初始滚动位置：从模块底部开始（文字从下往上滚）
+        scrollPosition = quoteScrollEl.offsetHeight; 
+        quoteContentEl.style.top = `${scrollPosition}px`; // 设置初始top值
+      }
+
+      // 启动向上滚动动画（兼容requestAnimationFrame）
+      function startScrollAnimation() {
+        // 兼容浏览器requestAnimationFrame
+        const requestAnimFrame = window.requestAnimationFrame || 
+                                window.webkitRequestAnimationFrame || 
+                                window.mozRequestAnimationFrame || 
+                                function(callback) { setTimeout(callback, 16); };
+
+        const animate = () => {
+          // 滚动逻辑：向上移动（top值递减）
+          scrollPosition -= scrollSpeed;
+          quoteContentEl.style.top = `${scrollPosition}px`;
+
+          // 当文本完全滚出可视区域时，切换下一条名言
+          if (scrollPosition < -quoteContentEl.offsetHeight) {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quoteList.length; // 循环切换
+            renderCurrentQuote(); // 渲染新名言
+            // 暂停滚动，等待5秒后继续
+            setTimeout(() => {
+              requestAnimFrame(animate);
+            }, pauseDuration);
+          } else {
+            requestAnimFrame(animate); // 持续滚动
+          }
+        };
+        animate(); // 启动动画
+      }
+    }
+  </script>
 </body>
 </html>
