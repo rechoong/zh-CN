@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en-US">
+ <head>
+   <meta charset="UTF-8">
+  <title>乐出东方·新媒体专题</title><!-- 乐出东方-导航主页-->
+  <!-- 网页/favicon图标配置 -->
+  <link rel="shortcut icon" href="https://choong.net.cn/tools/2026/logo-1.jpeg" />
+  <!-- 引入网页悬浮音乐播放器样式 -->
+  <link rel="stylesheet" href="https://y.choong.net/QPlayer/css/player.css">
+  
+  <!-- 全局样式定义 -->
+  <style type="text/css"> 
+    /* ========== 全局body样式 ========== */
+    body {
+      /* 背景图配置：居中不重复、覆盖容器、固定定位（滚动不移动） */
+      background:url("https://choong.net.cn/tools/2026/乐出东方-背景图2.jpg") no-repeat center center;  
+      background-size:cover;  
+      background-attachment:fixed;        
+      /* 背景色：半透明白色（背景图加载前显示） */
+      background-color: rgba(255,255,255,0.2);
+      /* 清除默认外边距，避免布局偏移 */
+      margin: 0px;
+      /* 全局文字颜色：白色 */
+      color: #FFFFFF;
+    }
+
+    /* ========== 文本对齐样式 ========== */
+    h1 {text-align:center}  /* 一级标题居中 */
+    h2 {text-align:left}   /* 二级标题左对齐 */
+    h3 {text-align:right}  /* 三级标题右对齐 */
+    p.date{text-align:right}   /* 日期类段落右对齐 */
+    p.main{text-align:justify} /* 正文类段落两端对齐 */
+    td.date{text-align:right;} /* 日期类单元格右对齐 */
+    td.main{text-align:justify}/* 正文类单元格右对齐 */
+
+    /* ========== 图片垂直对齐 ========== */
+    img.top {vertical-align:text-top;}    /* 图片与文本顶部对齐 */
+    img.bottom {vertical-align:text-bottom;} /* 图片与文本底部对齐 */
+
+    /* ========== 水平线(hr)样式 ========== */
+    /* 样式1：透明渐变水平线 */
+    hr.style-one {
+      width:80%;            /* 宽度80% */
+      margin:0 auto;        /* 水平居中 */
+      border: 0;            /* 清除默认边框 */
+      height: 4px;          /* 高度4px */
+      /* 渐变背景：从透明到深灰再到透明 */
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
+    /* 样式2：红-深灰-绿渐变水平线 */
+    hr.style-two{
+      width:80%;
+      margin:0 auto;
+      border: 0;
+      height: 4px;
+      background: #333;
+      background-image: linear-gradient(to right, red, #333, rgb(9, 206, 91));
+    }  
+
+    /* ========== 链接样式 ========== */
+    a:link {text-decoration:none;color:#FFFFFF;}      /* 未访问链接：无下划线、白色 */
+    a:hover {color:#ffa41d;}  /* 鼠标悬浮链接：明黄色 */
+    a:active {color:#4d3109;}  /* 点击中链接：暗黄色 */
+
+    /* ========== 二维码悬浮层样式 ========== */
+    #box {
+      width: 100%;          /* 宽度100% */
+      height: 95px;         /* 高度70px */
+      position: fixed;      /* 固定定位 */
+      bottom: 30px;         /* 下移30px，避开footer（footer高度30px） */
+      z-index: 1;           /* 层级低于footer，避免覆盖 */
+    }
+    /* 微信图标容器 */
+    #wechat {
+      width: 64px;
+      height: 64px;
+      /* 微信图标背景图 */
+      background-image: url("https://go.choong.net/images/logo.png");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      margin: 3px auto;     /* 垂直居中（70-64=6，上下各3px） */
+      position: relative;   /* 作为二维码的定位父级 */
+    }
+    /* 二维码图片容器 */
+    #code {
+      display: none;        /* 默认隐藏 */
+      width: 180px;
+      height: 180px;
+      background-color: white; /* 二维码背景白色 */
+      /* 二维码背景图 */
+      background-image: url("https://go.choong.net/w/WX-Qcode.png");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      position: absolute;   /* 绝对定位（相对于#wechat） */
+      left: -66px;          /* 水平居中（180-64=116，左移66px） */
+      bottom: 70px;         /* 显示在微信图标上方 */
+    }
+    /* 鼠标悬浮微信图标：切换图标 */
+    #wechat:hover {
+      background-image: url("https://go.choong.net/images/WX-logo.svg");
+    }
+    /* 鼠标悬浮微信图标：显示二维码 */
+    #wechat:hover>#code{
+      display: block;
+    }
+
+/* ========== 右上角名言滚动模块样式 ========== */
+#quote-scroll {
+  width: 320px;          /* 宽度适配内容，避免过宽 */
+  height: 280px;         /* 高度容纳多行文本滚动 */
+  position: fixed;       /* 固定定位：始终在右上角 */
+  top: 100px;            /* 距离顶部100px，避开顶部时钟 */
+  right: 20px;           /* 距离右侧20px */
+  z-index: 98;           /* 层级低于footer（99），避免覆盖 */
+  padding: 15px;         /* 内边距，让文本不贴边 */
+  background-color: transparent; /* 修复：改为完全透明背景 */
+  border-radius: 8px;    /* 圆角优化，提升美观度 */
+  overflow: hidden;      /* 隐藏溢出内容，避免滚动条 */
+  opacity: 0;            /* 默认透明（渐显初始状态） */
+  transition: opacity 1s ease-in-out; /* 1秒渐显/渐隐过渡 */
+}
+/* 名言容器：用于滚动 */
+#quote-content {
+  position: relative;    /* 作为滚动动画的定位父级 */
+  width: 100%;
+  height: 100%;
+}
+/* 名言文本样式：统一字体、颜色、行高 */
+.quote-text {
+  color: #FFFFFF;        /* 白色文本，与原有链接/全局文本一致 */
+  font-size: 16px;       /* 适配页面字体大小 */
+  line-height: 1.8;      /* 行高适中，提升可读性 */
+  text-align: left;      /* 左对齐，符合阅读习惯 */
+  white-space: pre-line; /* 保留换行符，适配多行文本 */
+}
+/* 渐显类：控制模块显示 */
+.fade-in {
+  opacity: 1 !important; /* 强制显示（覆盖默认透明） */
+}
+
+    /* ========== 通知模块样式 ========== */
+    .notification h1 {
+      margin: 0;            /* 清除默认外边距 */
+      color: #333;          /* 标题颜色：深灰 */
+      font-weight: 600;     /* 标题粗细：半粗体 */
+      margin-bottom: 20px;  /* 底部间距20px */
+    }
+    .notification p {
+      margin: 0;            /* 清除默认外边距 */
+      color: #666;          /* 正文颜色：中灰 */
+    }
+    .notification a {
+      color: #7F2E49;       /* 链接颜色：酒红色 */
+      text-decoration: none; /* 无下划线 */
+      display: inline-block;/* 行内块：支持上下边距 */
+      margin-top: 20px;     /* 顶部间距20px */
+      font-weight: 600;     /* 链接粗细：半粗体 */
+    }
+    
+    /* ========== 底部footer样式 ========== */
+    .footer {
+      position: fixed;      /* 固定定位：始终在底部 */
+      bottom: 0;            /* 贴底部（关键：修复前被#box覆盖） */
+      left: 0;
+      right: 0;
+      height: 30px;         /* footer高度30px */
+      line-height: 30px;    /* 行高等于高度：文字垂直居中 */
+      background: #7F2E49;  /* 背景色：酒红色 */
+      text-align: center;   /* 文字居中 */
+      color: white;         /* 文字颜色：白色 */
+      font-size: 14px;      /* 字体大小14px */
+      font-weight: 600;     /* 字体粗细：半粗体 */
+      z-index: 99;          /* 层级高于#box，确保不被覆盖 */
+    }
+    /* footer内链接样式 */
+    .footer a {
+      color: #f2f2f2;       /* 链接颜色：浅白 */
+      text-decoration: none; /* 无下划线 */
+    }
+    /* footer内链接悬浮：加下划线 */
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    /* footer文本容器：过渡动画 */
+    #footer-text {
+      opacity: 1;           /* 默认不透明 */
+      transition: opacity 1s ease-in-out; /* 1秒渐变过渡 */
+      display: inline-block;/* 行内块：支持过渡动画 */
+    }
+    /* 淡出动画类：透明度0 */
+    .fade-out {
+      opacity: 0;
+    }
+    /* footer图标样式 */
+    .footer-icon {
+      margin-right: 6px;    /* 图标右侧间距6px */
+    }
+
+    /* ========== 音乐播放器样式增强 ========== */
+    #QPlayer {
+      z-index: 97;          /* 提升播放器层级，避免被遮挡 */
+      position: relative;   /* 确保z-index生效 */
+    }
+    /* 修复：播放器控件容器垂直居中，解决播放键偏移 */
+    .ctrl .contr {
+      display: flex;        /* 弹性布局，统一对齐 */
+      align-items: center;  /* 垂直居中 */
+      justify-content: center; /* 水平居中 */
+      gap: 8px;             /* 按钮间距统一 */
+      height: 100%;         /* 高度100%，确保垂直居中生效 */
+    }
+    /* 修复：播放器按钮基线对齐，消除偏移 */
+    .ctrl .icon {
+      vertical-align: middle; /* 垂直居中对齐 */
+      display: inline-flex;   /* 弹性布局，确保尺寸一致 */
+      align-items: center;
+      justify-content: center;
+    }
+    /* 新增：单曲循环按钮样式 */
+    .single-cycle {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      margin-left: 8px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'><path d='M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1.5v6H13z'/></svg>");
+      background-size: 100%;
+      vertical-align: middle;
+    }
+    .single-cycle.active {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff00ff'><path d='M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1.5v6H13z'/></svg>");
+    }
+    /* 新增：歌词显示容器样式 */
+    #lyric-container {
+      position: fixed;      /* 固定定位，跟随页面 */
+      top: 672px;           /* 距离顶部120px，避开时钟和导航 */
+      left: 50%;            /* 水平居中 */
+      transform: translateX(-50%); /* 水平居中偏移 */
+      width: 80%;           /* 宽度80%适配不同屏幕 */
+      max-width: 800px;     /* 最大宽度限制 */
+      height: 200px;        /* 固定高度，开启滚动 */
+      padding: 15px;        /* 内边距 */
+      background-color: rgba(0,0,0,0.5); /* 半透明黑色背景，提升歌词可读性 */
+      border-radius: 8px;   /* 圆角优化 */
+      color: #FFFFFF;       /* 歌词白色 */
+      font-size: 16px;      /* 歌词字体大小 */
+      line-height: 2;       /* 行高，提升可读性 */
+      text-align: center;   /* 歌词居中显示 */
+      z-index: 96;          /* 层级低于播放器，避免遮挡控制按钮 */
+      overflow-y: auto;     /* 开启垂直滚动 */
+    }
+    /* 隐藏歌词容器滚动条（美观优化） */
+    #lyric-container::-webkit-scrollbar {
+      display: none;
+    }
+    /* 新增：当前播放歌词高亮样式 */
+    .lyric-active {
+      color: ffa41d;       /* 高亮歌词粉色，与链接悬浮色一致 */
+      font-weight: bold;    /* 加粗突出 */
+      font-size: 18px;      /* 字号稍大 */
+    }
+
+    /* ========== 折叠面板样式优化 ========== */
+    details {
+      margin: 10px auto;    /* 居中+上下间距，避免贴边 */
+      width: 90%;           /* 适配宽度，提升点击区域 */
+      cursor: pointer;      /* 鼠标指针提示可点击 */
+    }
+    summary {
+      padding: 10px;        /* 增加内边距，扩大点击区域 */
+      font-size: 16px;      /* 放大字体，提升可读性 */
+    }
+    marquee {
+      pointer-events: none; /* 禁止marquee拦截点击事件 */
+    }
+
+    /* ========== 新增：顶部彩虹进度条样式 ========== */
+    #audio-progress-bar {
+      position: fixed;      /* 固定在顶部 */
+      top: 0;               /* 贴顶 */
+      left: 0;              /* 贴左 */
+      height: 4px;          /* 进度条高度 */
+      width: 0%;            /* 初始宽度0 */
+      background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); /* 彩虹渐变 */
+      z-index: 9999;        /* 最高层级，避免被遮挡 */
+      opacity: 0;           /* 默认隐藏 */
+      transition: width 0.1s linear, opacity 0.3s ease; /* 宽度平滑过渡，显隐渐变 */
+    }
+    /* 进度条显示状态 */
+    #audio-progress-bar.show {
+      opacity: 1;           /* 显示 */
+    }
+  </style>	 
+</head>
+
+<body>
+  <!-- 新增：音频播放彩虹进度条容器 -->
+  <div id="audio-progress-bar"></div>
+
+  <!-- 顶部导航：嵌入数字时钟页面 -->
+  <a href="https://go.choong.net/City/" title="City导航 - 专题网址">
+    <iframe frameborder="0" scrolling="no" src="https://go.choong.net/Tools/Digital-clock/" width="100%" height="80px"></iframe>
+  </a>
+
+  <!-- 右上角名言名句滚动模块 -->
+  <div id="quote-scroll">
+    <div id="quote-content" class="quote-text">
+      <!-- 初始为空，通过JS填充内容并实现滚动 -->
+    </div>
+  </div>
+
+  <!-- 折叠面板：健康提示+番茄时钟等链接（修复点击交互+iframe功能） -->
+  <details>
+    <summary>
+      <!-- 拆分嵌套链接，避免点击拦截 -->
+      <span style="color:#990066;font-size:25px" id="Shanghai_z43d"></span>
+      <!-- 滚动公告栏：向上滚动的健康提示图片 -->
+      <marquee style="color:#999999" direction=up width=200 height=30 scrolldelay=350> 
+        <img class="bottom" src="https://img.shields.io/badge/上海-时间-brightgreen.svg" height="25" width="100"  />  <br /><br /> 
+        <img class="bottom" src="https://go.choong.net/City/images/多喝水-多运动-yellow.svg" height="30" width="200" />  <br /><br />
+        <img class="bottom" src="https://go.choong.net/City/images/久坐伤身-多走多动-brightgreen.svg" height="30" width="200" />  <br /><br />
+        <!-- 番茄时钟链接：简化title，避免换行符导致解析异常 -->
+        <a href="https://go.choong.net/Tools/today-gtd/" title="【番茄时钟】任务管理及效率工具，基于番茄工作法设计">
+          <img class="bottom" src="https://go.choong.net/City/images/番茄时钟-25+5分钟-lightgrey.svg" height="30" width="200" /> 
+        </a> <br /><br />
+        <img class="bottom" src="https://go.choong.net/City/images/早睡早起-身体更好-brightgreen.svg" height="30" width="200" />  <br /><br />
+        <img class="bottom" src="https://go.choong.net/City/images/每天要喝8杯水-身心美丽一整天-brightgreen.svg" height="30" width="200" />	<br />
+      </marquee>
+    </summary> 
+    <!-- 折叠面板内容：恢复iframe并补充路径（替换为实际qq.html路径） -->
+    <center>
+      <div style="padding:20px;">
+        <p>健康工具合集</p>
+        <a href="https://go.choong.net/Tools/today-gtd/" target="_blank">番茄时钟</a> | 
+        <a href="https://go.choong.net/City/" target="_blank">City导航</a>
+        <!-- 修复：恢复iframe，路径替换为实际qq.html的URL（示例为占位，需自行修改） -->
+        <iframe frameborder="0" scrolling="no" src="qq.html" width="1055px" height="545px"></iframe>
+      </div>
+    </center>
+  </details>
+  
+  <!-- 网页悬浮音乐播放器（修复层级+DOM加载顺序） -->
+  <div id="QPlayer">
+    <div id="pContent">
+      <div id="player">
+        <span class="cover"></span>
+        <div class="ctrl">
+          <div class="musicTag marquee">
+            <strong>Title</strong>
+            <span> - </span>
+            <span class="artist">Artist</span>
+          </div>
+          <div class="progress">
+            <div class="timer left">0:00</div>
+            <div class="contr">
+              <div class="rewind icon"></div>
+              <div class="playback icon"></div>
+              <div class="fastforward icon"></div>
+              <!-- 新增：单曲循环按钮 -->
+              <div class="single-cycle icon" id="singleCycleBtn" title="单曲循环"></div>
+            </div>
+            <div class="right">
+              <div class="liebiao icon"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ssBtn">
+        <div class="adf"></div>
+      </div>
+    </div>
+    <ol id="playlist"></ol>
+  </div>
+
+  <!-- 新增：歌词显示容器 -->
+  <div id="lyric-container">
+    <div id="lyric-content">自动查找歌词中</div>
+  </div>
+
+  <!-- 二维码悬浮层：底部显示，hover显示二维码 -->
+  <div id="box">
+    <div id="wechat">
+      <div id="code"></div>
+    </div>
+  </div>
+
+  <!-- 底部footer：固定在最底部，轮播显示不同文本 -->
+  <div class="footer" id="footer-area">
+    <span id="footer-text" class="fade-out">
+      <img style="vertical-align:text-bottom;width: 20px; height: 20px;" src="https://choong.net.cn/ICP.png" alt="ICP" height="15" width="15">
+      <a href="https://beian.miit.gov.cn/" style="text-align:center" title="【工业和信息化部】ICP/IP地址/域名信息备案管理系统" target="_blank">浙ICP备2020043532号-2</a>
+    </span>
+  </div>
+
+  <!-- ========== 外部JS加载（提前加载，确保依赖生效） ========== -->
+  <script src="https://y.choong.net/QPlayer/js/jquery.min.js"></script>
+  <script src="https://y.choong.net/QPlayer/js/jquery.marquee.min.js"></script>
+  <script src="//widget.time.is/zh.js"></script>
+
+  <!-- ========== 时间插件初始化 ========== -->
+  <script>
+    // 初始化time.is插件，显示上海日期（格式：年+月+日+星期）
+    time_is_widget.init({Shanghai_z43d:{template:"DATE", date_format:"year年monthnamednum日 dname"}});
+  </script>
+
+  <!-- ========== 音乐播放器+歌词同步核心逻辑 ========== -->
+  <script>
+    // 播放列表配置 - 扩展支持多种音乐格式（MP3/M4A/WAV/FLAC/APE）
+    var playlist = [
+      {
+        title:"乐出东方(宫廷乐氏司歌)",
+        artist:"乐氏集团",
+        // 支持主流无损/有损音乐格式（请替换为实际可访问的音频文件路径）
+        mp3:"2026-2-25宫廷乐氏司歌.mp3", 
+        m4a:"2026-2-25宫廷乐氏司歌.m4a",
+        wav:"2026-2-25宫廷乐氏司歌.wav",
+        flac:"2026-2-25宫廷乐氏司歌.flac",
+        ape:"2026-2-25宫廷乐氏司歌.ape",
+        cover:"logo-1.jpeg?param=106x106",
+        // 扩展支持全量歌词格式（新增SRT字幕格式）
+		srt:"2026-2-25宫廷乐氏司歌.srt", // SRT字幕文件
+        lrc:"2026-2-25宫廷乐氏司歌.lrc",    // 标准LRC歌词
+        trc:"2026-2-25宫廷乐氏司歌.trc",    // TRC歌词
+        krc:"2026-2-25宫廷乐氏司歌.krc",    // 酷狗KRC歌词
+        qrc:"2026-2-25宫廷乐氏司歌.qrc",    // QQ音乐QRC歌词
+        ksc:"2026-2-25宫廷乐氏司歌.ksc",    // KSC歌词
+        kaj:"2026-2-25宫廷乐氏司歌.kaj"     // KAJ歌词
+      }
+    ];
+    var isRotate = true;   // 封面旋转开关
+    var autoplay = false;  // 关闭自动播放（避免浏览器拦截）
+    var isSingleCycle = false; // 单曲循环开关：默认关闭
+
+    // 新增：歌词解析相关变量
+    var lyricLines = [];   // 解析后的歌词数组 [{time: 秒数, text: 歌词文本}]
+    var currentLyricIndex = -1; // 当前显示的歌词索引
+    var audioPlayer = null; // 音频播放器实例
+    // 支持的歌词格式后缀（新增SRT，补充全量格式）
+    var supportLyricExts = ['lrc', 'srt', 'trc', 'krc', 'qrc', 'ksc', 'kaj'];
+
+    /**
+     * 解析不同格式的歌词文件
+     * @param {string} lrcText 歌词文本内容
+     * @param {string} ext 歌词文件后缀（lrc/srt/trc等）
+     * @returns {Array} 解析后的歌词数组
+     */
+    function parseLyric(lrcText, ext) {
+      lyricLines = []; // 清空原有歌词
+      // 不同歌词格式的解析逻辑
+      switch(ext.toLowerCase()) {
+        case 'lrc':
+          // 标准LRC歌词解析：[mm:ss.xx] 或 [mm:ss]
+          const lrcRegex = /\[(\d{2}):(\d{2})(?:\.(\d{2}))?\]\s*(.*)/g;
+          let match;
+          while ((match = lrcRegex.exec(lrcText)) !== null) {
+            const minutes = parseInt(match[1], 10); // 分钟
+            const seconds = parseInt(match[2], 10); // 秒
+            const millis = match[3] ? parseInt(match[3], 10) : 0; // 毫秒（可选）
+            const text = match[4].trim(); // 歌词文本（去除首尾空格）
+            if (text) { // 跳过空歌词行
+              const totalSeconds = minutes * 60 + seconds + millis / 100; // 转换为总秒数
+              lyricLines.push({ time: totalSeconds, text: text });
+            }
+          }
+          break;
+        case 'srt':
+          // SRT字幕格式解析：适配标准SRT格式（序号 + 时间轴 + 文本）
+          // SRT格式示例：
+          // 1
+          // 00:01:20,400 --> 00:01:24,700
+          // 歌词文本内容
+          const srtRegex = /(\d+)\r?\n(\d{2}):(\d{2}):(\d{2}),(\d{3}) --> .*?\r?\n([\s\S]*?)(?:\r?\n\r?\n|$)/g;
+          while ((match = srtRegex.exec(lrcText)) !== null) {
+            const hours = parseInt(match[2], 10);    // 小时
+            const minutes = parseInt(match[3], 10);  // 分钟
+            const seconds = parseInt(match[4], 10);  // 秒
+            const millis = parseInt(match[5], 10);   // 毫秒
+            const text = match[6].trim().replace(/<br\/?>/g, '\n'); // 处理换行
+            if (text) {
+              const totalSeconds = hours * 3600 + minutes * 60 + seconds + millis / 1000;
+              lyricLines.push({ time: totalSeconds, text: text });
+            }
+          }
+          break;
+        case 'trc':
+          // TRC歌词解析（简化版，根据实际格式调整）
+          const trcRegex = /\[(\d+),(\d+)\]\s*(.*)/g;
+          while ((match = trcRegex.exec(lrcText)) !== null) {
+            const time = parseInt(match[1], 10) / 1000; // 毫秒转秒
+            const text = match[3].trim();
+            if (text) {
+              lyricLines.push({ time: time, text: text });
+            }
+          }
+          break;
+        case 'krc':
+        case 'qrc':
+          // 酷狗/QQ音乐加密歌词（这里做简化处理，实际需解密）
+          try {
+            // 模拟解密后解析（实际项目需引入对应解密库）
+            const decodeText = lrcText; // 实际需解密逻辑
+            const krcRegex = /\[(\d{2}):(\d{2})\.(\d{3})\]\s*(.*)/g;
+            while ((match = krcRegex.exec(decodeText)) !== null) {
+              const minutes = parseInt(match[1], 10);
+              const seconds = parseInt(match[2], 10);
+              const millis = parseInt(match[3], 10);
+              const text = match[4].trim();
+              if (text) {
+                const totalSeconds = minutes * 60 + seconds + millis / 1000;
+                lyricLines.push({ time: totalSeconds, text: text });
+              }
+            }
+          } catch (e) {
+            console.error("KRC/QRC歌词解析失败：", e);
+            lyricLines = [];
+          }
+          break;
+        case 'ksc':
+        case 'kaj':
+          // KSC/KAJ歌词解析（简化版）
+          const kscRegex = /<time value="(\d+\.?\d*)"\/>\s*<lyric>(.*?)<\/lyric>/g;
+          while ((match = kscRegex.exec(lrcText)) !== null) {
+            const time = parseFloat(match[1]);
+            const text = match[2].trim();
+            if (text) {
+              lyricLines.push({ time: time, text: text });
+            }
+          }
+          break;
+        default:
+          console.warn("不支持的歌词格式：", ext);
+          return [];
+      }
+      // 按时间排序歌词（防止歌词文件顺序混乱）
+      lyricLines.sort((a, b) => a.time - b.time);
+      // 解析完成后立即渲染一次
+      renderLyric();
+      return lyricLines;
+    }
+
+    /**
+     * 加载歌词文件（修复：增加跨域兼容+本地歌词兜底）
+     * @param {Object} song 歌曲对象（包含各种歌词路径）
+     */
+    function loadLyric(song) {
+      const lyricContent = document.getElementById("lyric-content");
+      lyricContent.innerHTML = "加载歌词中...";
+      
+      // 查找可用的歌词文件路径
+      let lyricPath = '';
+      let lyricExt = '';
+      for (let ext of supportLyricExts) {
+        if (song[ext]) {
+          lyricPath = song[ext];
+          lyricExt = ext;
+          break;
+        }
+      }
+
+      if (!lyricPath) {
+        // 兜底：使用示例歌词（避免无歌词情况）
+        const defaultLyric = `[00:00.00] 乐出东方(宫廷乐氏司歌)
+[00:05.00] 演唱：乐氏集团
+[00:10.00] 用我千年古方 护您百年健康
+[00:15.00] 复兴乐氏辉煌 再现中药荣光
+[00:20.00] 忠孝勤俭 信立天下
+[00:25.00] 坚韧聚焦 内求不怨
+[00:30.00] 敬畏感恩 利他共赢
+[00:35.00] 乐出东方 誉满九州
+[00:40.00] 传承经典 创新未来
+[00:45.00] 同心同德 共筑辉煌`;
+        lyricContent.innerHTML = defaultLyric;
+        parseLyric(defaultLyric, 'lrc');
+        return;
+      }
+
+      // 修复：使用跨域兼容的方式加载歌词（增加error兜底）
+      $.ajax({
+        url: lyricPath,
+        type: "GET",
+        dataType: "text",
+        crossDomain: true, // 允许跨域
+        success: function (data) {
+          parseLyric(data, lyricExt); // 解析歌词
+        },
+        error: function (xhr, status, error) {
+          console.error("歌词加载失败：", error);
+          // 兜底：使用示例歌词
+          const defaultLyric = `[00:00.00] ${song.title}
+[00:05.00] 演唱：${song.artist}
+[00:10.00] 用我千年古方 护您百年健康
+[00:15.00] 复兴乐氏辉煌 再现中药荣光
+[00:20.00] 忠孝勤俭 信立天下
+[00:25.00] 坚韧聚焦 内求不怨
+[00:30.00] 敬畏感恩 利他共赢`;
+          lyricContent.innerHTML = "歌词文件加载失败，显示默认歌词";
+          parseLyric(defaultLyric, 'lrc');
+        }
+      });
+    }
+
+    /**
+     * 渲染歌词到页面（核心修复：增加滚动定位逻辑）
+     */
+    function renderLyric() {
+      const lyricContent = document.getElementById("lyric-content");
+      const lyricContainer = document.getElementById("lyric-container");
+      
+      if (lyricLines.length === 0) {
+        lyricContent.innerHTML = "暂无歌词";
+        return;
+      }
+      
+      // 构建歌词HTML
+      let lyricHtml = "";
+      lyricLines.forEach((line, index) => {
+        // 给当前播放的歌词添加高亮类
+        const activeClass = index === currentLyricIndex ? "lyric-active" : "";
+        lyricHtml += `<div class="lyric-line ${activeClass}" data-time="${line.time}" id="lyric-line-${index}">${line.text}</div>`;
+      });
+      lyricContent.innerHTML = lyricHtml;
+      
+      // 核心修复：滚动到当前歌词并居中显示
+      if (currentLyricIndex >= 0) {
+        const activeLine = document.getElementById(`lyric-line-${currentLyricIndex}`);
+        if (activeLine) {
+          // 计算滚动偏移量：让当前歌词居中
+          const scrollTop = activeLine.offsetTop - (lyricContainer.clientHeight / 2) + (activeLine.clientHeight / 2);
+          lyricContainer.scrollTop = scrollTop;
+        }
+      }
+    }
+
+    /**
+     * 根据音频播放进度更新歌词
+     * @param {number} time 音频当前播放时间（秒）
+     */
+    function updateLyric(time) {
+      if (lyricLines.length === 0) return;
+      
+      // 找到当前时间对应的歌词索引
+      let newIndex = -1;
+      for (let i = 0; i < lyricLines.length; i++) {
+        // 匹配逻辑：当前时间 >= 歌词时间 且 小于下一句歌词时间
+        const currentLineTime = lyricLines[i].time;
+        const nextLineTime = i + 1 < lyricLines.length ? lyricLines[i + 1].time : Infinity;
+        if (time >= currentLineTime && time < nextLineTime) {
+          newIndex = i;
+          break;
+        }
+      }
+      
+      // 只有索引变化时才重新渲染
+      if (newIndex !== currentLyricIndex) {
+        currentLyricIndex = newIndex;
+        renderLyric();
+      }
+    }
+
+    /**
+     * 初始化单曲循环功能（增强版：支持播放器多实例兼容）
+     */
+    function initSingleCycle() {
+      const singleCycleBtn = document.getElementById("singleCycleBtn");
+      if (!singleCycleBtn) return;
+
+      // 单曲循环按钮点击事件：切换状态+样式
+      singleCycleBtn.addEventListener("click", function() {
+        isSingleCycle = !isSingleCycle;
+        // 更新按钮样式和提示文字
+        if (isSingleCycle) {
+          singleCycleBtn.classList.add("active");
+          singleCycleBtn.title = "取消单曲循环";
+          // 控制台提示当前状态
+          console.log("单曲循环已开启");
+        } else {
+          singleCycleBtn.classList.remove("active");
+          singleCycleBtn.title = "单曲循环";
+          console.log("单曲循环已关闭");
+        }
+      });
+
+      /**
+       * 绑定音频结束事件（核心单曲循环逻辑）
+       */
+      function bindAudioEnded() {
+        if (!audioPlayer) return;
+        // 先移除原有事件，避免重复绑定
+        audioPlayer.removeEventListener("ended", handleAudioEnded);
+        // 绑定新的结束事件
+        audioPlayer.addEventListener("ended", handleAudioEnded);
+      }
+
+      /**
+       * 音频播放结束处理函数
+       */
+      function handleAudioEnded() {
+        if (isSingleCycle) {
+          // 单曲循环：重置播放进度并重新播放
+          audioPlayer.currentTime = 0;
+          audioPlayer.play().catch(err => {
+            console.warn("单曲循环播放失败（需用户交互）：", err);
+            // 降级处理：提示用户手动播放
+            document.getElementById("lyric-content").innerHTML = "🔊 需点击播放按钮后生效单曲循环";
+          });
+        }
+        // 播放结束隐藏进度条
+        document.getElementById("audio-progress-bar").classList.remove("show");
+        document.getElementById("audio-progress-bar").style.width = "0%";
+      }
+
+      // 立即绑定+延迟兼容绑定（防止音频元素未创建）
+      bindAudioEnded();
+      setTimeout(bindAudioEnded, 1000);
+    }
+
+    /**
+     * 初始化顶部彩虹进度条
+     */
+    function initAudioProgressBar() {
+      const progressBar = document.getElementById("audio-progress-bar");
+      if (!audioPlayer || !progressBar) return;
+
+      // 监听音频播放进度更新进度条
+      audioPlayer.addEventListener("timeupdate", function() {
+        if (audioPlayer.duration === 0) return; // 音频未加载完成时跳过
+        // 计算播放进度百分比
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.style.width = `${progress}%`;
+      });
+
+      // 播放时显示进度条
+      audioPlayer.addEventListener("play", function() {
+        progressBar.classList.add("show");
+      });
+
+      // 暂停时隐藏进度条
+      audioPlayer.addEventListener("pause", function() {
+        progressBar.classList.remove("show");
+      });
+
+      // 结束时重置进度条
+      audioPlayer.addEventListener("ended", function() {
+        progressBar.style.width = "0%";
+        progressBar.classList.remove("show");
+      });
+    }
+
+    // 播放器DOM加载完成后初始化
+    $(document).ready(function() {
+      // 提前加载默认歌词（修复：页面加载后立即显示歌词）
+      loadLyric(playlist[0]);
+
+      // 加载播放器核心逻辑
+      $.getScript("https://y.choong.net/QPlayer/js/player.js", function() {
+        // 修复播放列表背景样式
+        function bgChange(){
+          var lis= $('.lib');
+          for(var i=0; i<lis.length; i+=2){
+            lis[i].style.background = 'rgba(246, 246, 246, 0.5)';
+          }
+        }
+        bgChange(); // 立即执行样式修复
+
+        // 初始化单曲循环功能
+        initSingleCycle();
+
+        // 修复：增强音频实例获取逻辑（无限轮询直到获取到，增加超时保护）
+        let audioCheckTimes = 0; // 检查次数计数器
+        function getAudioPlayer() {
+          audioPlayer = document.querySelector("#player audio") || 
+                        document.querySelector("audio") ||
+                        document.getElementById("audio-player");
+          
+          if (audioPlayer) {
+            console.log("音频播放器实例获取成功");
+            
+            // 监听音频播放进度更新
+            audioPlayer.addEventListener("timeupdate", function () {
+              updateLyric(this.currentTime); // 根据当前播放时间更新歌词
+            });
+            
+            // 监听音频播放开始事件
+            audioPlayer.addEventListener("play", function () {
+              // 重新加载当前歌曲的歌词（确保最新）
+              loadLyric(playlist[0]);
+            });
+            
+            // 监听音频暂停事件
+            audioPlayer.addEventListener("pause", function () {
+              console.log("音频已暂停");
+            });
+            
+            // 绑定单曲循环结束事件
+            audioPlayer.addEventListener("ended", function() {
+              if (isSingleCycle) {
+                this.currentTime = 0;
+                this.play().catch(err => {
+                  console.warn("单曲循环播放失败：", err);
+                });
+              }
+            });
+            
+            // 初始化彩虹进度条
+            initAudioProgressBar();
+          } else {
+            audioCheckTimes++;
+            // 最多检查30次（15秒），避免无限循环
+            if (audioCheckTimes < 30) {
+              setTimeout(getAudioPlayer, 500);
+              console.log(`未找到音频播放器，500ms后重试（第${audioCheckTimes}次）`);
+            } else {
+              console.error("音频播放器实例获取超时，请检查播放器加载是否正常");
+              // 超时兜底：创建临时音频实例（用于测试歌词滚动）
+              audioPlayer = new Audio();
+              // 手动触发一次歌词渲染
+              renderLyric();
+            }
+          }
+        }
+
+        // 立即执行音频实例获取
+        getAudioPlayer();
+
+        // 兼容QPlayer初始化逻辑：延迟再次绑定
+        setTimeout(() => {
+          getAudioPlayer();
+        }, 1000);
+      });
+    });
+  </script>
+
+  <!-- ========== Footer轮播逻辑 ========== -->
+  <script>
+    // footer轮播的文本列表
+    const footerItems = [
+      {
+        html: ` <a href="https://beian.miit.gov.cn/" title="【工业和信息化部】ICP/IP地址/域名信息备案管理系统" target="_blank">
+        <img style="vertical-align:text-bottom;width: 20px; height: 20px;" src="https://choong.net.cn/ICP.png">沪ICP备16038907号-2</a>`
+      },
+		{
+        html: `<a href="https://example.com/license" target="_blank">增值电信业务许可证编号：沪B2-2020043532</a>`
+      },
+      {
+        html: `<a href="https://beian.mps.gov.cn/#/query/webSearch?code=44010602006299" title="全国互联网安全管理平台" target="_blank">
+        <img style="vertical-align:text-bottom;width: 20px; height: 20px;" src="https://choong.net.cn/gabeian.png">沪公网安备 2020043532号</a>`
+      },
+      {
+        html: `乐氏集团 © ${new Date().getFullYear()} All Rights Reserved.`
+      },
+      {
+        html: `<a target="_blank" href="https://choong.net.cn/logs/" style="color:#fff;text-decoration:none;"
+        title="新媒体·技术支持 :  乐哥在线 choong.net">本站已稳定运行</a>：<a target="_blank" href="https://choong.net.cn/"
+        style="color:#fff;text-decoration:none;" title="集团官网·技术支持 : 乐哥在线 choong.net"><span id="htmer_time"
+          style="color:#33CC33;">载入中...</span> </a>`
+      },
+      {
+        html: `<span class="footer-icon">📣</span><a href="https://example.com/notice" target="_blank">关于系统维护的通知</a>
+        <a href="https://rlxmt.cn/" title="技术支持 : 新媒体·乐哥 || choong.net" style="color:#FFFFFF;text-decoration:none;" target="_blank">
+        <img style="vertical-align:text-bottom;width: 20px; height: 20px;" src="https://choong.net.cn/images/favicon.png">技术支持</a> : <a href="https://choong.net" style="color:#FFFFFF;text-decoration:none;" target="_blank" 
+          title="网站技术支持 : 乐哥 || choong.net">乐氏新媒体中心</a>`
+      }
+    ];
+
+    let currentIndex = 0;       // 当前轮播索引
+    let isPaused = false;       // 悬停暂停标识
+    const footerTextEl = document.getElementById("footer-text"); // footer文本元素
+    const footerArea = document.getElementById("footer-area");   // footer容器
+
+    // 切换footer文本的核心函数
+    function switchFooter() {
+      if (isPaused) return;     // 暂停状态则不切换
+      footerTextEl.classList.add("fade-out"); // 添加淡出类
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % footerItems.length; // 索引自增（循环）
+        footerTextEl.innerHTML = footerItems[currentIndex].html; // 更新文本
+        footerTextEl.classList.remove("fade-out"); // 移除淡出类（淡入）
+      }, 1000); // 与CSS transition时间一致（1秒）
+    }
+
+    // 自动轮播：每5秒切换一次
+    const interval = setInterval(switchFooter, 5000);
+
+    // 鼠标悬停footer：暂停轮播
+    footerArea.addEventListener("mouseenter", () => isPaused = true);
+    // 鼠标离开footer：恢复轮播
+    footerArea.addEventListener("mouseleave", () => isPaused = false);
+  </script>
+
+  <!-- ========== 网站运行时长统计 ========== -->
+  <script>
+    // 秒数转换为年/天/时/分/秒
+    function secondToDate(second) {
+      if (!second) {
+        return [0,0,0,0,0]; // 返回默认数组，避免报错
+      }
+      var time = [0, 0, 0, 0, 0]; // 时间数组：[年,天,时,分,秒]
+      if (second >= 365 * 24 * 3600) {     // 计算年
+        time[0] = parseInt(second / (365 * 24 * 3600));
+        second %= 365 * 24 * 3600;
+      }
+      if (second >= 24 * 3600) {           // 计算天
+        time[1] = parseInt(second / (24 * 3600));
+        second %= 24 * 3600;
+      }
+      if (second >= 3600) {               // 计算时
+        time[2] = parseInt(second / 3600);
+        second %= 3600;
+      }
+      if (second >= 60) {                 // 计算分
+        time[3] = parseInt(second / 60);
+        second %= 60;
+      }
+      time[4] = second;                   // 计算秒（简化判断）
+      return time;
+    }
+
+    // 实时更新网站运行时长
+    function setTime() {
+      // 网站创建时间（UTC时间：2026年03月11日，月份从0开始，故03改为02）
+      var create_time = Math.round(new Date(Date.UTC(2026, 02, 11, 0, 0, 0)).getTime() / 1000);
+      // 当前时间戳（+8小时：转换为北京时间）
+      var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+      // 计算运行时长（秒）
+      var runTime = timestamp - create_time;
+      
+      // 转换为年/天/时/分/秒
+      var time = secondToDate(runTime);
+      // 拼接显示文本
+      var timeStr = time[0] + '年' + time[1] + '天' + time[2] + '时' + time[3] + '分' + time[4] + '秒';
+      // 更新页面显示
+      if (document.getElementById("htmer_time")) {
+        document.getElementById("htmer_time").innerText = timeStr;
+      }
+    }
+
+    // 初始化执行一次
+    setTime();
+    // 每秒更新一次
+    setInterval(setTime, 1000);
+  </script>
+  
+<!-- ========== 右上角名言滚动逻辑（核心修复） ========== -->
+  <script>
+    // 定义名言名句内容（修复换行符语法，统一使用\n）
+    const quoteList = [
+      "<b>上海乐氏迁年中药有限公司</b>\n地址：上海市松江区佘北公路3000弄258号\n电话：021-57793357",
+      "<b>使命</b>：\n用我千年古方 护您百年健康\n\n<b>愿景</b>：\n复兴乐氏辉煌，再现中药荣光。\n——到 2030 年，实现门店 1 万家；\n——培育专业人才 5 万人；\n——守护用户 200 万。 \n\n<b>价值观</b>：\n忠孝勤俭 信立天下\n坚韧聚焦 内求不怨\n敬畏感恩 利他共赢\n\n<b>祖训</b>：\n制虽繁，不省人工；\n品虽贵，不减物力；\n修合无人见 存心有天知。\n\n<b>口号</b>：\n正统正宗安心安宫\n京城乐氏仁者道同\n同心同行共创共赢\n共赢共赢共赢"
+      "<b>宫廷乐氏司歌《乐出东方》</b>\n\nA1\n是谁将本草灵犀藏进香中\n把满腔热爱装进每一芬芳\n晨雾轻笼着连翘的秧&nbsp;露滴吻醒白芷的嫩黄\n云露浸润丹参的茁壮&nbsp;和风催熟当归的醇芳\n每片叶都凝着天地的晴朗\n\nA2\n是谁将百年祖训记在心中\n用滚烫初心温暖人间寻常\n灯火漫映着匠人的守望&nbsp;岁月沉淀着坚守的绵长\n指尖摩挲过古方&nbsp;字里行间传承着非遗薪火\n让健康承诺传遍山河四方\n\nB1\n宫廷乐氏&nbsp;乐出东方\n千年古方辉映百年荣光\n同心同行&nbsp;守护安康\n安心安宫是我们不变的向往\n\nA3\n是谁将中药的复兴扛在肩上\n用乐声荡起东方健康波浪\n国际舞台上&nbsp;闪耀着民族的昂扬\n匠心铸就着&nbsp;瑰宝的璀璨荣光\n让中华智慧照亮世界中央\n\nA4\n是谁用馨香编织健康的网\n把快乐送进每个人心房\n清晨到日暮&nbsp;脚步不停向\n穿越人海&nbsp;跨越街巷\n让美好在岁月中慢慢流淌\n\nB3\n宫廷乐氏&nbsp;乐出东方\n百年坚守是永远的信仰\n宫廷乐氏&nbsp;守护安康\n让我们同心筑梦照亮前路坦荡",
+	];
+
+    // 获取DOM元素（防错：元素不存在则终止）
+    const quoteScrollEl = document.getElementById("quote-scroll");
+    const quoteContentEl = document.getElementById("quote-content");
+    if(!quoteScrollEl || !quoteContentEl) {
+      console.warn("名言模块DOM元素未找到");
+    } else {
+      let currentQuoteIndex = 0; // 当前显示的名言索引
+      let scrollPosition = 0;    // 滚动位置
+      const scrollSpeed = 10;     // 滚动速度（像素/帧）
+      const pauseDuration = 9000; // 每段名言暂停时间（9秒）
+      const fadeInDelay = 1000;  // 页面加载后渐显延迟（1秒）
+
+      // 初始化：页面加载后渐显模块
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          quoteScrollEl.classList.add("fade-in"); // 添加渐显类
+          renderCurrentQuote(); // 渲染第一条名言
+          startScrollAnimation(); // 启动滚动动画
+        }, fadeInDelay);
+      });
+
+      // 渲染当前索引的名言内容
+      function renderCurrentQuote() {
+        quoteContentEl.innerHTML = quoteList[currentQuoteIndex];
+        // 初始滚动位置：从模块底部开始（文字从下往上滚）
+        scrollPosition = quoteScrollEl.offsetHeight; 
+        quoteContentEl.style.top = `${scrollPosition}px`; // 设置初始top值
+      }
+
+      // 启动向上滚动动画（兼容requestAnimationFrame）
+      function startScrollAnimation() {
+        // 兼容浏览器requestAnimationFrame
+        const requestAnimFrame = window.requestAnimationFrame || 
+                                window.webkitRequestAnimationFrame || 
+                                window.mozRequestAnimationFrame || 
+                                function(callback) { setTimeout(callback, 16); };
+
+        const animate = () => {
+          // 滚动逻辑：向上移动（top值递减）
+          scrollPosition -= scrollSpeed;
+          quoteContentEl.style.top = `${scrollPosition}px`;
+
+          // 当文本完全滚出可视区域时，切换下一条名言
+          if (scrollPosition < -quoteContentEl.offsetHeight) {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quoteList.length; // 循环切换
+            renderCurrentQuote(); // 渲染新名言
+            // 暂停滚动，等待5秒后继续
+            setTimeout(() => {
+              requestAnimFrame(animate);
+            }, pauseDuration);
+          } else {
+            requestAnimFrame(animate); // 持续滚动
+          }
+        };
+        animate(); // 启动动画
+      }
+    }
+  </script>
+</body>
+</html>
