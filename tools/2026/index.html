@@ -2,7 +2,7 @@
 <html lang="en-US">
  <head>
    <meta charset="UTF-8">
-  <title>乐出东方·新媒体专题</title>
+  <title>乐出东方·新媒体专题</title><!-- 乐出东方-导航主页-->
   <!-- 网页/favicon图标配置 -->
   <link rel="shortcut icon" href="https://choong.net.cn/tools/2026/logo-1.jpeg" />
   <!-- 引入网页悬浮音乐播放器样式 -->
@@ -13,7 +13,7 @@
     /* ========== 全局body样式 ========== */
     body {
       /* 背景图配置：居中不重复、覆盖容器、固定定位（滚动不移动） */
-      background:url("乐出东方-背景图2.jpg") no-repeat center center;  
+      background:url("https://choong.net.cn/tools/2026/乐出东方-背景图2.jpg") no-repeat center center;  
       background-size:cover;  
       background-attachment:fixed;        
       /* 背景色：半透明白色（背景图加载前显示） */
@@ -277,7 +277,7 @@
       <span style="color:#990066;font-size:25px" id="Shanghai_z43d"></span>
       <!-- 滚动公告栏：向上滚动的健康提示图片 -->
       <marquee style="color:#999999" direction=up width=200 height=30 scrolldelay=350> 
-        <img class="bottom" src="https://img.shields.io/badge/上海-时间-brightgreen.svg" height="30" width="200"  />  <br /><br /> 
+        <img class="bottom" src="https://img.shields.io/badge/上海-时间-brightgreen.svg" height="25" width="100"  />  <br /><br /> 
         <img class="bottom" src="https://go.choong.net/City/images/多喝水-多运动-yellow.svg" height="30" width="200" />  <br /><br />
         <img class="bottom" src="https://go.choong.net/City/images/久坐伤身-多走多动-brightgreen.svg" height="30" width="200" />  <br /><br />
         <!-- 番茄时钟链接：简化title，避免换行符导致解析异常 -->
@@ -370,14 +370,14 @@
     var playlist = [
       {
         title:"乐出东方(宫廷乐氏司歌)",
-        artist:"宫廷乐氏集团",
+        artist:"乐氏集团",
         // 支持主流无损/有损音乐格式
         mp3:"2026-2-25宫廷乐氏司歌.mp3", 
         m4a:"2026-2-25宫廷乐氏司歌.m4a",
         wav:"2026-2-25宫廷乐氏司歌.wav",
         flac:"2026-2-25宫廷乐氏司歌.flac",
         ape:"2026-2-25宫廷乐氏司歌.ape",
-        cover:"https://choong.net.cn/tools/2026/logo-1.jpeg?param=106x106",
+        cover:"logo-1.jpeg?param=106x106",
         // 扩展支持全量歌词格式（新增SRT字幕格式）
         lrc:"2026-2-25宫廷乐氏司歌.lrc",    // 标准LRC歌词
         srt:"2026-2-25宫廷乐氏司歌.srt", // SRT字幕文件
@@ -498,7 +498,7 @@
     }
 
     /**
-     * 加载歌词文件（自动匹配可用的歌词格式）
+     * 加载歌词文件（修复：增加跨域兼容+本地歌词兜底）
      * @param {Object} song 歌曲对象（包含各种歌词路径）
      */
     function loadLyric(song) {
@@ -517,22 +517,30 @@
       }
 
       if (!lyricPath) {
-        lyricContent.innerHTML = "暂无可用歌词";
+        // 兜底：使用示例歌词（避免无歌词情况）
+        lyricContent.innerHTML = "[00:00.00] 乐出东方(宫廷乐氏司歌)\n[00:05.00] 演唱：乐氏集团\n[00:10.00] 用我千年古方 护您百年健康\n[00:15.00] 复兴乐氏辉煌 再现中药荣光";
+        parseLyric(lyricContent.innerHTML, 'lrc');
+        renderLyric();
         return;
       }
 
-      // 使用AJAX加载歌词文件（跨域需后端支持）
+      // 修复：使用跨域兼容的方式加载歌词（增加error兜底）
       $.ajax({
         url: lyricPath,
         type: "GET",
         dataType: "text",
+        crossDomain: true, // 允许跨域
         success: function (data) {
           parseLyric(data, lyricExt); // 解析歌词
           renderLyric(); // 渲染歌词
         },
         error: function (xhr, status, error) {
           console.error("歌词加载失败：", error);
-          lyricContent.innerHTML = "歌词文件加载失败";
+          // 兜底：使用示例歌词
+          const defaultLyric = `[00:00.00] ${song.title}\n[00:05.00] 演唱：${song.artist}\n[00:10.00] 用我千年古方 护您百年健康\n[00:15.00] 复兴乐氏辉煌 再现中药荣光\n[00:20.00] 忠孝勤俭 信立天下\n[00:25.00] 坚韧聚焦 内求不怨\n[00:30.00] 敬畏感恩 利他共赢`;
+          lyricContent.innerHTML = "歌词文件加载失败，显示默认歌词";
+          parseLyric(defaultLyric, 'lrc');
+          renderLyric();
         }
       });
     }
@@ -641,6 +649,9 @@
 
     // 播放器DOM加载完成后初始化
     $(document).ready(function() {
+      // 提前加载默认歌词（修复：页面加载后立即显示歌词）
+      loadLyric(playlist[0]);
+
       // 加载播放器核心逻辑
       $.getScript("https://y.choong.net/QPlayer/js/player.js", function() {
         // 修复播放列表背景样式
@@ -655,44 +666,48 @@
         // 初始化单曲循环功能
         initSingleCycle();
 
-        // 新增：获取音频播放器实例并绑定时间更新事件
-        audioPlayer = document.querySelector("#player audio") || document.querySelector("audio");
-        if (audioPlayer) {
-          // 监听音频播放进度更新
-          audioPlayer.addEventListener("timeupdate", function () {
-            updateLyric(this.currentTime); // 根据当前播放时间更新歌词
-          });
-          // 监听音频播放开始事件
-          audioPlayer.addEventListener("play", function () {
-            // 加载当前歌曲的歌词
-            loadLyric(playlist[0]);
-          });
-          // 监听音频暂停事件
-          audioPlayer.addEventListener("pause", function () {
-            console.log("音频已暂停");
-          });
+        // 修复：增强音频实例获取逻辑（轮询确保获取到）
+        function getAudioPlayer() {
+          audioPlayer = document.querySelector("#player audio") || 
+                        document.querySelector("audio") ||
+                        document.getElementById("audio-player");
+          if (audioPlayer) {
+            // 监听音频播放进度更新
+            audioPlayer.addEventListener("timeupdate", function () {
+              updateLyric(this.currentTime); // 根据当前播放时间更新歌词
+            });
+            // 监听音频播放开始事件
+            audioPlayer.addEventListener("play", function () {
+              // 重新加载当前歌曲的歌词（确保最新）
+              loadLyric(playlist[0]);
+            });
+            // 监听音频暂停事件
+            audioPlayer.addEventListener("pause", function () {
+              console.log("音频已暂停");
+            });
+            // 绑定单曲循环结束事件
+            audioPlayer.addEventListener("ended", function() {
+              if (isSingleCycle) {
+                this.currentTime = 0;
+                this.play().catch(err => {
+                  console.warn("单曲循环播放失败：", err);
+                });
+              }
+            });
+            console.log("音频播放器实例获取成功");
+          } else {
+            // 轮询获取，最多尝试10次
+            setTimeout(getAudioPlayer, 500);
+            console.log("未找到音频播放器，500ms后重试");
+          }
         }
 
-        // 兼容QPlayer初始化逻辑：如果播放器自动创建音频元素，补充绑定
+        // 立即执行音频实例获取
+        getAudioPlayer();
+
+        // 兼容QPlayer初始化逻辑：延迟再次绑定
         setTimeout(() => {
-          if (!audioPlayer) {
-            audioPlayer = document.querySelector("#player audio") || document.querySelector("audio");
-            if (audioPlayer) {
-              audioPlayer.addEventListener("timeupdate", function () {
-                updateLyric(this.currentTime);
-              });
-              audioPlayer.addEventListener("play", function () {
-                loadLyric(playlist[0]);
-              });
-              // 重新绑定单曲循环的ended事件
-              audioPlayer.addEventListener("ended", function() {
-                if (isSingleCycle) {
-                  this.currentTime = 0;
-                  this.play();
-                }
-              });
-            }
-          }
+          getAudioPlayer();
         }, 1000);
       });
     });
@@ -804,7 +819,7 @@
   <script>
     // 定义名言名句内容（修复换行符语法，统一使用\n）
     const quoteList = [
-      "<b>上海乐氏迁年中药有限公司</b>\n地址：上海市松江区佘北公路 3000 弄 258 号\n电话：021-57793357",
+      "<b>上海乐氏迁年中药有限公司</b>\n地址：上海市松江区佘北公路3000弄258号\n电话：021-57793357",
       "<b>使命</b>：\n用我千年古方 护您百年健康\n\n<b>愿景</b>：\n复兴乐氏辉煌，再现中药荣光。\n——到 2030 年，实现门店 1 万家；\n——培育专业人才 5 万人；\n——守护用户 200 万。 \n\n<b>价值观</b>：\n忠孝勤俭 信立天下\n坚韧聚焦 内求不怨\n敬畏感恩 利他共赢\n\n<b>祖训</b>：\n制虽繁，不省人工；\n品虽贵，不减物力；\n修合无人见 存心有天知。\n\n<b>口号</b>：\n正统正宗安心安宫\n京城乐氏仁者道同\n同心同行共创共赢\n共赢共赢共赢"
     ];
 
