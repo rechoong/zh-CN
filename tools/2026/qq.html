@@ -1,0 +1,1122 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<!-- <script src="inc/jquery.min.js" type="text/javascript"></script>-->
+<title>新媒体导航 | 腾讯·专题网址</title>
+  <link rel="shortcut icon" href="https://go.choong.net/favicon.png" />
+ <!--  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"> <!-- IE地址栏前换成自己的图标 -->
+ <!--  <link href="favicon.ico" rel="Bookmark">  <!-- 可以在收藏夹中显示出你的图标 -->
+	<style>  /* CSS Text文本格式 https://www.w3cschool.cn/css/css-text.html */
+	    h1{text-align:center;}
+	    p.date{text-align:right;} /* 向右靠齐*/
+	    p.main{text-align:justify;}
+		p.float{text-align:left;} /* 向左靠齐*/
+		td.date{text-align:right;}
+		td.main{text-align:justify;}
+		
+    </style>
+	
+	<style>  /* 文本垂直对齐图像 https://www.w3cschool.cn/tryrun/showhtml/trycss_vertical-align */
+	    img.top {vertical-align:text-top;}
+	    img.bottom {vertical-align:text-bottom;}
+</style>
+
+
+<style type="text/css"> 
+ a:link,a:visited{ 
+ text-decoration:none;  /*超链接无下划线*/ 
+} 
+a:hover{ 
+ text-decoration:underline;  /*鼠标放上去有下划线*/ 
+} 
+a:link {text-decoration:none;color:#999999;}      /* 正常，未访问过的链接 */
+a:visited {color:#666666;}  /* 用户已访问过的链接 */
+a:hover {color:#FF00FF;}  /* 当用户鼠标放在链接上时 */
+a:active {color:#0000FF;}  /* 链接被点击的那一刻 */ 
+</style> 
+
+ <link rel="stylesheet" href="https://we.choong.net/assets/css/style.css?v=85ead8fb5213bc5749ed549b93e6d17718895313">
+ <!-- <link rel="stylesheet" href="css/city.css"> -->
+<style>
+         body { 
+		       text-align: left;
+               background-color: rgba(255,255,255,0.2);   /* 设置背景颜色：默认透明色，背景图加载过程中会显示背景色 */
+		 } 
+        .table-box {
+            margin: 100px auto;
+            width: 1024px;
+        }
+ 
+        /* 滚动条宽度 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background-color: transparent;
+        }
+ 
+        /* 滚动条颜色 */
+        ::-webkit-scrollbar-thumb {
+            background-color: #27314d;
+        }
+ 
+        table {
+            width: 100%;
+            border-spacing: 0px;
+            border-collapse: collapse;
+        }
+ 
+        table caption{
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 50px;
+        }
+ 
+        table th, table td {
+            height: 50px;
+            text-align: center;
+            border: 1px solid gray;
+        }
+ 
+        table thead {
+            color: blue;
+            background-color: #38F;
+        }
+ 
+        table tbody {
+            display: block;
+            width: calc(100% + 0px); /*这里的8px是滚动条的宽度*/
+            height: 300px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+ 
+        table tfoot {
+            background-color: #71ea71;
+        }
+ 
+        table thead tr, table tbody tr, table tfoot tr {
+            box-sizing: border-box;
+            table-layout: fixed;
+            display: table;
+            width: 100%;
+        }
+ 
+        table tbody tr:nth-of-type(odd) {
+            background: #EEE;
+        }
+ 
+        table tbody tr:nth-of-type(even) {
+            background: #FFF;
+        }
+ 
+        table tbody tr td{
+            border-bottom: none;
+        }
+ 
+    </style>
+
+	<!-- /* css跳动的文字动画 */ -->
+	<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<style>
+.nav_li_pb {
+	font-size:18px;
+	color:#ef9208;
+}
+.nav_li_pb i {
+	font-style:normal;
+}
+.nav_li_pb i {
+	display:inline-block;
+	vertical-align:bottom;
+	-webkit-animation-name:fontSizeUp1;
+	animation-name:fontSizeUp1;
+	-webkit-animation-duration:5s;
+	animation-duration:5s;
+	-webkit-animation-timing-function:steps(1,end);
+	animation-timing-function:steps(1,end);
+	-webkit-animation-fill-mode:none;
+	animation-fill-mode:none;
+	-webkit-animation-iteration-count:infinite;
+	animation-iteration-count:infinite;
+	-webkit-transform-origin:50% 75%;
+	transform-origin:50% 75%;
+}
+.nav_li_pb i:nth-of-type(1) {
+	-webkit-animation-delay:0s;
+	animation-delay:0s;
+}
+.nav_li_pb i:nth-of-type(2) {
+	-webkit-animation-delay:0.5s;
+	animation-delay:0.5s;
+}
+.nav_li_pb i:nth-of-type(3) {
+	-webkit-animation-delay:1s;
+	animation-delay:1s;
+}
+.nav_li_pb i:nth-of-type(4) {
+	-webkit-animation-delay:1.5s;
+	animation-delay:1.5s;
+}
+.nav_li_pb i:nth-of-type(5) {
+	-webkit-animation-delay:2s;
+	animation-delay:2s;
+}
+.nav_li_pb i:nth-of-type(6) {
+	-webkit-animation-delay:2.5s;
+	animation-delay:2.5s;
+}
+.nav_li_pb i:nth-of-type(7) {
+	-webkit-animation-delay:3s;
+	animation-delay:3s;
+}
+.nav_li_pb i:nth-of-type(8) {
+	-webkit-animation-delay:3.5s;
+	animation-delay:3.5s;
+}
+.nav_li_pb i:nth-of-type(9) {
+	-webkit-animation-delay:4s;
+	animation-delay:4s;
+}
+.nav_li_pb i:nth-of-type(10) {
+	-webkit-animation-delay:4.5s;
+	animation-delay:4.5s;
+}
+.nav_li_pb i:nth-of-type(11) {
+	-webkit-animation-delay:5s;
+	animation-delay:5s;
+}
+.nav_li_pb i:nth-of-type(12) {
+	-webkit-animation-delay:5.5s;
+	animation-delay:5.5s;
+}
+@-webkit-keyframes fontSizeUp1 {
+	0% {
+	-webkit-transform:scale(1.25);
+	transform:scale(1.25);
+}
+7%,100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+}
+}@keyframes fontSizeUp1 {
+	0% {
+	-webkit-transform:scale(1.25);
+	transform:scale(1.25);
+}
+7%,100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+}
+}.nav_li_pb .fontSizeUp1 {
+	-webkit-animation-name:fontSizeUp1;
+	animation-name:fontSizeUp1;
+}
+</style>
+
+<script>
+function randomNum(minNum,maxNum){ 
+    switch(arguments.length){ 
+        case 1: 
+            return parseInt(Math.random()*minNum+1,10); 
+        break; 
+        case 2: 
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+        break; 
+            default: 
+                return 0; 
+            break; 
+    } 
+} 
+function go(){
+	var cxurl=new Array('http://kjbm.mof.gov.cn/ksbm/usercxzkz.jsp','http://kjbm3.mof.gov.cn/ksbm/usercxzkz.jsp','http://kjbm4.mof.gov.cn/ksbm/usercxzkz.jsp');
+	location.href=cxurl[randomNum(0,2)];
+}
+</script>
+</head>
+
+<body  style="text-align:left;">
+   <div class="container-lg px-3 my-5 markdown-body">
+ <section class="table-box" >
+        <table cellpadding="0" cellspacing="0">
+           <caption> 
+			<marquee style="color:#ffffff;" direction=up width=330 height=35 scrolldelay=600>
+			<a href="https://www.tencent.com/zh-cn/customer-service.html" target="_blank" title="【☞点击进入，看官网详情】客户服务 | 客服专线 - Tencent 腾讯" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+微信支付、理财通、商户专线 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>9</i><i>5</i><i>0</i><i>1</i><i>7</i> <br>
+财付通、手Q钱包专线 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" />0755-<i>8</i><i>6</i><i>0</i><i>1</i>-<i>3</i><i>8</i><i>6</i><i>0</i> <br>
+腾讯未成年人游戏监督热线 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>9</i><i>5</i><i>0</i><i>9</i>-<i>2</i><i>6</i><i>6</i><i>6</i> <br>
+腾讯会议客服电话 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>4</i><i>0</i><i>0</i><i>9</i>-<i>1</i><i>0</i><i>0</i>-<i>1</i><i>0</i><i>0</i> 转5 <br>
+腾讯云·客服热线：<br>
+腾讯云 | 中国大陆 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>4</i><i>0</i><i>0</i>-<i>9</i>-<i>1</i><i>0</i><i>0</i>-<i>1</i><i>0</i><i>0</i>或<i>9</i><i>5</i><i>7</i><i>1</i><i>6</i><br>
+腾讯云 | 中国香港 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" />+852 800-964-163<br>
+腾讯云 | 美国地区 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" />+1 888-652-2736<br>
+腾讯云 | 其他地区 <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" />+86 4009100100<br>
+			 </a>
+			</marquee>
+			&nbsp;&nbsp;
+
+	</caption>
+        
+	<thead>
+         <tr>
+		 <td><b>
+		   <a href="https://time.is/calendar" id="time_is_link" rel="nofollow" target="_blank" style="font-size:24px" title="【与原子钟同步运行】时光如水，让时间沉淀一切，让时间洗涤尘埃，让时间过滤纷杂，让时间见证一切。">
+		    <!--<img class="bottom" src="https://img.shields.io/badge/腾讯-时间-brightgreen.svg" /> -->
+		   <img class="bottom" src="https://we.choong.net/images/腾讯-时间-brightgreen.svg" /></a>
+		   <!--<img class="bottom" src="https://static.time.is/favicon.ico"/> -->  
+		   <span id="Shanghai_z43d" style="color:#999999;font-size:18px"></span>
+		   <script src="//widget.time.is/zh.js"></script>
+		   <script>
+			     time_is_widget.init({Shanghai_z43d:{template:"DATE TIME", date_format:"year年monthnamednum日 (dname)"}});
+		   </script>		   
+		   
+		   <a href="http://www.weather.com.cn/" target="_blank" title="首页-中国天气网">
+		    <!--<img class="bottom" src="https://img.shields.io/badge/天气-预报-yellow.svg" /> -->
+		   <img class="bottom" src="https://we.choong.net/images/天气-预报-yellow.svg" />
+		   <!-- <img class="bottom" src="http://www.weather.com.cn/m2/i/favicon.ico?v=3" height="15" width="15" /> -->
+		   <img class="bottom" class="bottom" src="https://we.choong.net/images/Weather.ico?v=3" height="15" width="15" /></a> 		  
+		  <a href="https://go.choong.net/Anyway.FM/" target="_blank" title="【专题】Anyway.FM | 设计杂谈 • UI 设计师 JJ 和 Leon 主播的设计播客">
+		   <!-- <img class="bottom" src="https://s.anw.red/anyway.fm/mask-icon.svg" color="#f60c3e" height="15" width="15" /> -->
+		   <img class="bottom" src="https://we.choong.net/images/mask-icon.svg" color="#f60c3e" height="15" width="15" /></a>  
+		   <a href="https://www.cnbeta.com/" target="_blank" title="cnBeta.COM - 中文业界资讯站">
+		  <!-- <img class="bottom" src="https://static.cnbetacdn.com/images/logo.png" height="15" width="15" /> -->
+		   <img class="bottom" src="https://we.choong.net/images/cnBeta.png" height="15" width="15" /></a>
+           <a href="https://www.dapenti.com/" target="_blank" title="喷嚏网----阅读、发现和分享：8小时外的健康生活！">
+			  <img class="bottom" src="https://we.choong.net/images/MSN-favicon.ico?v=3" height="15" width="15" /></a>		   
+		   </b></td>
+			  <td><b> 			  
+			  <a href="https://www.qq.com/map/" target="_blank" title="网站地图 | 由 腾讯网 优质资讯推荐">
+			   <!--<img class="bottom" src="https://img.shields.io/badge/腾讯-网站-lightgrey.svg" />--> 
+			  <img class="bottom" src="https://we.choong.net/tx/腾讯-网站-lightgrey.svg"/></a>
+			  <a href="https://news.qq.com/" title="新闻中心-优质资讯推荐_腾讯网">新闻</a>
+			  <a href="https://v.qq.com/" title="腾讯视频 - 中国领先的在线视频媒体平台,海量高清视频在线观看">视频</a>
+			  <a href="https://tech.qq.com/" title="科技-腾讯网">科技</a>
+			  <a href="https://ent.qq.com/" title="娱乐-腾讯网">娱乐</a>
+			  <a href="https://finance.qq.com/" title="财经-腾讯网">财经</a>
+			  <a href="https://health.qq.com/" title="健康-腾讯网">健康</a>
+			  <a href="https://new.qq.com/ch/visit/" title="旅游-腾讯网">旅游</a>
+			  <a href="https://auto.qq.com/" title="腾讯汽车_腾讯网">汽车</a>
+			  <!--<a href="https://sports.qq.com/" title="腾讯体育_腾讯网">体育</a>-->
+			  <a href="https://gongyi.qq.com/" title="腾讯公益_腾讯网">公益</a>			  
+			  <a href="https://www.douban.com/gallery/topic/122820/" target="_blank" title="豆瓣话题 - 35岁之上的我们"><img class="bottom" src="https://we.choong.net/images/douban.ico?v=3" height="15" width="15" /></a>
+			  <a href="https://zhuanlan.zhihu.com/p/24946390" target="_blank" title="知乎 - 有问题，上知乎 | 构建知识图谱，让自己更值钱 - 知乎专栏"><img class="bottom" src="https://we.choong.net/images/zhihu.ico?v=3" height="15" width="15" /></a>
+		          <a href="https://github.com/trending" target="_blank" title="Github 优质项目推荐 ★ TOP100"><img class="bottom" src="https://we.choong.net/images/github.png" height="15" width="15"  style="background-color:#9A9A9A"/></a>
+			  <a href="https://github.com/taoste/taoste.github.io/wiki" target="_blank" title="Home · taoste/taoste.github.io Wiki 【直达 go.choong.net/wiki/】"><img class="bottom" src="https://we.choong.net/images/github.png" height="15" width="15" /></a>
+			</b></td>
+		 </tr>  
+         </thead>
+		
+        <tbody>	
+        <!--⬇️微信公众平台--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+				<img style="vertical-align:text-bottom;width:20px;height:20px"
+					src="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADAklEQVRYhe2WQWgUZxiGn/ffuFlrLkoIMbOsWQxWikcvPRVFqKaKyQhejKcipfRUPPQUiAcpHrx5kSL1IK0HXQ2SKqXUSo/VHkREZFNjM7OVZSkeQtls43wesqmandmMzUYP7Xub/3/ne56BYf6B/3qUtpi/lh+yhu1GtgtsyKAX1Le4a1VBDVTGdFNZ/RgcCMqrFhj6bihbn/9rLDI7jvFeWtnm5PtOOp3rfudCebjceG0B74o3Zhadxuh7LXAroSq54+FoeCGVwLZrA71zf/MVZiOrAreQdLVnHcceHqjUEgUGpwb7G/XGTbDtHYW/wD3I5rK7Zj6aedIiUJws9s0vzN9aO/gLie6u7g8eHXxUBXBLy41n81+3g0t6CkQpCFGzmxDbvshajIOlF86GY8Go4ZTZF/qVjcJtkXS3jeRd4baEfmWjU2afUOzbb2bD3hVvDMBN2IQjslOJvuJS4Ac3AMJDYWDGeGLXGA8PhQFA4Ac3TFxK6mL25YRNOHdu8uwewwaSi69eZtp8OVr2LLbW5Fv+3OTZPS6KOJJcA8Fhr+TtByhOFQsRnEzqRnCyOFUsAHglb7/gcLvZUaQj8kqbfzFjZ7ti02QO6Gn3VEvGwBxGz4ojxe0ug8KKcCDNwGYPSNc1KLjUg9ck6nHAzFvDQ+AkpTo21yJmzDikW29LQNJ1h3FeqP7m6SzkyH3jQj/8E7j45vlcnPanqw4gp/VfAE9WuKeDdNXW5zZ8Ds3DaNqfrnZJR9P/Ia4GDk7uk/JwufaPAMDvfuUHTJ+R7sj993DTsWA0KL209GrylzePGPrWsFxn2arj9Gk4Gp5f5tSafCm/N7Jn1zvIv71O2aOP/ccPlm+4uHbkonsdwYr7zunjbZvefT8ODtAVe1+k3fbSsSdUQfxq2A6MwbZM6SHYT85xeXbkj+8BAiqJ/VgBwz5sDnsKOtFf6D9zZ+edBYCtpa19ddV3mKxXpk1ERJJqjqhqmcxvswdnk2lxwnGLA6WBn2Xc25BlfPl//P/pdJ4DItcX43LWrMQAAAAASUVORK5CYII="
+					title="微信公众平台">
+				<a target="_blank" href="https://mp.weixin.qq.com/" title="微信公众平台">微信公众平台</a>
+				<a target="_blank" href="https://channels.weixin.qq.com/" title="微信视频号助手"
+					style="color:#FA9D3B;text-decoration:none;">
+					<img style="vertical-align:text-bottom;width:20px;height:20px"
+						src="data:image/vnd.microsoft.icon;base64,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+vo7nfrUPJ77KDue+gAAAAAAAAAAAAAAAAAAAAAAAAAAADue+gA8nvpRO536+jud+sg7nfrgO5368Dye+js7nvoAAAAAAAAAAAAAAAAAAAAAADye+wA8nvsMO536oDud+v87nfqsPJ78Djye+wAAAAAAAAAAAD2e+wA9nvwPO536rjud+v87nfqgPJ77DDue+wAAAAAAAAAAAAAAAAAAAAAAO536ADye+jw7nfrwO5364Dud+vE7nfrpPJ77Kzyd+wAAAAAAAAAAAAAAAABBoPwA4///ADye+2s7nfr5O5363Tyd+zM7nfoAPqD9AAAAAAAAAAAAPJ39ADud+gA8nfs0O5363Tud+vk8nvtr4///AEGg/AAAAAAAAAAAAAAAAAA8nfsAPJ77Kzud+uk7nfrxO536/Dud+uQ8nvshPJ76AAAAAAAAAAAAQaP8ADqb+QA8nvo+O5364jud+vY7nvtjDInNADye+wAAAAAAAAAAAAAAAAAAAAAAPJ77AAyJzQA7nvtjO5369jud+uI8nvo+Opv5AEGj/AAAAAAAAAAAADue+gA8nvshO5365Dud+vw7nfr+O5364jye+h48nfoAAAAAAEWj+wA7nfsAPJ77JDud+sY7nfr/O537ljye/Ak8nvwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPJ78ADye/Ak7nfuWO536/zud+sY8nvskO537AEWj+wAAAAAAO576ADue+h47nfrjO536/jud+vY7nfrmPJ77JTye+wAAAAAAPJ77ADye+xc7nfqtO536/zud+rk9n/saPJ77AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPJ77AD2f+xo7nfq5O536/zud+q08nvsXPJ77AAAAAAA7nvsAO577JTud+uY7nfr2O5363zud+vE7nfo9O536ADyd+gA8nvsWO536oDud+v87nfrSPJ77MDud+wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8AO537ADye+zA7nfrSO536/zud+qA8nvsWPJ36ADue+gA8nvo+O5368Tud+t87nfqyO536/zyd+3s/pf0CPJ77LDud+q47nfr+O5362Tud+kA5m/oAPZ/6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9n/oAOZv6ADud+kA7nfrZO536/jud+q48nvssP6X9Ajye+3s7nfr/O536sTye+107nfr0O5365jud+qg7nfrcO536/zud+tE7nftBE43/ADud/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7nfwADYb/ADud+0E7nfrRO536/zud+tw7nfqoO5365jud+vM8nvtdPqD7Czye+os7nfrzO536/zud+vA7nfqkPJ77Kzec+QBAoPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAoPwAN5z5ADye+ys7nfqkO5368Dud+v87nfrzPJ76iz6g+ws8nfsAPJ37Czyd+0U7nvphO577PT2g+wo9oPoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPaD6AD2g+wo7nvs9O576YTyd+0U8nvsLPJ77AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////x//j/4H/gf8A/wD/AP8A/hB+CH4YPBh8PDw8PD4YfDw+AHw4fwD+GH8A/hh/gf4Yf4H+EP/D/wD/gf8A/wH/AP8A/wH+AH+B/hh/gfwcP4H4PB+B8H4PgfD/D4Hg/weBwf+DgYP/wYAH/+AAB//gAB//+Ag///wf////8=" />
+					微信视频号助手</a>
+
+</td>
+		 	<td class="main">
+		<a href="https://www.tencent.com/zh-cn/" target="_blank" title="Tencent 腾讯 - 官网" style="color:#999999;text-decoration:none;">
+		<img class="bottom" src="https://we.choong.net/tx/menu_logo_hover.png" width="20%" height="20%"/></a> 
+		        <a href="https://www.qq.com/" target="_blank" title="❤ 腾讯 | 首页 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/tx/qq_logo_2x.png" width="10%" height="10%"/></a>
+			   &nbsp;&nbsp;
+		       <a href="https://go.choong.net/jx/href/" target="_blank" title="❤Welcome : 浙江生活 | 嘉兴工作·专题" style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" title="腾讯服务热线：83765566" /></a><a href="https://www.tencent.com/zh-cn/customer-service.html" target="_blank" title="☞ 客户服务 | 客服专线 - Tencent 腾讯" class="nav_li_pb" style="text-align:right;color:#990066;font-size:14px;text-decoration:none;">
+	  	  <i>0</i><i>7</i><i>5</i><i>5</i>-<i>8</i><i>3</i><i>7</i><i>6</i>-<i>5</i><i>5</i><i>6</i><i>6</i>
+        </a>
+</td> 
+</tr> 
+<!--⬆️微信公众平台--> 
+<!--⬇️【上海】宫廷乐氏集团：2026年3月9日年后首次谈话/3月10日首次到上海面谈（3月11日-12日处理离职）/3月13日（周五）正式入职起薪日--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️【上海】宫廷乐氏集团--> 
+<!--⬇️占位1--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️占位1-->
+<!--⬇️占位2--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️占位2-->
+<!--⬇️占位3--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️占位3-->   
+<!--⬇️占位4--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️占位4--> 
+ <tr>
+             <td class="date"><b>
+			
+			 <a href="https://www.tencent.com/zh-cn/" target="_blank" title="Tencent 腾讯集团 - 官网" style="color:#999999;text-decoration:none;">
+		      <img class="bottom" src="https://we.choong.net/tx/tencent_logo.png" width="112" height="28"/></a> 
+		        <a href="https://www.qq.com/" target="_blank" title="❤ 腾讯网 | 首页 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/tx/qq_logo_2x.png" width="110" height="28"/></a>	
+<a href="https://110.qq.com/" target="_blank" title="❤ 腾讯110-帐号安全、QQ/微信违规行为举报受理综合服务平台 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/tx/qq-aq.png" width="116" height="28" style="background-color:#3F70DB"/></a>	
+<a href="https://weixin110.qq.com/" target="_blank" title="❤ 微信安全中心 - 安全连接一切 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/tx/weixin-aq.png" width="116" height="28" style="background-color:#4C4C4C"/></a>				   
+			 </b></td> 
+			 <!-- <td class="date"> 靠最右对齐--> 
+			 <td class="main"><b>
+			 <a href="https://daxue.qq.com/" target="_blank" title="腾讯大学-打造移动互联网生态圈最有影响力的学习交流平台: https://daxuepc.com/" style="color:#999999;text-decoration:none;">
+		<img class="bottom" src="https://we.choong.net/tx/tx-daxue.png" width="100" height="25"/></a> 
+		<a href="https://daxue.qq.com/wechat/" target="_blank" title="微信学院 | 腾讯大学" style="color:#04B141;font-size:18px;text-decoration:none;text-align:left;">微信学院</a>
+		 <a href="https://edu.tencentads.com/" target="_blank" title="营销学院 | 腾讯大学" style="color:#0D2968;font-size:18px;text-decoration:none;text-align:left;">营销学院</a>
+		 <a href="https://daxue.qq.com/game/" target="_blank" title="游戏学院 | 腾讯大学" style="color:#FEB74C;font-size:18px;text-decoration:none;text-align:left;">游戏学院</a>			
+		 <a href="https://daxue.qq.com/open/" target="_blank" title="开平学院 | 腾讯大学" style="color:#136FE4;font-size:18px;text-decoration:none;text-align:left;">开平学院</a>
+		 <a target="_blank" href="tencent.html" title="向下滑动，查看更多" style="color:#999999;text-decoration:none;">更多👇</a>	
+		</b></td> 
+		 </tr>
+
+         <tr>
+		 	<td class="date"><b>	
+             <img class="bottom" src="https://go.choong.net/images/favicon.png" width="25" height="25	"/>			
+             <a target="_blank" href="https://go.choong.net/nav/" title="乐哥在线：工具导航 - 精选实用的工具网站" style="color:#990066;font-size:25px;text-decoration:none;text-align:left;">新媒体营销</a> 
+	<a href="https://www.douban.com/gallery/topic/97715/" target="_blank" title="豆瓣话题 - 30岁后学习的一项新技能"><img class="bottom" src="https://we.choong.net/images/douban.ico?v=3" height="25" width="25" /></a>	
+	<a href="https://www.newrank.cn/" target="_blank" title="新榜 —— 内容产业服务平台 | 更多更好的KOL自媒体，品效合一的传播销售方案，尽在新榜：微信微博广告营销、新榜有赚平台、电商导购、数据咨询……"><img class="bottom" src="https://chs.newrank.cn/favicon/favicon.ico" height="25" width="25" />新榜</a>	
+				</b></td> 
+		 	<td class="main"><b>
+			 <a target="_blank" href="https://weixin.qq.com/" title="WeChat | 微信，是一个生活方式" style="color:#04B141;text-decoration:none;">微信</a>
+			 <a target="_blank" href="https://wx.qq.com/" title="微信网页版">
+			 <img class="bottom" src="https://we.choong.net/tx/weixin.ico" width="20" height="20"/></a> 
+		     <a target="_blank" href="https://mp.weixin.qq.com/" title="微信公众平台" style="color:#04B141;text-decoration:none;">公众平台</a>				
+			| <a target="_blank" href="https://shop.weixin.qq.com/" title="微信小商店 | 微信小商店，无需开发，免费开店，帮助商家快速生成卖货小程序,享有完整小商店功能，适合无开发能力且没有小程序的商家注册。">
+			 <img class="bottom" src="https://we.choong.net/tx/wx-shop.png" width="20" height="20"/></a> 
+			| <a target="_blank" href="https://channels.weixin.qq.com/mcn/" title="视频号机构管理平台 | 公告：视频号机构管理平台创建不会收取任何费用，请勿在任何非官方渠道申请。" style="color:#FA9D3B;text-decoration:none;"><img class="bottom" src="https://we.choong.net/tx/wx-fed.ico" width="20" height="20"/></a> <a target="_blank" href="https://channels.weixin.qq.com/" title="视频号助手" style="color:#FA9D3B;text-decoration:none;">助手</a>
+			| <a target="_blank" href="https://pay.weixin.qq.com/" title="微信支付 - 中国领先的第三方支付平台 ｜ 微信支付提供安全快捷的支付方式">支付</a>
+			| <a target="_blank" href="https://work.weixin.qq.com/" title="WeCom | 企业微信">企业</a>
+			| <a target="_blank" href="https://ad.weixin.qq.com/" title="微信广告">广告</a>
+			| <a target="_blank" href="https://open.weixin.qq.com/" title="微信开放平台">平台</a><a target="_blank" href="https://developers.weixin.qq.com/community/business" title="微信学堂 | 微信开放社区">学堂</a><a target="_blank" href="https://sticker.weixin.qq.com/" title="微信表情开放平台">表情</a>
+			 </b></td>  
+		 </tr>      
+
+        <tr>
+             <td><b>	
+            <a href="https://go.choong.net/s/30+/" target="_blank" title="❤">			 
+		 <marquee style="color:#999999;text-align:left;" direction=down width=580 height=30 scrolldelay=600>
+			 
+			&nbsp;&nbsp;&nbsp;&nbsp;❤愿你被这个世界温柔以待 即使生命总以刻薄荒芜相欺❤<br />
+			</marquee></a>
+			 </b></td>
+			 
+		 	<td class="main"><b>
+         		☞<a href="https://www.tenpay.com/" title="财付通 - 会支付 会生活				
+				财付通（Tenpay）是腾讯公司于2005年9月正式推出专业在线支付平台，
+				其核心业务是帮助在互联网上进行交易的双方完成支付和收款。
+				致力于为互联网用户和企业提供安全、便捷、专业的在线支付服务。
+				个人用户注册财付通后，即可在拍拍网及20多万家购物网站轻松进行购物。">财付通</a>				
+			  | <a href="https://qpay.qq.com/" title="QQ钱包 - 中国领先的第三方支付平台｜QQ钱包提供安全快捷的支付方式 https://qpay.qq.com/
+			  QQ钱包商户平台即将于11月9日迁移至新地址 https://mp.qpay.tenpay.com/ ，
+			  请您及时更新浏览器收藏夹或直接使用新地址访问本站">QQ钱包</a>
+			  | <a href="https://pay.weixin.qq.com/" title="微信支付 - 中国领先的第三方支付平台 ｜ 微信支付提供安全快捷的支付方式
+			  微信支付是腾讯公司的支付业务品牌，微信支付商户平台支持线下场所、公众号、小程序、PC网站、APP、企业微信等经营场景快速接入微信支付。
+			  微信支付全面打通O2O生活消费领域，提供专业的互联网+行业解决方案，微信支付支持微信红包和微信理财通，是移动支付的首选。">微信支付</a>
+         	  | <a href="https://pay.qq.com/" title="腾讯充值中心 ( Q点Q币/游戏点卡/手机话费 )">腾讯充值中心</a>
+			  | <a href="https://www.webank.com/" title="WeBank 微众银行			  
+			  深圳前海微众银行股份有限公司，由腾讯、百业源和立业等企业发起设立，
+			  于2014年12月16日正式开业，是中华人民共和国境内首家由民营企业出资建立的商业银行，
+			  主要业务有微粒贷、微众银行APP、微车贷、微众有折、微动力等金融产品。 @维基百科">微众银行</a>   	  
+			 </b></td> 
+		 </tr>		 
+
+		  <tr>
+             <td><b>
+			  <a href="maxim.html" title="[转载]分享各个领域的一些格言 @编程随想的博客">
+			      <marquee style="color:#999999" direction=up width=500 height=35 scrolldelay=500>
+				  <!-- 
+					<a href="https://github.com/taoste/Hello-World/tree/master/eBook/ProgramThink">💗 精选</a>：分享各个领域的一些格言
+					<a href="https://program-think.blogspot.com/2014/08/maxim.html" title="分享各个领域的一些格言@编程随想的博客">@编程随想的博客</a> 					
+					<a href="https://www.wikiquote.org/" title="有一个网站叫做“维基语录”，是“维基百科”的姐妹网站。它上面可以看到不少名人名言（包含各主流语种）。">@维基语录</a> 
+					-->
+				  
+				  ★关于“人生”“学习和思考”: <br /><br /> 
+				  
+				  世上只有一种英雄主义<br />就是在认清生活的真相之后依然热爱生活 -- 罗曼·罗兰 <br /><br />
+				  
+				  在这个世界上, 人所处的绝境, <br />在很多情况下, 都不是生存的绝境, 而是精神的绝境!<br /><br />
+				  
+				  人生中最大的两个财富是: 你的才华和你的时间。<br />
+				  才华越来越多而时间越来越少。我们的一生就是用时间来换取才华。<br /><br />
+				  
+				  你要按你所想的去生活; 否则, 你迟早会按你所生活的去想!<br /><br />
+				  
+				  人生最大的一种痛, 不是失败, 而是没有经历自己想要经历的一切。<br /><br />
+				  
+				  想得到你从未拥有过的东西, 就必须做你从未做过的事情。<br /><br />
+				  
+				  你若不想做, 总能找到借口; 你若想做, 总会找到方法<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——阿拉伯谚语<br /><br />
+				  
+				  获得信任的技巧就是避免使用任何技巧<br /><br />
+				  
+				  不要去欺骗别人 -- 因为你能骗到的人, 都是相信你的人。<br /><br />
+				  
+				  判断一个人的人品, 不是看他好起来做什么好事, <br />
+				  而是看他坏起来【不做】什么坏事。<br /><br />
+				  
+				  授人以鱼不如授人以渔!<br />
+				  授人以鱼只救一时之急, 授人以渔则可解一生之需。<br /><br />		
+
+				  大多数人宁愿死去, 也不愿思考。<br />	 
+				  -- 事实上他们也确实到死都没有思考。<br />	
+				  &nbsp;——罗素 (哲学家 数学家 诺贝尔文学奖得主)<br />	<br />	
+
+				  对知识分子而言, 成为思维的精英比成为道德的精英更重要。<br />
+				  &nbsp;&nbsp;&nbsp;——<a href="https://zh.wikipedia.org/zh-hans/王小波" title="王小波（1952年5月13日－1997年4月11日） - 维基百科，自由的百科全书">@王小波</a>  (著名作家，第一代程序员)	<br /><br />	
+
+				  只有两样东西可能是无限的: <br />
+				  宇宙的大小和人类的愚蠢。<br />
+				  不过, 对于前者我不太确定 :)<br />
+				  &nbsp;&nbsp;&nbsp; ——爱因斯坦	<br /><br />			  
+				  
+				  
+				  ◇关于“设计”“编程” : <br /><br />
+				  
+				  简单即是美  Simple is beautiful <br /><br />
+				  
+				  编程的艺术就是处理复杂性的艺术<br />
+				  &nbsp;&nbsp;&nbsp;——Edsger Dijkstra (图灵奖得主)<br /><br />
+				  
+				  优秀的设计在不断地演化, 糟糕的设计在不断地打补丁。 <br /><br />
+				  
+				  简单是可靠的先决条件 —— Edsger Dijkstra (图灵奖得主)<br /><br />
+				  
+				  软件设计就像做爱, 一次犯错, 你要用余下的一生来维护。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——Michael Sinz <br /><br />
+				  
+				  好的程序代码本身就是最好的文档<br />
+				  &nbsp;&nbsp;&nbsp;——《代码大全》Steve McConnell<br /><br />
+				  
+				  
+				  ◇关于“教育” : <br /><br />
+				  
+				  教育的价值在于培训思维, 而不在于传授事实。——爱因斯坦<br /><br />
+				  
+				  花在孩子身上的钱和孩子的修养之间没有任何关系, 甚至成反比。<br />
+				  在子女教育方面, 父母应该投入的是时间, 而不是金钱。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;——大前研一 (日本经济评论家)<br /><br />
+				  
+				  小时候一个劲地教你做好人, 长大了一个劲地教你做坏人<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——这就是中国式教育<br /><br />
+				  
+				  以前学英语是为了更好地了解外国<br />
+				  现在学英语是为了更好地了解中国<br /><br />
+				  
+				  若批评不自由, 则赞美无意义!<br />——法国《费加罗报》的宗旨<br /><br />
+				  
+				  ★关于“经济”: <br /><br />
+				  
+				  我也会有恐惧和贪婪, 只不过是在大众贪婪时恐惧, 在大众恐惧时贪婪!<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  控制风险的最好办法是深入思考, 而不是投资组合。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  价值投资不能保证我们盈利, <br />
+				  但价值投资给我们提供了通向成功的唯一机会。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  我从事投资时, 会观察一家公司的全貌; <br />
+				  而大多数投资人只盯着它的股价。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  投资成功与否并非取决于你了解的东西, <br />
+				  而在于你能否老老实实地承认你所不知道的东西。<br />
+				  投资人并不需要做对很多事情, <br />
+				  重要的是不要犯重大的错误。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  所谓'市场效率学说'之类的投资教条, <br />
+				  不过是为了增加投资的神秘性, 好让投资顾问得以从中牟利罢了。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  退潮时, 便可知道谁在裸泳。<br />
+				  &nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+
+				  短期而言, 股票市场是个投票机; 长期而言, 股票市场是个称重器。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——本杰明.格雷厄姆<br /><br />
+
+				  投资是预测资产收益的活动, 而投机是预测市场心理的活动。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——凯恩斯<br /><br />
+
+				  投资的风险来自于: 你不知道你在做什么 :)<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——巴菲特<br /><br />
+				  
+				  ★关于“管理”: <br /><br />
+
+				  用人不在于如何减少人的短处, 而在于如何发挥人的长处。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——彼得.德鲁克 (管理学之父)<br /><br />
+
+				  企业最大的资产是人!<br />
+				  &nbsp;&nbsp;——松下幸之助 (号称日本经营之神)<br /><br />
+
+				  你想雇用的人必须具备3种品质: <br />
+				  正直诚实、聪明能干和精力充沛。<br />
+				  如果缺少第一种, 后两种品质会要你命!<br />
+				  &nbsp;&nbsp;&nbsp;——巴菲特 （相关博文：<a href="https://program-think.blogspot.com/2009/04/defect-of-hire.html">招聘的误区</a> ）<br /><br />
+
+				  以用户为中心, 其它一切纷至沓来!<br />
+				  &nbsp;&nbsp;&nbsp;——Google 信条<br /><br />
+
+				  只有偏执狂才能生存!<br />
+				  &nbsp;&nbsp;&nbsp;——Andy Grove (英特尔创始人之一, 前任CEO)<br /><br />
+
+				  领袖和跟风者的区别就在于创新!<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;——史蒂夫.乔布斯<br /><br />
+
+				  我的管理风格既不是美国的个人主义, <br />
+				  也不是日本的共识主义, <br />
+				  而是独特的达尔文主义(适者生存)!<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——比尔.盖茨<br /><br />
+
+				  我们没有不懂技术的管理人员<br />
+				  -- 因为寻求技术和管理的平衡毫不费力!<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——比尔.盖茨<br /><br />
+
+				  伟大的车工值得给他几倍于普通车工的薪水。<br />
+				  但一个伟大的程序员, 其价值相当于普通程序员的1万倍!<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——比尔.盖茨<br /><br />
+
+				  当你用一个手指指着某人时, 请注意其它三个手指在指哪儿。<br />
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;——Gerald Weinberg (软件工程大牛)<br />
+				  （相关博文：<a target="_blank" href="https://program-think.blogspot.com/2009/07/book-review-are-your-lights-on.html">书评：《你的灯亮着吗？——找到问题的真正所在》</a>）<br /><br />
+
+				  唯一不变的是变化本身!<br /><br />
+				  
+				  </marquee>
+				  </a>				  
+			 </b></td>
+		 	<td class="main"><b> 
+            <marquee style="color:#999999" direction=up width=480 height=30 scrolldelay=890>
+				新闻·资讯: <a target="_blank" href="https://hb.qq.com/" title="腾讯·湖北（大楚网）_更懂湖北更懂你">湖北·大楚网</a>
+				  | <a target="_blank" href="http://hn.qq.com/" title="腾讯·湖南（大湘网）_湖南互联网综合服务平台">湖南·大湘网</a>
+				  | <a target="_blank" href="https://henan.qq.com/" title="腾讯·河南（大豫网）_河南城市生活门户">河南·大豫网</a> 
+				  | <a target="_blank" href="https://gd.qq.com/" title="腾讯·广东（大粤网） － 广东城市生活网络平台">广东·大粤网</a>
+				   <br />
+				 地方分站:  <a target="_blank" href="https://cd.qq.com/" title="腾讯·四川（大成网）">四川</a>
+				   <a target="_blank" href="https://fj.qq.com/" title="腾讯·福建（大闽网）">福建</a>
+				   <a target="_blank" href="https://cq.qq.com/" title="腾讯·重庆（大渝网）">重庆</a>
+				   <a target="_blank" href="https://xian.qq.com/" title="腾讯·陕西（大秦网）">陕西</a>
+				   <a target="_blank" href="https://sh.qq.com/" title="腾讯·上海（大申网）">上海</a>
+				   <a target="_blank" href="https://zj.qq.com/" title="腾讯·浙江（大浙网）">浙江</a>
+				   <a target="_blank" href="https://ln.qq.com/" title="腾讯·辽宁（大辽网）">辽宁</a>
+				   <a target="_blank" href="https://js.qq.com/" title="腾讯·江苏（大苏网）">江苏</a>
+				   <a target="_blank" href="https://bj.jjj.qq.com/" title="腾讯·北京（大燕网）">北京</a>
+				   <a target="_blank" href="https://tj.jjj.qq.com/" title="腾讯·天津（大燕网）">天津</a>
+				   <a target="_blank" href="https://hb.jjj.qq.com/" title="腾讯·河北（大燕网）">河北</a>
+				   </marquee>		 	
+			 </b></td>  
+		 </tr>  
+		           
+
+         <tr>
+			 <td class="date">
+				 <a href="https://rgb.to/rgb/128,128,128" title="❤ 灰色 RGB color (128, 128, 128) to Hex （#808080）Websafe #999999 CMYK（0, 0, 0, 50）, Pantone, RAL, HSL, HSV, HSB, JSON. Get color scheme."/>
+			<img class="bottom"  src="https://we.choong.net/images/RGB.png" height="20" width="20"></a> 
+				 <b>			 
+            系统化·结构化
+		👍 <a target="_blank" href="https://developer.mozilla.org/zh-CN/" title="MDN Web 文档">MDN</a> |
+		  <a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web" title="Web 开发技术 | MDN">Web</a> - 
+		 <a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" title="HTML（超文本标记语言） - Web 开发技术 | MDN">HTML</a> / 
+		<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS" title="CSS（层叠样式表） | MDN ">CSS</a> / 
+		<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/SVG" title="SVG - 可缩放矢量图形（Scalable Vector Graphics） | MDN ">SVG</a> / 		 
+		<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/MathMLS" title="MathML - Mathematical 标记语言能让显示复杂的数学公式或语法变得可能。 | MDN ">MathML</a>	
+            </b></td>
+		 	<td class="main"><b>
+			  <a target="_blank" href="https://go.choong.net/" title="向下滑动，查看更多">👍</a>
+			    <a target="_blank" href="https://go.choong.net/google/" title="感谢 Google © 2010 👍 不作恶 - Don't be evil">Good</a>
+			 <a target="_blank" href="https://www.microsoft.com/zh-cn/software-download/windows10" title="微软官网 | 下载 Windows 10">MS</a>
+			       <a target="_blank" href="https://msdn.itellyou.cn/" title="MSDN, 我告诉你 - MS资源下载：系统大全 (包含微软所有操作系统，全官方，不是Ghost版系统，需注意下载后重做系统需要驱动精灵网卡版) ">系统</a>
+			       <a target="_blank" href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads#!/zh-cn/help/17621/internet-explorer-downloads" title="Internet Explorer 下载 
+			       （适用于： Windows 10, Windows 8.1, Windows 7）">IE</a> <a target="_blank" href="https://tool.oschina.net/commons?type=2" title="HTML转义字符对照表">&amp;</a><a target="_blank" href="https://www.microsoft.com/zh-cn/windows/microsoft-edge/" title="Microsoft Edge - 适用于台式机和移动设备的 Internet Web 浏览器
+			       （仅适用于： Windows 10 ）">Edge</a><a target="_blank" href="https://github.com/taoste/taoste.github.io/issues/10" title="🔄内链切换[Note] Ⓜ️ 微软 Microsoft 系列 · Issue #10">-</a><a target="_blank" href="https://go.choong.net/welcome/" title="Welcome : 常用网页浏览器 - 扩展插件专题">插件</a>
+				   	<a target="_blank" href="https://go.choong.net/hosts/" title="#">Ho</a><a href="https://go.choong.net/1024/" title="#">st</a> 
+		            <a target="_blank" href="https://go.choong.net/16bit/" title="Notepad笔记：16进制颜色代码（完全）">Bit</a> 
+		            <a target="_blank" href="https://go.choong.net/zh/" title="虫虫物语 | 乐哥在线 [wiki主页]">wiki</a> 
+		            <a target="_blank" href="https://go.choong.net/nav/" title="工具导航 / 备注【直达Hello-World/Tools】go.choong.net/Tools/">Tool</a>'<a href="https://go.choong.net/Tools/pandao/" title="【开源工具】: ① Editor.md - 开源在线 Markdown 编辑器 | ② Plane UI - HTML5 跨终端响应式前端界面框架 | ③ tileTemplate - 一个简单的、高性能的开源 JavaScript 模板引擎">S</a>  
+		            <a target="_blank" href="https://go.choong.net/zt/" title="专题">top</a> 
+		            <a target="_blank" href="https://go.choong.net/BTSync/" title="Program-think 专题 | eBooks 目录 - BT Sync 密钥">BTSync</a> 		     
+			 </b></td>
+		 </tr> 
+		 
+		 <tr>
+			 <td class="date"><b> <a title="向下滑动，查看更多">☞</a>  
+			   <a href="https://ke.qq.com/" target="_blank" title="腾讯课堂_职业培训、考试提升在线教育平台: https://ke.qq.com/" style="color:#999999;text-decoration:none;">
+		<img class="bottom" src="https://we.choong.net/tx/tx-ke.png" width="80" height="25"/></a> 
+				 
+				  <a href="https://mail.qq.com/" target="_blank" title="QQ邮箱，常联系！" style="color:#EFF4FA;text-decoration:none;">
+		<img class="bottom" src="https://we.choong.net/tx/qqmail_logo.png" width="80" height="16"/></a> 
+			 <img class="bottom" src="https://we.choong.net/images/weiyun.ico" width="16" height="16"/><a target="_blank" href="https://www.weiyun.com/" title="腾讯微云 | 微云是腾讯公司为用户精心打造的一项智能云服务, 您可以通过微云方便地在手机和电脑之间同步文件、推送照片和传输数据。">微云</a>
+			 <img class="bottom" src="https://we.choong.net/tx/qq-fav.ico" width="16" height="16"/>
+			 <a target="_blank" href="https://b.qq.com/" title="腾讯企业产品官网_企业QQ及营销QQ唯一官方认证平台_企业QQ_营销QQ">企</a>·<a target="_blank" href="https://qidian.qq.com/" title="腾讯企点_智慧客户沟通运营平台_为企业提供智慧营销服务全链路SaaS解决方案">点</a>
+				 </b>			 
+			 <a href="https://cloud.tencent.com/" target="_blank" title="❤ 腾讯云 | 腾讯会议 - 产业智变 云启未来 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/images/cloud.tencent-logo.png" width="80" height="20" style="background-color:#3F70DB"/></a>
+			 <a href="https://meeting.tencent.com/" target="_blank" title="❤ 视频会议_语音会议_视频会议软件_视频会议系统-腾讯会议 " style="color:#999999;text-decoration:none;">
+			   <img class="bottom" src="https://we.choong.net/images/tencent-meeting_logo_1x.png" width="80" height="20"/></a>
+			 </td> 
+			 <!-- <td class="main"> 靠最左对齐--> 
+            <td class="date"><b> 	
+		    <a href="https://zenvideo.qq.com/" title="腾讯智影-在线智能视频创作平台">智影</a>  
+                  <a target="_blank" href="https://www.douyin.com/" title="抖音网页版"><img class="bottom" src="https://we.choong.net/images/douyin.ico" width="20" height="20"/></a><a target="_blank" href="https://e.douyin.com/site/" title="抖音企业服务中心 | 抖音企业号商家管理后台">抖音</a>·<a target="_blank" href="https://lv.ulikecam.com/" title="剪映专业版-全能易用的桌面端剪辑软件-轻而易剪 上演大幕
+【软件简介】
+剪映专业版是一款轻而易剪的视频编辑工具，
+能够轻松对视频进行各种编辑，包括卡点、去水印，特效制作、倒放、变速等等，
+还有专业风格滤镜，精选贴纸给你的视频加点乐趣。
+【官网】https://lv.ulikecam.com/">剪映</a>·<a target="_blank" href="https://www.feishu.cn/" title="飞书 —— 字节跳动旗下先进企业协作与管理平台，一站式无缝办公协作，团队上下对齐目标，全面激活组织和个人。先进团队，先用飞书。"><strong>飞书</strong></a><img class="bottom" src="https://we.choong.net/images/bd-naotu.ico" width="20" height="20"/><a target="_blank" href="https://naotu.baidu.com/" title="百度脑图－便捷的思维工具">百度脑图</a>		  
+		    <a target="_blank" href="https://mubu.com/explore" title="幕布精选 - 幕布"><img class="bottom" src="https://we.choong.net/images/mubu.ico" width="20" height="20"/></a><a href="https://mubu.com/" title="幕布 - 极简大纲笔记 | 一键生成思维导图">幕布</a><img class="bottom" src="https://we.choong.net/tx/dnspod.ico" width="20" height="20"/><a target="_blank" href="https://www.dnspod.cn/" title="DNSPod -免费智能DNS解析服务商-电信_网通_教育网,智能DNS">DNS</a><a target="_blank" href="https://console.cloud.tencent.com/cns" title="腾讯云-控制台">Pod</a>
+			<a target="_blank" href="https://sg.godaddy.com/zh/whois" title="WHOIS域名注册信息查询-查看域名可用性-GoDaddy官方中文站">
+		    <img class="bottom" src="https://we.choong.net/images/godaddy-32x32.png" width="20" height="20"/>GoDaddy</a>
+		    <a title="👇向下滑动，查看更多👇">👇</a>			
+				 </b></td> 
+		 </tr>		
+		 
+         <tr>
+             <td><b> 
+			  <marquee style="color:#ffffff" direction=up width=500 height=35 scrolldelay=500>
+
+			<a href="https://www.alibabagroup.com/cn/contact/contacts#slide_customer" target="_blank" title="【☞点击进入，看官网详情】客户服务 | 客服专线 - 阿里巴巴集团" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+蚂蚁集团客服热线<img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>9</i><i>5</i><i>1</i><i>8</i><i>8</i><br>
+阿里云<img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>9</i><i>5</i><i>1</i><i>8</i><i>7</i>：转③号线 ☞备案延期  | 转②-⑤-③号线 ☞阿里云盘<br>
+阿里云售后专属热线<img class="bottom" src="https://we.choong.net/images/phone-volume.svg" height="15" width="15" /><i>4</i><i>0</i><i>0</i>-<i>8</i><i>0</i><i>1</i>-<i>3</i><i>2</i><i>6</i><i>0</i><br>
+			 </a>
+			</marquee>	              			 
+			 </b></td>
+		 	<td class="main"><b>	
+				 <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do?spm=a2cmq.17630005.J_9220772140.117.675579feQAaPKb&method=lzxx&id=3301963301080000025024" target="_blank" title="【阿里云】网上亮牌 - 浙江网络监管服务系统"/><img class="bottom" src="https://we.choong.net/images/aliyun.ico" height="15" width="15" /></a>
+				<a href="https://www.aliyun.com/" target="_blank" title="阿里云-上云就上阿里云"/>阿里云</a> ·
+	   			<a href="https://edu.aliyun.com/" target="_blank" title="阿里云大学 - 官方网站，云生态下的创新人才工场"/>大学</a> |
+				<a href="https://beian.aliyun.com/" target="_blank" title="ICP代备案管理系统 | 阿里云备案_个人域名备案申请_企业网站备案流程_服务-阿里云"/>代备案</a>
+		                <a target="_blank" href="https://www.aliyundrive.com/apply" title="阿里云盘 - “个人云种子用户”报名入口"><img class="bottom" src="https://we.choong.net/images/aliyundrive.ico" width="20" height="20"/></a><a target="_blank" href="https://www.aliyundrive.com/" title="阿里云盘 - 阿里网盘更名阿里云盘，大容量、不限速，高达10MB/s下载速度，18个月不登陆就清空账号">阿里云盘</a>   
+	                        <a href="https://www.antgroup.com/" target="_blank" title="蚂蚁集团"/><img class="bottom" src="https://gw.alipayobjects.com/mdn/rms/afts/img/A*BAhDQLCn3-wAAAAAAAAAAAAAARQnAQ" width="20" height="20"/>蚂蚁集团</a>
+			<a target="_blank" href="https://www.yuque.com/" title="「语雀」是一个「专业的云端知识库」，孵化自 蚂蚁集团 ，是 体验科技 理念下的一款创新产品，已是 10 万阿里员工进行文档编写、知识沉淀的标配。"><img class="bottom" src="https://gw.alipayobjects.com/zos/rmsportal/UTjFYEzMSYVwzxIGVhMu.png" width="20" height="20"/></a>
+	<a target="_blank" href="https://www.yuque.com/arvinxx/" title="空谷 · 语雀 （ 自诩设计工程师，一手做设计👩‍🎨‍，一手写代码👨‍💻‍ ）"> 
+                       <font color="#FC1205">空谷</font>
+                   </a>
+		 <a target="_blank" href="https://airtable.com/shrDW1huvdtNavQHY/tbl6QnfQe66p0OHaR" title="Airtable - 设计导航"> 
+                       <font color="#FC1205">导航</font>
+                   </a>
+	</b></td> 
+		 </tr> 	 
+		 
+         <tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="https://www.miit.gov.cn/" target="_blank" title="中华人民共和国工业和信息化部" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://we.choong.net/images/miit.ico" height="15" width="15" />工信部</a>
+				<a href="https://beian.miit.gov.cn/" target="_blank" title="ICP/IP地址/域名信息备案管理系统 - 中华人民共和国工业和信息化部"/>域名备案系统</a> 
+		     | <a href="https://www.mps.gov.cn/" target="_blank" title="中华人民共和国公安部"/>
+		     <img class="bottom" src="https://we.choong.net/images/mps.ico" height="15" width="15" />公安部</a>
+                       <a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank" title="全国互联网安全管理服务平台 | 公安部网络安全保卫局"/>网监管理系统</a> 
+			 </b></td>
+		 	<td class="main"><b>				
+                       <a href="http://idinfo.zjamr.zj.gov.cn/bscx.do" target="_blank" title="电子标识 - 浙江网络监管服务系统 | 浙江省市场监督管理局"/> 
+				<img class="bottom" src="https://we.choong.net/images/zjamr.ico" height="15" width="15" />浙江|网监管理系统</a> 
+			 &nbsp;
+			 </b></td> 
+		 </tr>   
+
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="https://www.chinaz.com/" target="_blank" title="站长之家 - 站长资讯-我们致力于为中文网站提供动力！" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+           <img class="bottom" src="https://we.choong.net/images/chinaz.ico" height="15" width="15" />站长</a>·<a href="https://tool.chinaz.com/" target="_blank" title="站长工具 - 站长之家" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">工具</a> 
+		   | <a href="https://www.jb51.net/" target="_blank" title="脚本之家 | jb51.net"/>
+	     <img src="https://go.choong.net/images/jb51.net.ico" height="15" width="15" />脚本之家</a> 
+	      · <a href="http://tools.jb51.net/" target="_blank" title="脚本之家 | 在线工具"/>工具集</a> 
+		   </b></td>
+		 	<td class="main"><b>	
+				<img class="bottom" src="https://www.baidu.com/img/baidu.svg" height="15" width="15" />
+				<a href="https://ziyuan.baidu.com/" target="_blank" title="百度搜索资源平台_让网站更具价值"/>百度站长</a>	
+				<img class="bottom" src="http://dlweb.sogoucdn.com/translate/favicon.ico?v=20180424" height="15" width="15" />
+				<a href="http://zhanzhang.sogou.com/" target="_blank" title="搜狗站长平台_公平开放的交流平台 | 全面掌握在搜狗搜索中的数据表现"/>搜狗站长</a>
+				<a href="http://zhanzhang.sogou.com/index.php/renzheng/index" target="_blank" title="【官网认证】搜狗站长平台_公平开放的交流平台"/>官网认证</a>
+				<a href="https://www.speedtest.net/zh-Hans" target="_blank" title="【测速网】 - 专业网速测试, 宽带提速, 游戏测速, 直播测速, 5G测速, 物联网监测 - SpeedTest.net"/>
+                                <img class="bottom" src="https://go.choong.net/images/speedtest.cn.ico" height="15" width="15" /></a>
+                                <a href="https://www.speedtest.cn/" target="_blank" title="测速网 - 专业网速测试, 宽带提速, 游戏测速, 直播测速, 5G测速, 物联网监测 - SpeedTest.cn"/>测速网</a>
+				&nbsp;
+			 </b></td> 
+		 </tr>    
+
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="#" target="_blank" title="#" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://go.choong.net/favicon.png" height="15" width="15" />直播推流</a> </b></td>
+		 	<td class="main"><b>	
+				<img class="bottom" src="https://obsproject.com/favicon-16x16.png" height="15" width="15" /><a href="https://obsproject.com/zh-cn/" target="_blank" title="开放广播软件 - Open Broadcaster Software®️ | OBS 免费且开源的用于视频录制以及直播串流的软件。"/>OBS工作室版</a>
+				<a href="https://wx.vzan.com/live/pc/index?liveId=75999" target="_blank" title="微赞官方直播间【ID：75999】"/>
+				<img class="bottom" src="https://go.choong.net/images/vzan.ico" height="15" width="15" /></a>
+				<a href="https://www.vzan.com/" target="_blank" title="微赞 - 企业直播营销平台，为企业提供专业微信直播方案 (vzan.com)"/>微</a>
+				<a href="https://www.vzan.com/home/lectureIndex" target="_blank" title="微赞 - 企业直播教学_商业直播分享就在微赞企业直播大讲堂">赞</a>
+				<a href="https://wx.vzan.com/live/pc/index?liveId=1725393497" target="_blank" title="瑞联集团-微赞直播间【ID：1725393497】"/>·</a>
+				<a href="https://www.sinsam.com/" target="_blank" title="免费芯象专业直播导播软件 | 微赞直播-出品"/>直播</a>
+				&nbsp;
+			 </b></td> 
+		 </tr>  
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="#" target="_blank" title="#" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://obsproject.com/favicon-16x16.png" height="15" width="15" />OBS直播-脚本插件</a> </b></td>
+		 	<td class="main"><b>	
+				<a href="https://kuabo.cn/" target="_blank" title="咩播云插件（原：跨播） - 直播云插件 - 专注直播间美化,弹幕美化,礼物答谢等直播插件"/>
+				<img class="bottom" src="https://kuabo.cn/favicon.ico" height="15" width="15" />跨播</a>
+				 | <a href="https://opensourcelibs.com/lib/blivechat" target="_blank" title="Blivechat - 用于OBS的仿YouTube风格的bilibili直播评论栏 - (blivechat)"/>Blivechat</a>
+				 | <a href="https://www.danmuji.org/" target="_blank" title="B站弹幕姬 - 开源、简洁的B站直播弹幕工具"/>
+				<img class="bottom" src="https://www.danmuji.org/favicon.ico" height="15" width="15" />B站弹幕姬</a>
+				 &nbsp;
+				<a href="https://link.bilibili.com/p/center/index#/my-room/start-live" target="_blank" title="【B站】开播设置 - 个人中心 - bilibili link"/>
+				<img class="bottom" src="https://static.hdslb.com/mobile/img/512.png" height="15" width="15" /></a>
+				<a href="http://live.bilibili.com/22747181" target="_blank" title="【乐哥在线】我的B站直播间 | 哔哩哔哩直播，二次元弹幕直播平台"/>乐哥在线</a>
+				&nbsp;				
+			 </b>
+			 </td> 
+</tr> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="#" target="_blank" title="#" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://go.choong.net/favicon.png" height="15" width="15" />开源多媒体播放器</a> </b></td>
+		 	<td class="main"><b>
+				<a href="https://www.videolan.org/" target="_blank" title="VLC：官方网站 - 全平台的自由多媒体解决方案！ - VideoLAN"/>
+				<img class="bottom" src="https://www.videolan.org/favicon.ico" height="15" width="15" /></a>
+				<a href="https://www.videolan.org/vlc/" target="_blank" title="【OBS直播可插入VLC视频源】官方下载：VLC media player，最棒的开源播放器 - VideoLAN"/>VLC开源播放器</a>
+                                
+                                <a href="soft/开源播放器splayer射手影音（绿色版）.7z" target="_blank" title="【本地备份下载】开源播放器splayer射手影音（绿色版）.7z
+											       射手影音 SPlayer - 智能翻译播放器免费下载
+											       · 仅需5M，安全播放所有视频，强大到极致，绿色无插件，字幕匹配最智能精准。
+											       采用最新DirectX硬件加速技术，特有画面增益，清晰播放720p、1080p高清。	"/>
+				<img class="bottom" src="https://www.splayer.org/favicon.ico" height="15" width="15" /></a>
+				<a href="https://www.splayer.org" target="_blank" title="射手影音 SPlayer - 智能翻译播放器免费下载
+					 · 仅需5M，安全播放所有视频，强大到极致，绿色无插件，字幕匹配最智能精准。
+                                            采用最新DirectX硬件加速技术，特有画面增益，清晰播放720p、1080p高清。	"/>SPlayer射手影音</a>
+				<!-- 
+				<a href="https://www.vzan.com/" target="_blank" title=""/>
+				<img class="bottom" src="https://go.choong.net/images/vzan.ico" height="15" width="15" /></a>
+				<a href="https://wx.vzan.com/live/pc/index?liveId=1725393497" target="_blank" title=""/>·</a>
+				<a href="https://www.sinsam.com/" target="_blank" title=""/></a>
+				&nbsp;
+				-->
+			 </b>
+			 </td> 
+</tr> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b><a href="#" target="_blank" title="#" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://go.choong.net/favicon.png" height="15" width="15" />入驻平台</a> </b></td>
+		 	<td class="main"><b>
+				<a href="https://y.qq.com/topic/kol_helpcenter/index.html" target="_blank" title="QQQ音乐·开发平台 | 帮助" />
+				<img class="bottom" src="https://y.qq.com/favicon.ico" height="15" width="15" /></a>
+				<a href="https://y.qq.com/artists" target="_blank" title="【QQ音乐人】邀请您入驻
+电脑端：您可以点击链接申请入驻：https://y.qq.com/artists
+手机端：您可以在微信搜索小程序“腾讯音乐人”即可申请入驻"/>QQ音乐人</a>  
+				· <a href="https://kg.qq.com/pc_vip/signin/home/index.html" target="_blank" title="公会入驻 - 全民K歌"/>
+				<img class="bottom" src="https://kg.qq.com/favicon.ico" height="15" width="15" />全民K歌</a>
+                               | <a href="https://musician.kugou.com/" target="_blank" title="酷狗音乐开放平台 - 自助发歌推广 让音乐人有钱收"/>
+				<img class="bottom" src="https://www.kugou.com/root/favicon.ico" height="15" width="15" />酷狗音乐人</a>
+                               | <a href="https://music.163.com/st/musician" target="_blank" title="网易音乐人 - 欢迎所有音乐“妄想”"/>
+				<img class="bottom" src="https://s1.music.126.net/style/favicon.ico" height="15" width="15" />网易音乐人</a>
+                                <!--
+                                <a href="https://www.vzan.com/" target="_blank" title=""/>
+				<img class="bottom" src="https://go.choong.net/images/vzan.ico" height="15" width="15" /></a>
+				<a href="https://wx.vzan.com/live/pc/index?liveId=1725393497" target="_blank" title=""/>·</a>
+				<a href="https://www.sinsam.com/" target="_blank" title=""/></a>
+				&nbsp;
+				-->
+			 </b>
+			 </td> 
+</tr> 
+<!--⬇️【嘉兴】香港瑞联集团新媒体事业部部长：2015年12月20日至2025年7月30日/2026年3月12日--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="" target="_blank" title="" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="" width="116" height="28" /></a> </b>
+
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="" target="_blank" title=""/>
+            <img class="bottom" src="h" height="15" width="15" /></a>
+				&nbsp;
+	</b>
+</td> 
+</tr>  
+<!--⬆️瑞联集团新媒体事业部部长：2015年12月20日至2025年7月30日/2026年4月30日社保结束--> 
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="https://m.tb.cn/h.feQZY93" target="_blank" title="李佳琦Austin | 淘宝个人页 - 直播主页" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://we.choong.net/images/LiJiaQi-live.png" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="https://www.weibo.com/u/1968758563" target="_blank" title="@李佳琦Austin 的个人主页 - 微博"/>
+            <img class="bottom" src="https://we.choong.net/images/weibo.ico" height="15" width="15" />微博</a>
+				<a href="https://www.zhihu.com/topic/20942758/intro" target="_blank" title="李佳琦 - 知乎|话题"/>
+				<img class="bottom" src="https://we.choong.net/images/zhihu.ico" height="15" width="15" />知乎</a>
+				<a href="https://docs.qq.com/sheet/DUXl3WU1qZlNJQ0hv" target="_blank" title="李佳琦 | 双十一攻略文档 - 腾讯文档"/>	
+				<img class="bottom" src="https://we.choong.net/images/TX-Excel.png" height="15" width="15" />双十一攻略</a>	
+				&nbsp;
+	</b>
+</td> 
+</tr>    
+<tr>
+             <td class="date"> <!--靠最右对齐--> 
+			<b>
+<a href="https://m.tb.cn/h.fgrOcVO" target="_blank" title="薇娅viya | 淘宝个人页 - 直播主页（逛逛号：100075442）" class="nav_li_pb" style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+<img class="bottom" src="https://we.choong.net/images/viya.png" width="116" height="28" /></a> </b>
+</td>
+		 	<td class="main">
+    <b>					
+          <a href="https://weibo.com/huangxiaov" target="_blank" title="@薇娅viyaaa 的个人主页 - 微博"/>
+            <img class="bottom" src="https://we.choong.net/images/weibo.ico" height="15" width="15" />微博</a>
+				<a href="https://www.zhihu.com/topic/21181681/intro" target="_blank" title="薇娅 - 知乎|话题"/>
+				<img class="bottom" src="https://we.choong.net/images/zhihu.ico" height="15" width="15" />知乎</a>
+				<a href="https://docs.qq.com/sheet/DTmpyYmh1RGNuWENP" target="_blank" title="薇娅 | 双十一攻略文档 - 腾讯文档"/>	
+				<img class="bottom" src="https://we.choong.net/images/TX-Excel.png" height="15" width="15" />双十一攻略</a>	
+				&nbsp;
+	</b>
+</td> 
+</tr> 		 
+</tbody>
+ 
+            <tfoot>
+                <tr>
+                    <td colspan="1"> 
+				          <a href="https://www.ximalaya.com/yinyue/291718/262147552" target="_blank" title="【专注💗背景】静听音乐 - 《夜色钢琴曲》左手指月 - 赵海洋 | 在线收听_《夜色钢琴曲》_喜马拉雅FM ">
+		   <img class="bottom" src="https://we.choong.net/images/QPlayer.ico" height="30" width="30" /></a>        				
+		          <a href="https://www.guokr.com/article/214/" target="_blank" title="一天8杯水才健康？| 果壳 科技有意思">
+				 <!--<img class="bottom" src="https://img.shields.io/badge/每天要喝8杯水-身心美丽一整天-brightgreen.svg" height="20" width="200" /> -->
+				 <!--<img class="bottom" src="https://img.shields.io/badge/为祖国健康工作50年-brightgreen.svg" height="20" width="200" /> -->
+				 <!--<img class="bottom" src="https://img.shields.io/badge/健康是责任-健身是任务-yellow.svg" height="20" width="200" /> -->
+		             <img class="bottom" src="https://we.choong.net/images/每天要喝8杯水-身心美丽一整天-brightgreen.svg" height="30" width="200" />								
+                  </a>	
+
+               <a href="https://go.choong.net/Tools/today-gtd/" target="_blank" title="【番茄时钟】任务管理及效率工具
+		 
+		 “今日”是一款结合任务管理和番茄工作法的效率工具，帮助用户将注意力放在每天的任务执行和明天的计划上。
+		 
+> 番茄工作法是简单易行的时间管理方法，是由弗朗西斯科·西里洛于1992年创立的一种相对于GTD更微观的时间管理方法。
+> 使用番茄工作法，选择一个待完成的任务，将番茄时间设为25分钟，专注工作，
+> 中途不允许做任何与该任务无关的事，直到番茄时钟响起，然后短暂休息一下，每4个番茄时段多休息一会儿。
+> 番茄工作法的基本原则是:
+> 1.   番茄鐘不可分割
+> 2.   耗時超過3小時的任务需要再切分
+> 3.   每個番茄钟开始后就不能暫停，一旦暫停，只能作廢重來
+> 4.   若一項活动话费時間很短，不到一個番茄钟，可與其他活動合并
+> 5.   番茄工作法不用于假期和休息期的活动">
+               <marquee style="color:#999999" direction=up width=400 height=25 scrolldelay=350> 				
+				<person>小鱼</person>多喝水 ☞八杯水≈1.8L <br />
+				久坐伤身，多走动 ☞番茄钟时间≈25+5分钟<br />
+				早睡早起身体好！☞22:00上床≈睡眠八小时<br />
+				每天锻炼一小时,健康工作五十年,幸福生活一辈子！
+		</marquee></a>				 
+						    				
+				 <!-- <marquee behavior=alternate scrolldelay=300> 
+				 <!--全方位详解HTML常用标签_HTML 教程_w3cschool https://www.w3cschool.cn/html/html-Label.html -->				
+				<a href="https://www.yuque.com/gangafengliu/frontend-rookie" title="前端小白成长实录 · 语雀">⚠</a>
+				<a href="https://go.choong.net/tips/" target="_blank" title="tips">Tips</a>：<a href="https://go.choong.net/ppt/bowuguan/" target="_blank" title="50+国内外线上博物馆清单（持续更新）">博物馆</a><a href="https://go.choong.net/welcome/" target="_blank" title="Welcome : 常用网页浏览器 - 扩展插件专题 ">汇集</a>				
+				<a href="https://www.w3cschool.cn/html/html-space.html" title="HTML中如何键入空格_w3cschool">🛡</a>
+				<a href="https://go.choong.net/QPlayer/" target="_blank" title="【壁纸背景】静听音乐 - 网页悬浮音乐播放器QPlayer ★ 短链直达： go.choong.net/ting ">
+		   <img class="bottom"src="https://we.choong.net/images/QPlayer.ico" height="15" width="15" /></a>	
+			    <a text-align="center" href="https://share.choong.net/eBooks/图灵社区 _ 阅读 _ Markdown语法.pdf" title="图灵社区 _ 阅读 _ Markdown语法.pdf">Markdown</a>
+                    <a href="https://music.163.com/#/my/m/music/playlist?id=2062400855" target="_blank" title="网易云音乐: 阿尔法【神奇的α脑波】 激活右脑 学习必备">
+		   <img class="bottom"src="https://we.choong.net/images/QPlayer.ico" height="15" width="15" /></a>
+			</td>
+                </tr>	
+			
+            </tfoot>	    
+        </table>
+			  
+<p style="color:#990066;text-align:center">Copyright
+<a href="0713/" target="_blank" style="color:#990066;" title="我在浠水等你 - 网易云音乐 | 单曲">&copy;</a>   
+<a href="../rili.html" target="_blank" style="color:#990066;" title="万年历">
+		 <script>// <![CDATA[
+                 document.write(new Date().getFullYear());
+                 // ]]></script></a>,<a href="https://choong.net" target="_blank" style="color:#990066;" title="虫虫物语 | 乐哥在线">Choong.Net</a> 
+	  &nbsp;&nbsp;
+	 by <b><span id="htmer_time" style="color:#990066;">载入中...</span> 
+			<script> function secondToDate(second) { 
+			if (!second) { return 0; } var time = new Array(0, 0, 0, 0, 0); 
+			if (second >= 365 * 24 * 3600) { time[0] = parseInt(second / (365 * 24 * 3600)); 
+			second %= 365 * 24 * 3600; 
+			} 
+			if (second >= 24 * 3600) { time[1] = parseInt(second / (24 * 3600)); 
+			second %= 24 * 3600; } if (second >= 3600) { time[2] = parseInt(second / 3600); 
+			second %= 3600; } 
+			if (second >= 60) { time[3] = parseInt(second / 60); second %= 60; }
+			if (second > 0) { time[4] = second; } return time; } 
+			</script> 
+			<script type="text/javascript" language="javascript">  /* 帮助工具 🔨 https://www.topster.cn/tools/ */
+			function setTime() { /* 博客创建时间秒数，时间格式中，月比较特殊，是从0开始的，所以想要显示5月，得写4才行，如下*/ 
+			var create_time = Math.round(new Date(Date.UTC(2009, 1, 10, 12, 0, 0)) .getTime() / 1000); /* 当前时间秒数,增加时区的差异 */ 
+			var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000); 
+			currentTime = secondToDate((timestamp - create_time)); 
+			currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天' + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4] + '秒'; 
+			document.getElementById("htmer_time").innerHTML = currentTimeHtml; } setInterval(setTime, 1000); 
+			</script></b>  <!-- /* 激励着我勇敢前行的那些经历 */ -->
+		 </p> 
+
+<!-- <div class="layout" >
+<div>    
+	<div  style="float:left; margin:10px 0 0 30px">
+      <img class="bottom"  src="https://we.choong.net/images/czbzwwx.jpg"  title="【财政部政务微信】公众号二维码"/> 
+    </div> 
+    <div style="float:left; margin:10px 0px 0 30px">
+      <img class="bottom"  src="https://we.choong.net/images/kzpwx.jpg"  title="【财政部会计资格评价中心】微信公众号二维码"/> 
+    </div>  
+</div>
+</div> -->
+</section>
+
+<div style="visibility:hidden">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?694e61985b4752f4e7a0e5223195635f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</div>
+
+ <div id="imgDiv" style="position:absolute;align:center; visibility:hidden; z-index:9999;">
+	<br>
+	<table width="450" cellspacing="0">
+		<tr>
+            <td align="right"><div id="imgDivclose" style="color:#00C; cursor:pointer; background-color:#FF0; width:44px" align="right">关闭 </div></td>
+        </tr>
+ 
+		<tr>
+			<td width="450" height="50" align="center" bgcolor="#f55204" ><a href="/content.jsp?infoid=1639&class_id=01_01&child_class_id=" target="_blank" onMouseOver=stopme('jobads') onMouseOut=movechip('jobads')><div style="font-family:'微软雅黑','黑体'; font-size:16px; font-weight:bold; color:#ffffff; line-height:150%">财政部会计资格评价中心2020年接收应届高校毕业生面试公告</div></a></td>
+		</tr>
+
+	</table>
+
+</div>
+
+<script>
+var xin = true,  
+    yin = true;  
+var step = 1;  
+var delay = 30;  
+var $obj;  
+$(function() {  
+    $obj = $("#imgDiv");  
+    var time = window.setInterval("move()", delay);  
+    $obj.mouseover(function() {  
+        clearInterval(time)  
+    });  
+    $obj.mouseout(function() {  
+        time = window.setInterval("move()", delay)  
+    });  
+});  
+  
+function move() {  
+    var left = $obj.offset().left;  
+    var top = $obj.offset().top;  
+    var L = T = 0; //左边界和顶部边界  
+    var R = $(window).width() - $obj.width(); // 右边界  
+    var B = $(window).height() - $obj.height(); //下边界  
+  
+    //难点:怎样判断广告的4个边框有没有超出可视化范围!  
+    if (left < L) {  
+        xin = true; // 水平向右移动  
+    }  
+    if (left > R) {  
+        xin = false;  
+    }  
+    if (top < T) {  
+        yin = true;  
+    }  
+    if (top > B) {  
+        yin = false;  
+    }  
+    //根据有没有超出范围来确定广告的移动方向  
+    left += step * (xin == true ? 1 : -1);  
+    top  += step * (yin == true ? 1 : -1);  
+    // 给div 元素重新定位  
+    $obj.offset({  
+        top: top,  
+        left: left  
+    })  
+}  
+    //关闭  
+$(function() {  
+    $("#imgDivclose").click(function() {  
+        //var b = $("#imgDivclose").parent();  
+        //$(b).remove();  
+		$("#imgDiv").remove();
+    })  
+})
+</script>
+</body>
+</html>
