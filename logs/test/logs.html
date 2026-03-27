@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>生命架构日志 | @乐哥创事记</title>
+
+  <style>
+    /* ==================== 主题变量定义 ==================== */
+    :root {
+      /* 浅色主题（对外专业界面） */
+      --bg: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --border-color: #e0e0e0;
+      --header-color: #222222;
+      --accent-color: #07c160; /* 微信绿 */
+      --card-bg: #fafafa;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+      --log-border: #ddd;
+    }
+
+    /* 暗黑主题（内在生命代码） */
+    html[data-theme="dark"] {
+      --bg: #000000;
+      --text-primary: #0f0;
+      --text-secondary: #0a0;
+      --border-color: #0a0;
+      --header-color: #0a0;
+      --accent-color: #0f0; /* 荧光绿 */
+      --card-bg: #000;
+      --font-family: "Courier New", Courier, monospace;
+      --log-border: #0a0;
+    }
+
+    /* ==================== 全局重置 ==================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ==================== 光标闪烁动画 ==================== */
+    /* 模拟终端输入光标 */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.2rem;
+      background-color: var(--accent-color);
+      animation: blink 1s infinite;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ==================== 顶部区域 ==================== */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .title-section {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    h1 {
+      color: var(--header-color);
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--accent-color);
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      position: relative;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s;
+      margin-bottom: 5px;
+      pointer-events: none;
+    }
+
+    .btn:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    /* ==================== 日志条目 ==================== */
+    .log-entry {
+      margin-bottom: 30px;
+      border-left: 2px solid var(--log-border);
+      padding-left: 20px;
+    }
+
+    .log-header {
+      cursor: pointer;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+	  flex-wrap: wrap; /* 允许子元素换行 */
+    }
+
+    .log-date {
+      font-weight: bold;
+      color: var(--text-secondary);
+      font-size: 16px;
+ /* 默认：紧凑内联显示 */
+      display: inline-block;
+    }
+
+    /* 
+     * 小屏幕优化：允许长日期字符串在斜杠处或字符间换行
+     * 仅当屏幕宽度 ≤ 600px 时生效
+     */
+@media (max-width: 600px) {
+  .log-date {
+    white-space: normal !important;
+    word-break: break-word;
+    min-width: 0;
+    width: fit-content;
+    max-width: 100%;
+  }
+}
+
+    .log-title {
+      color: var(--header-color);
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .log-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .log-content.expanded {
+      max-height: 200px;
+      opacity: 1;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .log-content p {
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .log-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ==================== 页脚 ==================== */
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==================== 打印样式 ==================== */
+    @media print {
+      .action-buttons, .theme-toggle, .cursor {
+        display: none !important;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+        font-family: "Courier New", monospace;
+      }
+      .log-content {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible !important;
+        padding-right: 0 !important;
+      }
+      .log-entry {
+        border-left: 2px solid #000 !important;
+      }
+    }
+	@media print {
+	  .log-content {
+	    max-height: none !important; /* 强制展开/在打印时强制展开所有日志，防止 PDF 导出时内容缺失。 */
+	    display: block !important;
+	    opacity: 1 !important;
+	  }
+	}
+
+    @media (max-width: 600px) {
+      .header-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .title-section {
+        justify-content: space-between;
+      }
+      .action-buttons {
+        order: 3;
+      }
+    }
+	
+	/* 文本垂直对齐图像 https://www.w3cschool.cn/tryrun/showhtml/trycss_vertical-align */
+	img.top {
+					vertical-align: text-top;
+				}
+	
+	img.bottom {
+					vertical-align: text-bottom;
+	}
+	
+	/*“U盘化生存”标签增加一个微动效*/
+	.log-content a[title*="U盘化生存"]:hover {
+	  text-shadow: 0 0 8px var(--accent-color);
+	  border-bottom: 1px dashed var(--accent-color);
+	}
+  </style>
+</head>
+<body>
+  <!-- 顶部区域 -->
+  <div class="header-container">
+    <div class="title-section">
+      <!-- 标题 + 光标 -->
+      <h1>SYSTEM_LOG // 生命架构日志<span class="cursor"></span></h1>
+      <div class="action-buttons">
+        <button class="btn" onclick="window.print()" aria-label="导出 PDF">
+          🖨️<span class="tooltip">导出 PDF</span>
+        </button>
+        <button class="btn" id="copyBtn" aria-label="复制全文">
+          📋<span class="tooltip">复制全文</span>
+        </button>
+      </div>
+	  <a href="https://time.is/zh/" title="⌚ Time.is ⌛让时间见证！" style="text-decoration:none;">
+	  	<strong><span id="Main" style="color:#808080;text-decoration:none;"></span></strong>
+	  </a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" title="切换主题">🌓</button>
+  </div>
+
+  <!-- ==================== 日志内容（按时间倒序） ==================== -->
+  
+  <!-- 在顶部增加一个“系统运行进度条”，显示今年已经过去了百分之多少。-->
+<div id="life-progress-container" style="width:100%; height:4px; background:#333; margin-bottom:20px;">
+  <div id="life-progress-bar" style="height:100%; background:var(--accent-color); width:0%;"></div>
+</div>
+
+  <!-- 2026 年 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2025.08.01/<wbr>2026.01.30]</span>
+      <h3 class="log-title">核心逻辑重构：从“雇佣兵”到“架构师”</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>“完成了对‘<strong>个人生产力单元</strong>’的底层逻辑重构。通过建立多维防御冗余，外部环境的波动已转化为系统内部的参数微调。</p>
+      <p>状态已由‘<strong>被动生存</strong>’切换至‘<strong>主动对齐</strong>’，以更稳健的姿态进入下一段演进过程。”</p>
+	 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+      <p>※“<a href="https://www.dedao.cn/course/article?id=Pvz6E94NYDg2Jjn7RJL3rAkWQjnwpe&source=search" title="罗辑思维：第7期丨夹缝中的80后（优酷视频·首播于2013年1月25日） - 得到APP" style="text-decoration:none;font-weight: bold;">U盘化生存</a>”是由<a href="https://so.youku.com/search/罗辑思维" title="罗辑思维 （ 微信公众号：luojisw ） 《罗辑思维》是罗振宇2012年12月21日开播的个人知识型脱口秀节目《罗辑思维的自频道-优酷视频》https://i.youku.com/luojisw" style="text-decoration:none;">罗辑思维</a>·<a href="https://www.dedao.cn/" title="得到APP - 知识就是力量，知识就在得到" style="text-decoration:none;">得到</a>创始人@<a href="https://zh.wikipedia.org/wiki/罗振宇" title="罗振宇 - 维基百科，自由的百科全书, 全球领先的中文百科全书!
+罗振宇（1973年1月11日—），籍贯（祖籍）在安徽省桐城市，出生于安徽省芜湖市，中国资深媒体人，曾经从事记者，自称罗胖。
+罗辑思维创办人、“得到”APP创始人。
+--------------------------------------
+【生平】
+罗振宇出生于安徽芜湖，就读芜湖市第一中学。
+1990年考入华中科技大学新闻系本科，
+1994年考入北京广播学院电视系攻读硕士学位，
+2004年入中国传媒大学读取博士学位。
+------------
+罗振宇曾历任中国中央电视台《商务电视》、《经济与法》、《对话》制片人。
+2008年从中央电视台辞职，成为自由职业者。
+曾担任第一财经频道的总策划以及《决战商场》、《中国经营者》、《领航客》等电视节目主持人。
+2012年底，他与申音、吴声等合作开创知识型视频脱口秀《罗辑思维》及同名公司，申音后来离开该公司，李天田（“脱不花”）加入成为首席执行官。2016年该公司开发手机应用“得到app”。
+2015年罗振宇获得“2014中国互联网年度人物”提名。
+2024年，于YouTube频道同步开展巨型历史节目《文明之旅》。
+--------------------------------------
+【家庭】
+罗振宇的双胞胎女儿罗思思和罗维维于2016年出生。" style="text-decoration:none;">罗振宇</a>提出的职场发展理念，核心内涵概括为“<a href="https://www.dedao.cn/course/article?id=oWZdeMxN5Y4DJlOErVjB62zrR8OblQ" title="罗辑思维：第1期丨末日启示: 向死而生 - 得到APP （优酷视频·首播于2012年12月21日） - 得到APP
+“U盘化生存”理念由罗振宇在2012年12月21日《罗辑思维》第一季第一期视频《向死而生》中正式提出。
+------------
+当时正值玛雅预言中的“世界末日”，罗胖借此话题探讨了工业时代“组织结构”的瓦解。
+他认为未来的职场人不再是机器上的螺丝钉，而是具有独立价值的“U盘”。" style="text-decoration:none;font-weight: bold;">自带信息，不装系统，随时插拔，自由协作</a>
+		  ”，主张个体应像U盘般通过专业技能实现跨组织协作，摆脱对固定职场的依附。</p>
+      <p>该理念以互联网时代社会结构变迁为背景，强调个人价值由市场定价机制取代传统组织评价体系。</p>
+      <p>历史上《水浒传》中的安道全、金大坚等手艺人已具备专业技能的跨系统协作特征。</p>
+      <p><strong style="color:#808080;">标签 #谈判策略 #资产安全 #核心架构</strong></p>
+    </div>
+  </div>
+
+  <!-- 2019 年 学位 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.12.30/<wbr>2020.06.30]</span>
+      <h3 class="log-title">升级编译成功：软件工程·双证学位</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>历时数年，终于在病痛与还债的间隙，完成了底层逻辑的升级。</p>
+      <p>拿到的不仅是软件工程·双证工科学位，更是对命运进行“降维打击”的入场券。</p>
+      <p><strong style="color:#808080;">标签 #高等教育 #逻辑重塑 #系统升级</strong></p>
+    </div>
+  </div>
+
+  <!-- 2019 年 双胞胎 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.06.13]</span>
+      <h3 class="log-title">双核并行启动：龙凤呈祥协议激活（<a href="https://jmjy.vip/" title="铭媛时刻 ( 成长版·实时更新 )" style="text-decoration:none;" target="_blank">铭媛</a><span id="kids-age"></span>岁）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>嘉铭、嘉媛于夏至前夕同步降临，龙凤胎：一子一女，构成生命中最完美的“好”字闭环。</p>
+      <p>系统首次实现双线程情感并发，资源占用翻倍，幸福溢出缓冲区。</p>
+      <p>此非普通更新，而是架构级事件——从此防御矩阵新增两位最高权限守护者，所有战略决策均需通过“童颜认证”。</p>
+      <p><strong style="color:#808080;">标签 #龙凤双胎 #传承协议jmjy.vip #双喜临门</strong></p>
+    </div>
+  </div>
+
+  <!-- 2014-2015 嘉兴工作 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2014.12.20/<wbr>2015.03.08]</span>
+      <h3 class="log-title">双线程入职：协同模式启动（在嘉<span id="jxworkage-years" title="来到嘉兴 (实时更新)"></span>年）</h3>
+    </div> 
+    <div class="log-content expanded">
+      <p>2014年12月20日，本人于嘉兴接入企业系统，初始进程为总裁办公室主任、企划与网络新媒体；2015年3月，配偶同步注入同一组织单元，执掌运营模块。</p>
+      <p>自此，工作流与生活流形成闭环耦合——晨会讨论需求，晚餐复盘KPI；非但无资源竞争，反因权限互补触发协同增益。</p>
+      <p>此阶段标志着“家庭-职业”混合架构正式进入稳定运行期。</p>
+      <p><strong style="color:#808080;">标签 #职场同频 #嘉兴纪元 #双核驱动</strong></p>
+    </div>
+  </div>
+
+  <!-- 2008-2013 结婚 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2008.11.11/<wbr>2013.01.10]</span>
+      <h3 class="log-title">信任链建立：从邂逅到法定绑定（结婚<span id="marriage-years" title="结婚 (实时更新)"></span>年）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>2008年11月，于人海协议栈中意外握手成功；2010年05月合体，五年深度兼容测试后，2013年1月正式完成婚姻登记，写入法律级持久化存储。</p>
+      <p>此非临时会话，而是双向认证的长期连接——密钥由时间生成，证书以陪伴签发。</p>
+      <p>从此，个人系统升级为分布式家庭架构，共识机制名为“余生”。</p>
+      <p><strong style="color:#808080;">标签 #安全连接 #五年磨合期 #婚姻登记日</strong></p>
+    </div>
+  </div>
+
+  <!-- 2009 出院 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2009.02.10]</span>
+      <h3 class="log-title">系统强制冷启动：顺利出院纪念 （重生<span id="cancer-years-2" title="乐哥 ( 实时更新 )"></span>年）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>2008年2月罹患重大疾病，经过大半年的化疗治疗，2008年12月移植成功，2009年2月10日顺利出院。</p>
+      <p>虽然伴随右侧股骨头坏死的硬件损伤，但内核运行稳定。</p>
+      <p>这是我“第二次人生”的元年，所有的数据从零开始备份。</p>
+      <p><strong style="color:#808080;">标签 #生还者协议 #硬件受损 #生命奇迹 #<span id="cancer-years" title="乐哥 ( 实时更新 )"></span>年</strong></p>
+    </div>
+  </div>
+
+  <!-- 1984 出生 -->
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[1984.03.11]</span>
+      <h3 class="log-title">系统初始化：根系云梦泽，脉出荆楚地 (今年<span id="age" title="乐哥 ( 成长版·实时更新 )"></span>岁)</h3>
+    </div>
+    <div class="log-content expanded" title="巴河镇位于古云梦泽东北缘，属江汉—鄂东水系，确为“云梦之根”；浠水自古属楚国腹地，是“荆楚之脉”。">
+      <p>硬件出厂于来自中国湖北省·荆楚文化核心区（古称：荆楚，古云梦大泽东缘）<br />黄冈市浠水县巴河镇——诗人闻一多的故乡。</p>
+      <p>此地文脉如地下水，无声浸润代码底层。</p>
+      <p>农历甲子年三月十一，春汛初涨，万物编码重启。</p>
+      <p>虽以公历登记身份，但生命时区始终锚定在农历的节气律动中。</p>
+      <p><strong style="color:#808080;">标签 #出生地协议 #文化基因 #甲子纪元 #荆楚之子</strong></p>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <p>忠于自己·网络 
+	(<a href="https://choong.net/" title="乐哥创事记 ( 国际版🌐全球 )" style="text-decoration: none;" target="_blank">Choong.net</a>	 
+	  			  &  
+	  <a href="https://choong.net.cn/" title="虫虫物语 - 乐哥在线·CN中国区 （ Le Ge's Personal Website ）" style="text-decoration: none;" target="_blank"> Choong.net.cn</a>)
+	   | 传承协议: <a href="https://jmjy.vip" target="_blank">jmjy.vip</a></p>
+    <p>乐哥创事记 © <a target="_blank" href="https://go.choong.net/rili.html" style="text-decoration:none;"
+  					title="我爱我的祖国">
+  					<script>
+  						// <![CDATA[
+  						document.write(new Date().getFullYear());
+  						// ]]>
+  					</script>
+  				</a> . All Rights Reserved.</p>
+	<p><footer id="icp-footer" style="color:#FFFFFF;text-decoration:none;">
+			 <!-- 备案信息将由 JavaScript 动态插入 -->
+			 </footer></p>
+  </div>
+
+  <!-- ==================== JavaScript 功能 ==================== -->
+  <script>
+    /**
+     * 主题切换
+     */
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlEl = document.documentElement;
+
+    function getPreferredTheme() {
+      return localStorage.getItem('theme') || 
+             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }
+
+    function updateToggleButton(theme) {
+      themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function setTheme(theme) {
+      htmlEl.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      updateToggleButton(theme);
+    }
+
+    const initialTheme = getPreferredTheme();
+    setTheme(initialTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    /**
+     * 日志折叠/展开
+     */
+    function toggleLog(entry) {
+      const content = entry.querySelector('.log-content');
+      const isExpanded = entry.getAttribute('data-expanded') === 'true';
+
+      if (isExpanded) {
+        content.classList.remove('expanded');
+        entry.setAttribute('data-expanded', 'false');
+      } else {
+        content.classList.add('expanded');
+        entry.setAttribute('data-expanded', 'true');
+      }
+    }
+
+    /**
+     * 8秒后自动折叠
+     */
+    function autoCollapseAfterDelay(delayMs = 8000) {
+      setTimeout(() => {
+        document.querySelectorAll('.log-entry').forEach(entry => {
+          const content = entry.querySelector('.log-content');
+          content.classList.remove('expanded');
+          entry.setAttribute('data-expanded', 'false');
+        });
+      }, delayMs);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      autoCollapseAfterDelay(8000);
+    });
+
+    /**
+     * 复制全文
+     */
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      try {
+        let fullText = "SYSTEM_LOG // 生命架构日志\n";
+        fullText += "ID: @乐哥创事记 | DOMAIN: choong.net | STATUS: RUNNING_OPTIMIZED\n\n";
+
+        document.querySelectorAll('.log-entry').forEach(entry => {
+          const date = entry.querySelector('.log-date').textContent;
+          const title = entry.querySelector('.log-title').textContent;
+          const paragraphs = Array.from(entry.querySelectorAll('.log-content p'))
+            .map(p => p.textContent)
+            .join('\n');
+          fullText += `${date}\n${title}\n${paragraphs}\n\n`;
+        });
+
+        fullText += "忠于自己 · 网络 (choong.net) | 传承协议: https://jmjy.vip\n";
+        fullText += "荆楚文脉 × 云梦水泽 . All Rights Reserved.";
+
+        await navigator.clipboard.writeText(fullText);
+
+        const btn = document.getElementById('copyBtn');
+        const original = btn.innerHTML;
+        btn.innerHTML = '✅<span class="tooltip">已复制！</span>';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      } catch (err) {
+        alert('复制失败，请手动全选后复制');
+        console.error(err);
+      }
+    });
+  </script>
+  		
+		<!-- /* 使用javascript中Date对象创建获取时间,使用一个div标签来显示获取当前时间的值 */ -->
+  <script type="text/javascript">
+  			window.onload = function() {
+  				window.requestAnimationFrame(getDate)
+  			}
+  
+  			function getDate() {
+  				window.setTimeout(function() {
+  					window.requestAnimationFrame(getDate)
+  				}, 1000 / 2)
+  				var d = new Date();
+  				var year = d.getFullYear() //获取年	
+  				var month = d.getMonth() + 1; //获取月，从 Date 对象返回月份 (0 ~ 11)，故在此处+1	
+  				var day = d.getDay() //获取日	
+  				var days = d.getDate() //获取日期	
+  				var hour = d.getHours() //获取小时	
+  				var minute = d.getMinutes() //获取分钟	
+  				var second = d.getSeconds() //获取秒	
+  				if (month < 10) month = "0" + month
+  				if (days < 10) days = "0" + days
+  				if (hour < 10) hour = "0" + hour
+  				if (minute < 10) minute = "0" + minute
+  				if (second < 10) second = "0" + second
+  				var week = new Array("周日", "周一", "周二", "周三", "周四", "周五", "周六")
+  				var Tools = document.getElementById("Main")
+  				var da = year + "年" + month + "月" + days + "日," + week[day] + " 北京时间 " + hour + ":" + minute + ":" + second
+  				Tools.innerHTML = da
+  			}
+  	</script> <!-- /* 使用javascript中Date对象创建获取时间,使用一个div标签来显示获取当前时间的值 */ -->
+	
+	<!-- /* 在顶部增加一个“系统运行进度条”，显示今年已经过去了百分之多少。 */ -->
+	<script type="text/javascript">
+		const startOfYear = new Date(now.getFullYear(), 0, 1);
+	const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+	const progress = ((now - startOfYear) / (endOfYear - startOfYear)) * 100;
+	document.getElementById('life-progress-bar').style.width = progress + '%';
+	</script> <!-- /* 在顶部增加一个“系统运行进度条”，显示今年已经过去了百分之多少。 */ -->
+	
+		 <script>
+  		    (function() {
+  		      const icpMap = {
+  				"file:": "浙ICP备20190613号-高考2037",
+  				"127.0.0.1": "浙ICP备20190613号-高考2037",
+				"localhost": "浙ICP备20190613号-高考2037",
+  		        "ckyz.net": "浙ICP备2023002981号-1",
+  		        "xiangshou.tech": "浙ICP备2023002981号-5",
+  		        "selfhealthy.cn": "浙ICP备2023002981号-6",
+  		        "ckyg.net": "浙ICP备2023002981号-7",
+  		        "reliancejk.com": "浙ICP备2020043532号-2",
+  		        "reliancejk.cn": "浙ICP备2022035617号-1",
+  		        "choong.net.cn": "浙ICP备16038907号-2"
+  		      };
+  		
+  		      const hostname = window.location.hostname;
+  		      const domain = Object.keys(icpMap).find(base => hostname === base || hostname.endsWith("." + base));
+  		
+  		      if (domain) {
+  		        const icpNumber = icpMap[domain];
+  		        const footer = document.getElementById("icp-footer");
+  		        footer.innerHTML = `
+  		          <img class="bottom" src="#" alt="备案图标" height="20" width="20">
+  		          <a href="https://beian.miit.gov.cn/" title="【工业和信息化部】ICP/IP地址/域名信息备案管理系统" target="_blank">
+  		            ${icpNumber}
+  		          </a>
+  		        `;
+  		      }
+  		    })();
+  		  </script>
+
+  <script>
+    // 当前日期
+    const now = new Date();
+
+    // 工具函数：计算完整年份差
+    function getFullYears(startDateStr) {
+      const start = new Date(startDateStr);
+      let years = now.getFullYear() - start.getFullYear();
+      const monthDiff = now.getMonth() - start.getMonth();
+      const dayDiff = now.getDate() - start.getDate();
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        years--;
+      }
+      return years;
+    }
+
+    // 出生日期 → 年龄
+    const birthDate = '1984-04-11';
+    document.getElementById('age').textContent = getFullYears(birthDate);
+
+    // 抗癌起始日 → 年数
+    const cancerStart = '2008-02-28';
+    const cancerYears = getFullYears(cancerStart);
+    document.getElementById('cancer-years').textContent = cancerYears;
+    document.getElementById('cancer-years-2').textContent = cancerYears;
+
+    // 孩子出生日期 → 年龄
+    const kidsBirth = '2019-06-13';
+    document.getElementById('kids-age').textContent = getFullYears(kidsBirth);
+	
+	// 来到嘉兴 → 婚龄
+	const jxworkageDate = '2014-12-20';
+	document.getElementById('jxworkage-years').textContent = getFullYears(jxworkageDate);
+	
+	// 结婚登记日 → 婚龄
+	const marriageDate = '2013-01-10';
+	document.getElementById('marriage-years').textContent = getFullYears(marriageDate);
+  </script>
+</body>
+</html>

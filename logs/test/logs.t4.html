@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>生命架构日志 | @乐哥创事记</title>
+
+  <style>
+    /* ==================== 主题变量定义 ==================== */
+    :root {
+      --bg: #ffffff; --text-primary: #333333; --text-secondary: #666666;
+      --border-color: #e0e0e0; --header-color: #222222; --accent-color: #07c160;
+      --log-border: #ddd; --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    html[data-theme="dark"] {
+      --bg: #000000; --text-primary: #0f0; --text-secondary: #0a0;
+      --border-color: #0a0; --header-color: #0a0; --accent-color: #0f0;
+      --log-border: #0a0; --font-family: "Courier New", monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color: var(--bg); color: var(--text-primary); font-family: var(--font-family); line-height: 1.6; padding: 20px; max-width: 900px; margin: 0 auto; }
+
+    /* 年度进度条 */
+    #life-progress-container { width: 100%; height: 4px; background: #333; margin-bottom: 20px; border-radius: 2px; overflow: hidden; }
+    #life-progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 1s; }
+
+    .cursor { display: inline-block; width: 10px; height: 1.2rem; background-color: var(--accent-color); animation: blink 1s infinite; vertical-align: middle; margin-left: 4px; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .header-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: var(--accent-color); border: none; border-radius: 6px; cursor: pointer; }
+
+    /* 日志条目 */
+    .log-entry { margin-bottom: 30px; border-left: 2px solid var(--log-border); padding-left: 20px; }
+    .log-header { cursor: pointer; margin-bottom: 10px; }
+    .log-date { font-weight: bold; color: var(--text-secondary); }
+    .log-title { color: var(--header-color); font-size: 20px; }
+    .log-content { max-height: 0; overflow: hidden; transition: 0.3s; opacity: 0; }
+    .log-content.expanded { max-height: 1000px; opacity: 1; padding-bottom: 10px; }
+
+    /* 状态面板 */
+    .status-panel { margin: 15px 0; padding: 12px; background: rgba(7, 193, 96, 0.05); border: 1px dashed var(--accent-color); font-family: 'Courier New', monospace; font-size: 0.85rem; }
+    .status-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .value-highlight { color: var(--accent-color); font-weight: bold; }
+
+    @media print { .no-print { display: none !important; } .log-content { max-height: none !important; opacity: 1 !important; } }
+  </style>
+</head>
+<body>
+
+  <div id="life-progress-container" class="no-print"><div id="life-progress-bar"></div></div>
+
+  <div class="header-container">
+    <div>
+      <h1>SYSTEM_LOG // 生命架构日志<span class="cursor"></span></h1>
+      <span id="Main" style="color:#808080; font-size: 14px;"></span>
+    </div>
+    <button class="btn no-print" id="themeToggle">🌓</button>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2026.03.13]</span>
+      <h3 class="log-title">🚀 系统挂载：上海乐氏迁年 (PRIME_NODE)</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>正式就职于“宫廷乐氏·同仁堂祖庭”体系，出任<strong>新媒体运营部门负责人</strong>。</p>
+      <div class="status-panel">
+        <div class="status-row"><span class="label">契约周期:</span><span class="value-highlight">2026/03/13 - 2029/03/12</span></div>
+        <div class="status-row">
+          <span class="label" id="contract-label">运行状态:</span>
+          <span class="value-highlight" id="contract-status">计算中...</span>
+        </div>
+        <div class="status-row"><span class="label">安全协议:</span><span class="value-highlight">NDA已签署 / 副本待挂载</span></div>
+      </div>
+      <p><strong style="color:#808080;">标签 #上海纪元 #同仁堂祖庭 #契约化追踪</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2025.08.01/2026.01.30]</span>
+      <h3 class="log-title">核心逻辑重构：从“雇佣兵”到“架构师”</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>状态由“被动生存”切换至“主动对齐”。践行“U盘化生存”理念。</p>
+      <p><strong style="color:#808080;">标签 #谈判策略 #资产安全 #核心架构</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.12.30/2020.06.30]</span>
+      <h3 class="log-title">升级编译成功：软件工程·双证学位</h3>
+    </div>
+    <div class="log-content">
+      <p>底层逻辑完成升级，获得对命运“降维打击”的入场券。</p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.06.13]</span>
+      <h3 class="log-title">双核并行启动：龙凤呈祥协议激活（铭媛<span id="kids-age"></span>岁）</h3>
+    </div>
+    <div class="log-content">
+      <p>嘉铭、嘉媛同步降临。系统实现双线程情感并发。</p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2014.12.20/2015.03.08]</span>
+      <h3 class="log-title">双线程入职：协同模式启动（在嘉<span id="jx-age"></span>年）</h3>
+    </div>
+    <div class="log-content">
+      <p>接入嘉兴企业系统，开启“家庭-职业”混合架构稳定运行期。</p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2008.11.11/2013.01.10]</span>
+      <h3 class="log-title">信任链建立：从邂逅到法定绑定（结婚<span id="marry-age"></span>年）</h3>
+    </div>
+    <div class="log-content">
+      <p>2013年正式写入法律级持久化存储。共识机制名为“余生”。</p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2009.02.10]</span>
+      <h3 class="log-title">系统强制冷启动：顺利出院纪念 （重生<span id="cancer-age"></span>年）</h3>
+    </div>
+    <div class="log-content">
+      <p>2008年罹患重疾后重生。这是我“第二次人生”的元年。</p>
+    </div>
+  </div>
+
+  <div class="log-entry">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[1984.03.11]</span>
+      <h3 class="log-title">系统初始化：根系云梦泽 (今年<span id="age"></span>岁)</h3>
+    </div>
+    <div class="log-content">
+      <p>硬件出厂于湖北。生命时区锚定于甲子纪元。</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>乐哥创事记 © <script>document.write(new Date().getFullYear());</script> | <span id="icp-placeholder"></span></p>
+  </div>
+
+  <script>
+    const now = new Date();
+
+    // 1. 年度进度条 (自动同步更新)
+    const start = new Date(now.getFullYear(), 0, 1);
+    const end = new Date(now.getFullYear() + 1, 0, 1);
+    document.getElementById('life-progress-bar').style.width = ((now - start) / (end - start) * 100).toFixed(2) + '%';
+
+    // 2. 核心逻辑：试用期 vs 履约天数 自动切换
+    function updateContractStatus() {
+      const entryDate = new Date('2026-03-13');
+      const probationEndDate = new Date('2026-09-12T23:59:59');
+      const labelEl = document.getElementById('contract-label');
+      const statusEl = document.getElementById('contract-status');
+
+      if (now < probationEndDate) {
+        // 试用期阶段
+        const diff = probationEndDate - now;
+        labelEl.textContent = "试用阶段:";
+        statusEl.textContent = `距转正还有 ${Math.floor(diff/(1000*60*60*24))} 天`;
+      } else {
+        // 转正后阶段：显示履约统计
+        const diff = now - entryDate;
+        labelEl.textContent = "履约统计:";
+        statusEl.textContent = `系统已平稳运行 ${Math.floor(diff/(1000*60*60*24))} 天`;
+        statusEl.style.color = "#ffcc00"; // 架构师金
+      }
+    }
+
+    // 3. 通用年份计算
+    function getYears(dateStr) {
+      const s = new Date(dateStr);
+      let y = now.getFullYear() - s.getFullYear();
+      if (now < new Date(now.getFullYear(), s.getMonth(), s.getDate())) y--;
+      return y;
+    }
+
+    function toggleLog(el) {
+      const c = el.querySelector('.log-content');
+      const isExp = el.getAttribute('data-expanded') === 'true';
+      c.classList.toggle('expanded', !isExp);
+      el.setAttribute('data-expanded', !isExp);
+    }
+
+    window.onload = () => {
+      updateContractStatus();
+      document.getElementById('age').textContent = getYears('1984-04-11');
+      document.getElementById('cancer-age').textContent = getYears('2008-02-28');
+      document.getElementById('kids-age').textContent = getYears('2019-06-13');
+      document.getElementById('jx-age').textContent = getYears('2014-12-20');
+      document.getElementById('marry-age').textContent = getYears('2013-01-10');
+
+      // 自动校时显示
+      setInterval(() => {
+        const d = new Date();
+        document.getElementById('Main').textContent = d.toLocaleString();
+      }, 1000);
+
+      // 8秒后折叠历史
+      setTimeout(() => {
+        document.querySelectorAll('.log-entry').forEach(e => {
+          if(!e.innerHTML.includes('2026.03.13')) {
+            e.querySelector('.log-content').classList.remove('expanded');
+            e.setAttribute('data-expanded', 'false');
+          }
+        });
+      }, 8000);
+    };
+
+    const tg = document.getElementById('themeToggle');
+    tg.onclick = () => {
+      const d = document.documentElement;
+      const isDark = d.getAttribute('data-theme') === 'dark';
+      d.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    };
+  </script>
+</body>
+</html>

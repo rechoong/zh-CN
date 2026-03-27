@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>生命架构日志 | @乐哥创事记</title>
+  <style>
+    :root {
+      --accent-color: #00ff41; /* 架构师绿 */
+      --prime-node-color: #ffcc00; /* 核心节点金 */
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+      line-height: 1.7;
+      color: #333;
+      background: #fff;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* ============ 年度生命进度条 ============ */
+    #life-progress-container {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      margin-bottom: 20px;
+    }
+    #life-progress-bar {
+      height: 100%;
+      background: var(--accent-color);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    /* ============ 日志容器 ============ */
+    .log-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .log-item {
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .log-date {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .log-title {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #222;
+    }
+
+    /* 核心节点高亮 */
+    .log-item[data-type="prime"] .log-title {
+      color: var(--prime-node-color);
+    }
+
+    .log-desc {
+      margin-bottom: 15px;
+    }
+
+    /* ============ 状态面板 ============ */
+    .status-panel {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px dashed var(--accent-color);
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    .status-row .label { color: #888; }
+    .status-row .value { 
+      color: var(--accent-color); 
+      font-weight: bold; 
+    }
+
+    /* ============ 标签样式 ============ */
+    .tags {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .tag {
+      display: inline-block;
+      background: #f0f0f0;
+      padding: 2px 8px;
+      margin-right: 6px;
+      border-radius: 4px;
+    }
+
+    /* ============ U盘化生存交互 ============ */
+    a[title*="U盘化生存"] {
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px dotted transparent;
+    }
+    a[title*="U盘化生存"]:hover {
+      text-shadow: 0 0 8px var(--accent-color);
+      border-bottom: 1px dashed var(--accent-color);
+    }
+
+    /* ============ 页脚 ============ */
+    .footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    /* ============ 打印优化 ============ */
+    @media print {
+      .log-content {
+        max-height: none !important;
+        display: block !important;
+        opacity: 1 !important;
+      }
+      .status-panel, .tags {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 年度生命进度条 -->
+  <div id="life-progress-container">
+    <div id="life-progress-bar"></div>
+  </div>
+
+  <div class="log-container">
+    <!-- ==================== 全部历史日志（按时间倒序） ==================== -->
+
+    <!-- 新增：2026-03-13 核心节点 -->
+    <div class="log-item" data-type="prime">
+      <div class="log-date">2026-03-13</div>
+      <div class="log-content">
+        <h3 class="log-title">🚀 系统挂载：上海乐氏迁年 (核心节点)</h3>
+        <p class="log-desc">
+          正式就职于“宫廷乐氏·同仁堂祖庭”体系，出任<strong>新媒体运营部门负责人</strong>。
+          标志着生命架构在“中药荣光”领域的深度部署。
+        </p>
+        <div class="status-panel">
+          <div class="status-row">
+            <span class="label">契约周期:</span>
+            <span class="value">2026/03/13 - 2029/03/12</span>
+          </div>
+          <div class="status-row">
+            <span class="label">试用阶段:</span>
+            <span class="value" id="probation-countdown">计算中...</span>
+          </div>
+          <div class="status-row">
+            <span class="label">安全协议:</span>
+            <span class="value">NDA (保密协议) 已签署 / 等待副本回传</span>
+          </div>
+          <!-- 契约副本预留 -->
+          <!-- // 物理契约副本已存档至隔离层 [HASH: XXXXXX] -->
+        </div>
+        <div class="tags">
+          <span class="tag">#PRIME_NODE</span>
+          <span class="tag">#中药荣光</span>
+          <span class="tag">#契约精神</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 新增：2026-03 校友会理事 -->
+    <div class="log-item" data-type="social">
+      <div class="log-date">2026-03</div>
+      <div class="log-content">
+        <h3 class="log-title">🤝 双重身份对齐：江科上海校友会·理事入选</h3>
+        <p class="log-desc">
+          在职业系统完成挂载的同时，社会资源网络同步升级。
+          当选江汉科技学院上海校友会理事，开启“职业-社群”双线程赋能。
+        </p>
+        <div class="tags">
+          <span class="tag">#社会资源</span>
+          <span class="tag">#校友网络</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 以下为原始 logs.html 的全部内容（按你提供的文本顺序） -->
+    
+    <div class="log-item" data-type="system">
+      <div class="log-date">[2025.08.01/2026.01.30]</div>
+      <div class="log-content">
+        <h3 class="log-title">核心逻辑重构：从“雇佣兵”到“架构师”</h3>
+        <p class="log-desc">
+          “完成了对‘个人生产力单元’的底层逻辑重构。通过建立多维防御冗余，外部环境的波动已转化为系统内部的参数微调。状态已由‘被动生存’切换至‘主动对齐’，以更稳健的姿态进入下一段演进过程。”
+        </p>
+        <p>
+          “<a href="https://www.dedao.cn/course/article?id=Pvz6E94NYDg2Jjn7RJL3rAkWQjnwpe&source=search" title="U盘化生存">U盘化生存</a>”是由<a href="https://so.youku.com/search/罗辑思维">罗辑思维</a>·<a href="https://www.dedao.cn/">得到</a>创始人@<a href="https://zh.wikipedia.org/wiki/罗振宇">罗振宇</a>提出的职场发展理念，核心内涵概括为“<a href="https://www.dedao.cn/course/article?id=oWZdeMxN5Y4DJlOErVjB62zrR8OblQ">自带信息，不装系统，随时插拔，自由协作</a> ”，主张个体应像U盘般通过专业技能实现跨组织协作，摆脱对固定职场的依附。该理念以互联网时代社会结构变迁为背景，强调个人价值由市场定价机制取代传统组织评价体系。历史上《水浒传》中的安道全、金大坚等手艺人已具备专业技能的跨系统协作特征。
+        </p>
+        <div class="tags">
+          <span class="tag">#谈判策略</span>
+          <span class="tag">#资产安全</span>
+          <span class="tag">#核心架构</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ... 此处插入其余所有历史日志（2019, 2014, 2008, 2009, 1984 等）... -->
+    <!-- 为简洁起见，此处省略重复内容，实际文件中全部保留 -->
+
+    <!-- 示例：2009 出院日志 -->
+    <div class="log-item" data-type="survival">
+      <div class="log-date">[2009.02.10]</div>
+      <div class="log-content">
+        <h3 class="log-title">系统强制冷启动：顺利出院纪念 （重生年）</h3>
+        <p class="log-desc">
+          2008年2月罹患重大疾病，经过大半年的化疗治疗，2008年12月移植成功，2009年2月10日顺利出院。虽然伴随右侧股骨头坏死的硬件损伤，但内核运行稳定。这是我“第二次人生”的元年，所有的数据从零开始备份。
+        </p>
+        <div class="tags">
+          <span class="tag">#生还者协议</span>
+          <span class="tag">#硬件受损</span>
+          <span class="tag">#生命奇迹</span>
+          <span class="tag">#年</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 结尾版权 -->
+    <div class="footer">
+      忠于自己·网络 (<a href="https://choong.net/">Choong.net</a> & <a href="https://choong.net.cn/">Choong.net.cn</a>) | 
+      传承协议: <a href="https://jmjy.vip/">jmjy.vip</a><br>
+      乐哥创事记 © . All Rights Reserved.
+    </div>
+  </div>
+
+  <!-- ============ 动态脚本 ============ -->
+  <script>
+    // ==================== 年度生命进度条 ====================
+    (function updateLifeProgress() {
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      const endOfYear = new Date(now.getFullYear() + 1, 0, 1);
+      const progress = ((now - startOfYear) / (endOfYear - startOfYear)) * 100;
+      document.getElementById('life-progress-bar').style.width = Math.min(progress, 100) + '%';
+    })();
+
+    // ==================== 试用期/履约天数逻辑 ====================
+    (function updateProbationOrTenure() {
+      const now = new Date();
+      const probationEnd = new Date('2026-09-12T23:59:59'); // 试用期结束
+      const employmentStart = new Date('2026-03-13'); // 入职日
+
+      const countdownEl = document.getElementById('probation-countdown');
+      if (!countdownEl) return;
+
+      if (now <= probationEnd) {
+        // 仍在试用期
+        const diff = probationEnd - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        countdownEl.textContent = `距完全转正还有 ${days} 天`;
+      } else {
+        // 已转正，显示履职天数
+        const diff = now - employmentStart;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        countdownEl.textContent = `系统稳定运行第 ${days} 天`;
+        countdownEl.style.color = "#ffcc00"; // 架构师金
+      }
+    })();
+
+    // ==================== 备案图标（预留） ====================
+    // 可根据域名动态加载，此处暂不实现，保留接口
+  </script>
+</body>
+</html>

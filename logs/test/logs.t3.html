@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>生命架构日志 | @乐哥创事记</title>
+
+  <style>
+    /* ==================== 主题变量定义 ==================== */
+    :root {
+      --bg: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --border-color: #e0e0e0;
+      --header-color: #222222;
+      --accent-color: #07c160;
+      --log-border: #ddd;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #000000;
+      --text-primary: #0f0;
+      --text-secondary: #0a0;
+      --border-color: #0a0;
+      --header-color: #0a0;
+      --accent-color: #0f0;
+      --log-border: #0a0;
+      --font-family: "Courier New", Courier, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ==================== 进度条 & 光标 ==================== */
+    #life-progress-container {
+      width: 100%; height: 4px; background: #333; margin-bottom: 20px; border-radius: 2px; overflow: hidden;
+    }
+    #life-progress-bar { height: 100%; background: var(--accent-color); width: 0%; transition: width 1s; }
+
+    .cursor {
+      display: inline-block; width: 10px; height: 1.2rem; background-color: var(--accent-color);
+      animation: blink 1s infinite; vertical-align: middle; margin-left: 4px;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ==================== 头部布局 ==================== */
+    .header-container { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+    .title-section { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    h1 { color: var(--header-color); font-size: 24px; font-weight: bold; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+      background-color: var(--accent-color); border: none; border-radius: 6px; cursor: pointer; position: relative;
+    }
+    .tooltip {
+      position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.8); color: white; padding: 4px 8px; border-radius: 4px;
+      font-size: 12px; opacity: 0; visibility: hidden; transition: opacity 0.2s; margin-bottom: 5px;
+    }
+    .btn:hover .tooltip { opacity: 1; visibility: visible; }
+
+    /* ==================== 日志条目 ==================== */
+    .log-entry { margin-bottom: 30px; border-left: 2px solid var(--log-border); padding-left: 20px; }
+    .log-header { cursor: pointer; display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .log-date { font-weight: bold; color: var(--text-secondary); font-size: 16px; }
+    .log-title { color: var(--header-color); font-size: 20px; margin: 0; }
+    .log-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; opacity: 0; }
+    .log-content.expanded { max-height: 1000px; opacity: 1; overflow-y: visible; padding-bottom: 10px; }
+    .log-content p { margin-bottom: 10px; }
+
+    /* 状态面板 */
+    .status-panel { margin: 15px 0; padding: 12px; background: rgba(7, 193, 96, 0.05); border: 1px dashed var(--accent-color); font-family: 'Courier New', monospace; font-size: 0.85rem; }
+    .status-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .status-row .label { color: var(--text-secondary); }
+    .status-row .value { color: var(--accent-color); font-weight: bold; }
+
+    /* ==================== 页脚 ==================== */
+    .footer { margin-top: 50px; text-align: center; font-size: 14px; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 20px; }
+    .footer a { color: var(--text-secondary); text-decoration: none; }
+
+    @media print {
+      .action-buttons, .theme-toggle, .cursor, #life-progress-container { display: none !important; }
+      .log-content { max-height: none !important; opacity: 1 !important; display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="life-progress-container"><div id="life-progress-bar"></div></div>
+
+  <div class="header-container">
+    <div class="title-section">
+      <h1>SYSTEM_LOG // 生命架构日志<span class="cursor"></span></h1>
+      <div class="action-buttons">
+        <button class="btn" onclick="window.print()">🖨️<span class="tooltip">导出 PDF</span></button>
+        <button class="btn" id="copyBtn">📋<span class="tooltip">复制全文</span></button>
+      </div>
+      <span id="Main" style="color:#808080; font-size: 14px; font-weight: bold;"></span>
+    </div>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2026.03.13]</span>
+      <h3 class="log-title">🚀 系统挂载：上海乐氏迁年 (核心节点)</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>正式就职于“宫廷乐氏·同仁堂祖庭”体系，出任<strong>新媒体运营部门负责人</strong>。</p>
+      <div class="status-panel">
+        <div class="status-row"><span class="label">契约周期:</span><span class="value">2026/03/13 - 2029/03/12</span></div>
+        <div class="status-row"><span class="label">试用阶段:</span><span class="value" id="probation-countdown">计算中...</span></div>
+        <div class="status-row"><span class="label">安全协议:</span><span class="value">NDA已签署 / 副本待挂载</span></div>
+      </div>
+      <p><strong style="color:#808080;">标签 #上海纪元 #同仁堂祖庭 #契约化追踪</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2025.08.01/2026.01.30]</span>
+      <h3 class="log-title">核心逻辑重构：从“雇佣兵”到“架构师”</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>完成了对“个人生产力单元”的底层逻辑重构。状态已由“被动生存”切换至“主动对齐”。</p>
+      <p>践行“U盘化生存”：自带信息，不装系统，随时插拔，自由协作。</p>
+      <p><strong style="color:#808080;">标签 #谈判策略 #资产安全 #核心架构</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.12.30/2020.06.30]</span>
+      <h3 class="log-title">升级编译成功：软件工程·双证学位</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>历时数年，在病痛与还债间隙完成升级。拿到的不仅是证书，更是对命运“降维打击”的入场券。</p>
+      <p><strong style="color:#808080;">标签 #高等教育 #逻辑重塑 #系统升级</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2019.06.13]</span>
+      <h3 class="log-title">双核并行启动：龙凤呈祥协议激活（铭媛<span id="kids-age"></span>岁）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>嘉铭、嘉媛同步降临。系统实现双线程情感并发，幸福溢出缓冲区。从此防御矩阵由“童颜认证”守护。</p>
+      <p><strong style="color:#808080;">标签 #龙凤双胎 #传承协议jmjy.vip</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2014.12.20/2015.03.08]</span>
+      <h3 class="log-title">双线程入职：协同模式启动（在嘉<span id="jxworkage-years"></span>年）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>2014年12月接入嘉兴企业系统。2015年3月配偶同步注入组织。开启“家庭-职业”混合架构稳定运行期。</p>
+      <p><strong style="color:#808080;">标签 #职场同频 #嘉兴纪元 #双核驱动</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2008.11.11/2013.01.10]</span>
+      <h3 class="log-title">信任链建立：从邂逅到法定绑定（结婚<span id="marriage-years"></span>年）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>2008年11月握手成功。历经5年深度兼容测试，2013年正式写入法律级持久化存储。共识机制名为“余生”。</p>
+      <p><strong style="color:#808080;">标签 #安全连接 #五年磨合期 #婚姻登记日</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[2009.02.10]</span>
+      <h3 class="log-title">系统强制冷启动：顺利出院纪念 （重生<span id="cancer-years"></span>年）</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>2008年2月罹患重疾，化疗移植后于2009年2月顺利出院。虽然硬件受损（股骨头），但内核极其稳固。</p>
+      <p><strong style="color:#808080;">标签 #生还者协议 #硬件受损 #生命奇迹</strong></p>
+    </div>
+  </div>
+
+  <div class="log-entry" data-expanded="true">
+    <div class="log-header" onclick="toggleLog(this.parentElement)">
+      <span class="log-date">[1984.03.11]</span>
+      <h3 class="log-title">系统初始化：根系云梦泽，脉出荆楚地 (今年<span id="age"></span>岁)</h3>
+    </div>
+    <div class="log-content expanded">
+      <p>硬件出厂于湖北黄冈浠水巴河。农历甲子年三月十一，生命时区锚定在节气律动中。</p>
+      <p><strong style="color:#808080;">标签 #出生地协议 #文化基因 #荆楚之子</strong></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>乐哥创事记 © <script>document.write(new Date().getFullYear());</script> . All Rights Reserved.</p>
+    <p id="icp-footer"></p>
+  </div>
+
+  <script>
+    const now = new Date();
+
+    // 1. 生命进度
+    const startYear = new Date(now.getFullYear(), 0, 1);
+    const endYear = new Date(now.getFullYear() + 1, 0, 1);
+    document.getElementById('life-progress-bar').style.width = ((now - startYear) / (endYear - startYear) * 100).toFixed(2) + '%';
+
+    // 2. 试用期倒计时
+    function updateProbation() {
+      const end = new Date('2026-09-12T23:59:59');
+      const diff = end - now;
+      const el = document.getElementById('probation-countdown');
+      if (diff > 0) {
+        el.textContent = `距完全转正还有 ${Math.floor(diff/(1000*60*60*24))} 天`;
+      } else {
+        el.textContent = "系统已完全稳定 (已转正)";
+        el.style.color = "#ffcc00";
+      }
+    }
+
+    // 3. 年份计算逻辑 (精确对齐)
+    function getFullYears(dateStr) {
+      const start = new Date(dateStr);
+      let y = now.getFullYear() - start.getFullYear();
+      if (now < new Date(now.getFullYear(), start.getMonth(), start.getDate())) y--;
+      return y;
+    }
+
+    // 4. 时间显示
+    function tick() {
+      const d = new Date();
+      const week = ["周日","周一","周二","周三","周四","周五","周六"];
+      document.getElementById("Main").innerHTML = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${week[d.getDay()]} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
+      requestAnimationFrame(tick);
+    }
+
+    function toggleLog(el) {
+      const content = el.querySelector('.log-content');
+      const isExp = el.getAttribute('data-expanded') === 'true';
+      content.classList.toggle('expanded', !isExp);
+      el.setAttribute('data-expanded', !isExp);
+    }
+
+    window.onload = () => {
+      tick();
+      updateProbation();
+      document.getElementById('age').textContent = getFullYears('1984-04-11');
+      document.getElementById('cancer-years').textContent = getFullYears('2008-02-28');
+      document.getElementById('kids-age').textContent = getFullYears('2019-06-13');
+      document.getElementById('jxworkage-years').textContent = getFullYears('2014-12-20');
+      document.getElementById('marriage-years').textContent = getFullYears('2013-01-10');
+      
+      // 8秒后自动折叠旧日志，保留最新入职节点
+      setTimeout(() => {
+        document.querySelectorAll('.log-entry').forEach(entry => {
+          if (!entry.querySelector('.log-date').innerHTML.includes('2026.03.13')) {
+            entry.querySelector('.log-content').classList.remove('expanded');
+            entry.setAttribute('data-expanded', 'false');
+          }
+        });
+      }, 8000);
+    };
+
+    // 主题切换
+    const tg = document.getElementById('themeToggle');
+    tg.onclick = () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      tg.textContent = isDark ? '🌙' : '☀️';
+    };
+  </script>
+</body>
+</html>
