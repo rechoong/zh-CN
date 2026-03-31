@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【乐出东方】APP 数据通报卡片生成器</title>
+    <!-- 引入 html2canvas 库，用于截图 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- 引入 qrcode 库，用于生成二维码 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        /* --- 全局样式 --- */
+        :root {
+            --primary-color: #8B0000; /* 深红/朱红 */
+            --accent-color: #DAA520; /* 金色 */
+            --text-main: #333333;
+            --text-sub: #666666;
+            --text-light: #999999;
+            --card-width: 375px;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        h1 { margin-bottom: 20px; font-size: 1.5rem; color: var(--primary-color); }
+
+        /* --- 布局 --- */
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* --- 左侧控制面板 --- */
+        .controls {
+            flex: 1;
+            min-width: 320px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: bold; font-size: 0.85rem; color: var(--text-sub); }
+        .form-group input[type="text"], 
+        .form-group input[type="number"],
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+        
+        .section-title-control {
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* 勾选框样式 */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .checkbox-item input { margin-right: 5px; }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #5c0000; }
+        .btn-outline { background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); }
+        .btn-outline:hover { background: #fff5f5; }
+        
+        .btn-export {
+            background-color: #27ae60; /* 绿色按钮 */
+            margin-top: 10px;
+        }
+        .btn-export:hover { background-color: #219150; }
+
+        /* --- 右侧卡片预览 --- */
+        .preview-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- 卡片核心样式 --- */
+        #share-card {
+            width: var(--card-width);
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        /* 头部：时间与标题 */
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), #a52a2a);
+            padding: 20px 25px;
+            color: white;
+            position: relative;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+        .app-title { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; margin: 0; }
+        .live-time { font-size: 0.8rem; opacity: 0.9; font-family: 'Arial', sans-serif; }
+        .header-date { font-size: 0.85rem; opacity: 0.8; }
+
+        /* 核心数据区域 */
+        .data-container {
+            padding: 20px;
+            background: #fff;
+        }
+        .core-data-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .core-data-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            background: #fdfbf7;
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+        }
+        .core-val { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); font-family: 'Arial', sans-serif; }
+        .core-label { font-size: 0.9rem; color: var(--text-sub); margin-top: 5px; font-weight: bold; }
+
+        /* 次要数据网格 (可选) */
+        .sub-data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px dashed #eee;
+        }
+        .sub-data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+        }
+        .sub-label { font-size: 0.8rem; color: var(--text-sub); }
+        .sub-val { font-size: 1rem; font-weight: bold; color: var(--text-main); font-family: 'Arial', sans-serif; }
+
+        /* 直播信息区域 */
+        .live-preview {
+            margin: 0 20px;
+            padding: 20px;
+            background: linear-gradient(to bottom, #fff, #fffbf0);
+            border-radius: 12px;
+            border: 1px solid #fcebb6;
+            position: relative;
+        }
+        .live-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .live-badge {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .live-schedule {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-weight: bold;
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .live-topic {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .live-guest {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .live-guest::before {
+            content: '🎙️';
+            margin-right: 5px;
+        }
+        .live-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .tag {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            background: rgba(139, 0, 0, 0.1);
+            color: var(--primary-color);
+            border-radius: 4px;
+        }
+        .live-desc {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            line-height: 1.5;
+            border-top: 1px dashed #ddd;
+            padding-top: 10px;
+        }
+
+        /* 底部二维码 */
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px 10px;
+            gap: 15px;
+        }
+        #qrcode img { display: block; }
+        .qr-info { text-align: left; }
+        .qr-title { font-size: 0.9rem; font-weight: bold; color: var(--text-main); }
+        .qr-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
+
+        /* 历史记录表格 */
+        .history-section {
+            width: 100%;
+            margin-top: 40px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-sizing: border-box;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; color: var(--text-light); }
+        .action-btn { color: var(--primary-color); cursor: pointer; margin-right: 10px; }
+
+    </style>
+</head>
+
+<body>
+
+    <h1>【乐出东方】APP 数据通报·日更·海报生成器</h1>
+
+    <div class="container">
+        <!-- 1. 输入控制区 -->
+        <div class="controls">
+            <div class="section-title-control">⏰ 基础信息</div>
+            <div class="form-group">
+                <label>统计日期</label>
+                <input type="date" id="inputDate">
+            </div>
+
+            <div class="section-title-control">📊 核心数据 (必显)</div>
+            <div class="form-group">
+                <label>APP 总注册量</label>
+                <input type="number" id="inputTotalReg" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label>APP 直播在线观看量</label>
+                <input type="number" id="inputLiveViews" placeholder="0">
+            </div>
+
+            <div class="section-title-control">📈 详细数据 (勾选显示) <b style="color:#808080;text-decoration:none;">（ 来源：
+            						<img class="bottom" src="https://choong.net.cn/tools/2026/logo-1.jpeg" height="15"
+            							width="15" />
+            						<a href="http://ff.yiyuehuiyou.cn/gjdu6y" style="color:#808080;text-decoration:none;" target="_blank" 
+            							title="【更新升级】乐出东方-APP下载" />
+            						乐出东方</a> ｜
+            						<a href="http://dsp.yiyuehuiyou.cn/admin/" style="color:#808080;text-decoration:none;" target="_blank" title="乐出东方-APP后台管理中心" />
+            						后台管理</a>&nbsp;）</b></div>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" id="checkNewUser" onchange="generateCard()"> 新增用户</label>
+                <label class="checkbox-item"><input type="checkbox" id="checkActiveUser" onchange="generateCard()"> 活跃用户</label>
+                <label class="checkbox-item"><input type="checkbox" id="checkStartTimes" onchange="generateCard()"> 启动次数</label>
+                <label class="checkbox-item"><input type="checkbox" id="checkDuration" onchange="generateCard()"> 使用时长</label>
+            </div>
+            <!-- 详细数据输入框 -->
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex:1">
+                    <label>新增用户</label>
+                    <input type="number" id="inputNewUser" placeholder="0">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>活跃用户</label>
+                    <input type="number" id="inputActiveUser" placeholder="0">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex:1">
+                    <label>启动次数</label>
+                    <input type="number" id="inputStartTimes" placeholder="0">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>使用时长(分)</label>
+                    <input type="number" id="inputDuration" placeholder="0">
+                </div>
+            </div>
+
+            <div class="section-title-control">🎙️ 直播信息配置</div>
+            <div class="form-group">
+                <label>板块抬头 (如：直播预告/回顾)</label>
+                <input type="text" id="inputSectionTitle" value="直播回顾">
+            </div>
+            <div class="form-group">
+                <label>直播具体时间</label>
+                <input type="text" id="inputLiveTime" placeholder="例如：昨晚 19:00" value="昨晚 19:00">
+            </div>
+            <div class="form-group">
+                <label>直播主题</label>
+                <input type="text" id="inputTopic" value="2026丙午马年「大清之年」如何清？">
+            </div>
+            <div class="form-group">
+                <label>嘉宾姓名</label>
+                <input type="text" id="inputGuest" value="主播号@吴国玺">
+            </div>
+            <div class="form-group">
+                <label>嘉宾头衔 (用空格分隔)</label>
+                <input type="text" id="inputTitles" value="中医香疗非遗传承人亲传弟子 宫廷乐氏香佩总裁">
+            </div>
+            <div class="form-group">
+                <label>核心亮点/简介</label>
+                <textarea id="inputDesc" rows="3" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">清身体、清环境、清运势，解锁一整年好状态。</textarea>
+            </div>
+
+            <div class="section-title-control">🔗 下载链接</div>
+            <div class="form-group">
+                <label>APP 下载链接</label>
+                <input type="text" id="inputLink" value="https://mobile.baidu.com/item?pid=5000109292&source=appbaidu">
+            </div>
+
+            <button class="btn" onclick="generateCard()">🔄 更新预览</button>
+            <button class="btn btn-outline" onclick="saveToHistory()">💾 保存记录</button>
+        </div>
+
+        <!-- 2. 卡片预览区 -->
+        <div class="preview-area">
+            <div id="share-card">
+                <!-- 头部 -->
+                <div class="card-header">
+                    <div class="header-top">
+                        <h2 class="app-title"><img style="vertical-align:text-bottom;width: 55%; height: 55%;" src="宫廷乐氏-乐出东方-logo.png" title="乐出东方APP 数据通报" alt="Logo">
+                        数据通报</h2>
+                        <div class="live-time" id="cardClock">14:30:00</div>
+                    </div>
+                    <div class="header-date" id="cardDateDetail">2026年03月31日 星期二</div>
+                </div>
+                
+                <!-- 数据区域 -->
+                <div class="data-container">
+                    <!-- 核心数据 -->
+                    <div class="core-data-row">
+                        <div class="core-data-item">
+                            <div class="core-val" id="cardTotalReg">0</div>
+                            <div class="core-label">总注册量</div>
+                        </div>
+                        <div class="core-data-item">
+                            <div class="core-val" id="cardLiveViews">0</div>
+                            <div class="core-label">直播在线</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 详细数据 (动态显示) -->
+                    <div class="sub-data-grid" id="subDataGrid">
+                        <!-- JS 动态插入 -->
+                    </div>
+                </div>
+
+                <!-- 直播信息 -->
+                <div class="live-preview">
+                    <div class="live-header-row">
+                        <div class="live-badge" id="cardSectionTitle">直播预告</div>
+                        <div class="live-schedule" id="cardLiveTime">今晚 19:00</div>
+                    </div>
+                    <div class="live-topic" id="cardTopic">主题</div>
+                    <div class="live-guest" id="cardGuest">嘉宾</div>
+                    <div class="live-tags" id="cardTags">
+                        <!-- 标签由JS生成 -->
+                    </div>
+                    <div class="live-desc" id="cardDesc">
+                        简介内容
+                    </div>
+                </div>
+
+                <!-- 底部二维码 -->
+                <div class="card-footer">
+                    <div id="qrcode"></div>
+                    <div class="qr-info">
+                        <div class="qr-title">👈扫码:普通下载 APP</div>
+                        <div class="qr-sub">用我千年古方 · 护您百年健康</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn" style="width: 200px;" onclick="downloadImage()">📸 生成海报</button>
+        </div>
+    </div>
+
+    <!-- 3. 历史数据汇总区 -->
+    <div class="history-section">
+        <div class="history-header">
+            <h3>📜 历史记录</h3>
+            <button class="btn btn-export" style="width: auto; margin:0; padding: 8px 16px;" onclick="exportToCSV()">📥 导出完整报表</button>
+        </div>
+        <table id="historyTable">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>总注册</th>
+                    <th>直播在线</th>
+                    <th>直播主题</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // --- 1. 实时时钟功能 ---
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('zh-CN', { hour12: false });
+            document.getElementById('cardClock').innerText = timeStr;
+            
+            const dateStr = now.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            document.getElementById('cardDateDetail').innerText = dateStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- 2. 核心功能：更新卡片 ---
+        function generateCard() {
+            // 获取核心数据
+            const totalReg = document.getElementById('inputTotalReg').value;
+            const liveViews = document.getElementById('inputLiveViews').value;
+            
+            // 获取详细数据
+            const newUser = document.getElementById('inputNewUser').value;
+            const activeUser = document.getElementById('inputActiveUser').value;
+            const startTimes = document.getElementById('inputStartTimes').value;
+            const duration = document.getElementById('inputDuration').value;
+
+            // 获取直播信息
+            const sectionTitle = document.getElementById('inputSectionTitle').value;
+            const liveTime = document.getElementById('inputLiveTime').value;
+            const topic = document.getElementById('inputTopic').value;
+            const guest = document.getElementById('inputGuest').value;
+            const titles = document.getElementById('inputTitles').value;
+            const desc = document.getElementById('inputDesc').value;
+            const link = document.getElementById('inputLink').value;
+
+            // 更新核心数据
+            document.getElementById('cardTotalReg').innerText = totalReg || '0';
+            document.getElementById('cardLiveViews').innerText = liveViews || '0';
+
+            // 处理详细数据展示 (根据勾选)
+            const subGrid = document.getElementById('subDataGrid');
+            subGrid.innerHTML = ''; // 清空旧内容
+            
+            // 定义详细数据配置
+            const subDataItems = [
+                { id: 'checkNewUser', val: newUser, label: '新增用户' },
+                { id: 'checkActiveUser', val: activeUser, label: '活跃用户' },
+                { id: 'checkStartTimes', val: startTimes, label: '启动次数' },
+                { id: 'checkDuration', val: duration, label: '使用时长(分)' }
+            ];
+
+            // 遍历生成 HTML
+            subDataItems.forEach(item => {
+                if (document.getElementById(item.id).checked) {
+                    const div = document.createElement('div');
+                    div.className = 'sub-data-item';
+                    div.innerHTML = `
+                        <span class="sub-label">${item.label}</span>
+                        <span class="sub-val">${item.val || '0'}</span>
+                    `;
+                    subGrid.appendChild(div);
+                }
+            });
+
+            // 如果有勾选，显示网格，否则隐藏
+            if (subGrid.children.length > 0) {
+                subGrid.style.display = 'grid';
+            } else {
+                subGrid.style.display = 'none';
+            }
+
+            // 更新直播信息
+            document.getElementById('cardSectionTitle').innerText = sectionTitle;
+            document.getElementById('cardLiveTime').innerText = liveTime;
+            document.getElementById('cardTopic').innerText = topic;
+            document.getElementById('cardGuest').innerText = guest;
+            document.getElementById('cardDesc').innerText = desc;
+
+            // 生成头衔标签
+            const tagsContainer = document.getElementById('cardTags');
+            tagsContainer.innerHTML = '';
+            if(titles) {
+                const titleArr = titles.split(/\s+/);
+                titleArr.forEach(t => {
+                    if(t.trim()) {
+                        const span = document.createElement('span');
+                        span.className = 'tag';
+                        span.innerText = t;
+                        tagsContainer.appendChild(span);
+                    }
+                });
+            }
+
+            // 生成二维码
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = ""; 
+            new QRCode(qrContainer, {
+                text: link,
+                width: 80,
+                height: 80,
+                colorDark : "#8B0000", 
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        // --- 3. 生成图片 ---
+        function downloadImage() {
+            const cardElement = document.getElementById('share-card');
+            setTimeout(() => {
+                html2canvas(cardElement, {
+                    scale: 2, 
+                    useCORS: true,
+                    backgroundColor: "#ffffff"
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `乐出东方日报_${document.getElementById('inputDate').value}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }, 500);
+        }
+
+        // --- 4. 导出 CSV 报表 ---
+        function exportToCSV() {
+            if (historyData.length === 0) {
+                alert('暂无数据可导出');
+                return;
+            }
+
+            // 定义表头
+            let csvContent = "\uFEFF"; // 添加 BOM 以支持 Excel 打开中文不乱码
+            csvContent += "日期,总注册量,直播在线人数";
+            
+            // 动态添加详细数据的表头
+            if (document.getElementById('checkNewUser').checked) csvContent += ",新增用户";
+            if (document.getElementById('checkActiveUser').checked) csvContent += ",活跃用户";
+            if (document.getElementById('checkStartTimes').checked) csvContent += ",启动次数";
+            if (document.getElementById('checkDuration').checked) csvContent += ",使用时长(分)";
+            
+            csvContent += ",直播主题,嘉宾\n";
+
+            // 添加数据行
+            historyData.forEach(row => {
+                csvContent += `${row.date},`;
+                csvContent += `${row.totalReg},`;
+                csvContent += `${row.liveViews},`;
+
+                // 动态添加详细数据
+                if (document.getElementById('checkNewUser').checked) csvContent += `${row.newUser || 0},`;
+                if (document.getElementById('checkActiveUser').checked) csvContent += `${row.activeUser || 0},`;
+                if (document.getElementById('checkStartTimes').checked) csvContent += `${row.startTimes || 0},`;
+                if (document.getElementById('checkDuration').checked) csvContent += `${row.duration || 0},`;
+
+                csvContent += `"${row.topic}",${row.guest}\n`;
+            });
+
+            // 创建下载链接
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `乐出东方_历史数据报表_${new Date().getTime()}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- 5. 历史记录管理 ---
+        let historyData = JSON.parse(localStorage.getItem('ledf_history_v5')) || [];
+
+        function saveToHistory() {
+            // 获取当前勾选状态和数值
+            const newItem = {
+                id: Date.now(),
+                date: document.getElementById('inputDate').value,
+                totalReg: document.getElementById('inputTotalReg').value,
+                liveViews: document.getElementById('inputLiveViews').value,
+                // 详细数据
+                newUser: document.getElementById('inputNewUser').value,
+                activeUser: document.getElementById('inputActiveUser').value,
+                startTimes: document.getElementById('inputStartTimes').value,
+                duration: document.getElementById('inputDuration').value,
+                // 直播信息
+                topic: document.getElementById('inputTopic').value,
+                guest: document.getElementById('inputGuest').value
+            };
+
+            historyData.unshift(newItem);
+            localStorage.setItem('ledf_history_v5', JSON.stringify(historyData));
+            renderHistoryTable();
+            alert('数据已保存至本地！');
+        }
+
+        function renderHistoryTable() {
+            const tbody = document.getElementById('historyBody');
+            tbody.innerHTML = '';
+
+            historyData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.date}</td>
+                    <td>${item.totalReg}</td>
+                    <td>${item.liveViews}</td>
+                    <td>${item.topic}</td>
+                    <td>
+                        <span class="action-btn" onclick="loadHistoryItem(${item.id})">加载</span>
+                        <span class="action-btn" style="color:red" onclick="deleteHistoryItem(${item.id})">删除</span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function loadHistoryItem(id) {
+            const item = historyData.find(d => d.id === id);
+            if (item) {
+                document.getElementById('inputDate').value = item.date;
+                document.getElementById('inputTotalReg').value = item.totalReg;
+                document.getElementById('inputLiveViews').value = item.liveViews;
+                document.getElementById('inputNewUser').value = item.newUser;
+                document.getElementById('inputActiveUser').value = item.activeUser;
+                document.getElementById('inputStartTimes').value = item.startTimes;
+                document.getElementById('inputDuration').value = item.duration;
+                document.getElementById('inputTopic').value = item.topic;
+                document.getElementById('inputGuest').value = item.guest;
+                
+                generateCard();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function deleteHistoryItem(id) {
+            if(confirm('确定删除这条记录吗？')) {
+                historyData = historyData.filter(d => d.id !== id);
+                localStorage.setItem('ledf_history_v5', JSON.stringify(historyData));
+                renderHistoryTable();
+            }
+        }
+
+        // --- 6. 页面初始化 ---
+        document.getElementById('inputDate').valueAsDate = new Date();
+        generateCard();
+        renderHistoryTable();
+
+    </script>
+</body>
+</html>
