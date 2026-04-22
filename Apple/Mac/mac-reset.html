@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- 文档类型：HTML5 -->
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 编码：UTF-8 保证中文不乱码 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 自适应：手机/平板/电脑都适配 -->
+    <title>MacBook Air M4 系统恢复重置指南</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* 主容器：居中、最大宽度、卡片风格 */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        /* 标题样式 */
+        h1 {
+            font-size: 24px;
+            color: #1d1d1f;
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 26px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #1d1d1f;
+            margin: 30px 0 14px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            width: 4px;
+            height: 20px;
+            background-color: #0071e3;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #222;
+            margin: 16px 0 10px 0;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        /* 列表样式 */
+        ul, ol {
+            margin-left: 24px;
+            color: #333;
+            margin-bottom: 18px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* 提示框 */
+        .tip {
+            background-color: #e6f7ff;
+            border-left: 4px solid #0071e3;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* 警告框 */
+        .warn {
+            background-color: #fff7e6;
+            border-left: 4px solid #ff9500;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* 代码/命令高亮 */
+        code {
+            background: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Menlo, monospace;
+            color: #d92525;
+        }
+
+        /* 区块间距 */
+        .section {
+            margin-bottom: 36px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>MacBook Air M4 系统恢复重置完整指南</h1>
+
+        <div class="warn">
+            <strong>⚠️ 重要提醒：</strong><br>
+            重置会<strong>删除所有数据</strong>，请先备份重要文件！
+        </div>
+
+        <div class="section">
+            <h2>一、恢复前准备工作</h2>
+            <ul>
+                <li>备份文件到 U 盘、移动硬盘或 iCloud</li>
+                <li>退出 Apple ID（系统设置 → 顶部个人头像 → 退出登录）</li>
+                <li>关闭 FileVault 加密（如已开启）</li>
+                <li>连接电源，避免中途断电</li>
+                <li>准备好 Wi‑Fi 密码（重装系统需要联网）</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>二、方案一：快速重置（推荐，保留当前系统）</h2>
+            <p>适合：系统正常，只是文件/软件杂乱，想快速恢复干净状态。</p>
+            <ol>
+                <li>点击左上角  → 系统设置</li>
+                <li>左侧选择 <strong>通用</strong> → <strong>传输或还原 Mac</strong></li>
+                <li>点击 <strong>抹掉所有内容和设置</strong></li>
+                <li>输入管理员密码，按提示确认抹掉</li>
+                <li>等待自动重启，进入初始化向导</li>
+                <li>选择<strong>不传输任何数据</strong>，即可得到全新系统</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>三、方案二：彻底重装系统（最干净）</h2>
+            <p>适合：系统卡顿、异常、想完全清空磁盘重装。</p>
+
+            <h3>1. 进入恢复模式</h3>
+            <ol>
+                <li>点击  → 关机</li>
+                <li>长按 <strong>电源键</strong> 不放，直到出现「加载启动选项」</li>
+                <li>选择 <strong>选项</strong> → 继续</li>
+                <li>选择管理员账户，输入密码进入恢复工具</li>
+            </ol>
+
+            <h3>2. 抹掉硬盘</h3>
+            <ol>
+                <li>选择 <strong>磁盘工具</strong> → 继续</li>
+                <li>左侧选中 <strong>APPLE SSD（顶层磁盘）</strong></li>
+                <li>点右上角 <strong>抹掉</strong></li>
+                <li>名称：Macintosh HD<br>格式：<strong>APFS</strong><br>方案：GUID 分区图</li>
+                <li>确认抹掉，完成后退出磁盘工具</li>
+            </ol>
+
+            <h3>3. 重新安装 macOS</h3>
+            <ol>
+                <li>回到恢复界面，选择 <strong>重新安装 macOS</strong></li>
+                <li>点继续，选择 <strong>Macintosh HD</strong> 作为目标磁盘</li>
+                <li>等待下载并安装（30~90 分钟，自动重启多次）</li>
+                <li>重启后按向导设置，选择<strong>不传输任何数据</strong></li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>四、初始化设置建议（保持干净）</h2>
+            <ul>
+                <li>国家/地区：中国</li>
+                <li>网络：连接 Wi‑Fi</li>
+                <li>数据迁移：<strong>不传输任何信息</strong></li>
+                <li>Apple ID：可先跳过，后续再登录</li>
+                <li>创建本地账户（用户名+密码）</li>
+                <li>关闭不必要的分析、定位等</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>五、常见问题</h2>
+            <ul>
+                <li><strong>抹不掉磁盘</strong>：关闭 FileVault 或退出 Apple ID</li>
+                <li><strong>下载慢</strong>：换 5GHz Wi‑Fi 或用手机热点</li>
+                <li><strong>无法进入恢复</strong>：关机 → 长按电源键直到出现选项</li>
+                <li><strong>激活锁</strong>：必须先退出原 Apple ID</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <strong>✅ 恢复完成后建议：</strong><br>
+            只安装必要软件，关闭多余开机启动项，系统会非常清爽流畅。
+        </div>
+    </div>
+</body>
+</html>
