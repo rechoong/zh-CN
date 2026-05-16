@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>GitHub 从 0 到 1 全流程指南（MacBook Air M4）</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.7; padding: 40px; max-width: 900px; margin: auto; }
+h1, h2, h3 { color: #333; }
+code { background: #f4f4f4; padding: 3px 6px; border-radius: 4px; }
+pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; }
+hr { margin: 40px 0; }
+</style>
+</head>
+<body>
+
+<h1>GitHub 从 0 到 1 全流程指南（MacBook Air M4）</h1>
+<p>适用于：Git 初学者、GitHub Pages、SSH 配置、分支管理、视频文件推送。</p>
+
+<hr>
+
+<h2>目录</h2>
+<ol>
+  <li>检查 Git 是否已安装</li>
+  <li>配置 Git 用户名与邮箱</li>
+  <li>生成 SSH Key 并绑定 GitHub</li>
+  <li>克隆仓库到本地</li>
+  <li>创建 web 分支（用于网页端开发）</li>
+  <li>推送 41.5MB MP4 视频文件</li>
+  <li>解决 GitHub 邮箱隐私保护导致的推送失败</li>
+</ol>
+
+<hr>
+
+<h2>1. 检查 Git 是否已安装</h2>
+<pre><code>git --version</code></pre>
+<p>MacBook Air M4 自带 Git，只要能看到版本号即可。</p>
+
+<hr>
+
+<h2>2. 配置 Git 用户名与邮箱</h2>
+<pre><code>git config --global user.name "taoste"
+git config --global user.email "taoste@gmail.com"
+</code></pre>
+
+<p>查看配置：</p>
+<pre><code>git config --list</code></pre>
+
+<hr>
+
+<h2>3. 生成 SSH Key 并绑定 GitHub</h2>
+
+<h3>3.1 生成 SSH Key</h3>
+<pre><code>ssh-keygen -t rsa -b 4096 -C "taoste@gmail.com"</code></pre>
+
+<h3>3.2 启动 SSH agent 并添加私钥</h3>
+<pre><code>eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+</code></pre>
+
+<h3>3.3 查看公钥并复制</h3>
+<pre><code>cat ~/.ssh/id_rsa.pub</code></pre>
+
+<h3>3.4 添加到 GitHub</h3>
+<p>GitHub → Settings → SSH and GPG keys → New SSH Key</p>
+
+<h3>3.5 测试连接</h3>
+<pre><code>ssh -T git@github.com</code></pre>
+
+<p>成功提示：</p>
+<pre><code>Hi taoste! You've successfully authenticated, but GitHub does not provide shell access.</code></pre>
+
+<hr>
+
+<h2>4. 克隆仓库到本地</h2>
+<pre><code>git clone git@github.com:ycdf/ycdf.github.io.git
+cd ycdf.github.io
+</code></pre>
+
+<hr>
+
+<h2>5. 创建 web 分支（用于网页端开发）</h2>
+
+<h3>5.1 查看当前分支</h3>
+<pre><code>git branch</code></pre>
+
+<h3>5.2 创建并切换到 web 分支</h3>
+<pre><code>git checkout -b web</code></pre>
+
+<h3>5.3 推送 web 分支到 GitHub</h3>
+<pre><code>git push -u origin web</code></pre>
+
+<hr>
+
+<h2>6. 推送 41.5MB MP4 视频文件（可直接推送）</h2>
+
+<h3>6.1 将视频放入仓库目录</h3>
+<pre><code>cp /路径/sige.mp4 ~/ycdf.github.io/live/</code></pre>
+
+<h3>6.2 添加并提交</h3>
+<pre><code>git add .
+git commit -m "添加司歌视频 sige.mp4（41.5MB）"
+</code></pre>
+
+<h3>6.3 推送</h3>
+<pre><code>git push</code></pre>
+
+<hr>
+
+<h2>7. 解决 GitHub 邮箱隐私保护导致的推送失败（GH007）</h2>
+
+<p>错误提示：</p>
+<pre><code>remote: error: GH007: Your push would publish a private email address.</code></pre>
+
+<h3>7.1 使用 GitHub 提供的匿名邮箱（推荐）</h3>
+<pre><code>git config --global user.email "taoste@users.noreply.github.com"
+git config user.email "taoste@users.noreply.github.com"
+</code></pre>
+
+<h3>7.2 修复上一次提交的作者信息</h3>
+<pre><code>git commit --amend --reset-author</code></pre>
+
+<h3>7.3 强制推送</h3>
+<pre><code>git push -f</code></pre>
+
+<hr>
+
+<h2>附录：网页中引用视频</h2>
+<pre><code>&lt;video src="live/sige.mp4" controls width="100%"&gt;&lt;/video&gt;
+</code></pre>
+
+<hr>
+
+<h2>文档结束</h2>
+<p>本 HTML 文档可长期保存，用于 GitHub 工作流学习与复习。</p>
+
+</body>
+</html>
