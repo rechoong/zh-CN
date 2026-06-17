@@ -1,4 +1,4 @@
-<!--更新：回放用户数据（2026年4月9日 周四 19点46分）-->
+<!--更新：下载链接（2026年6月17日 周三 16点05分）-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -287,7 +287,7 @@
         .qr-info { text-align: left; }
         .qr-title { font-size: 0.9rem; font-weight: bold; color: var(--text-main); }
         .qr-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
-
+        .qr-url { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
         /* 历史记录表格 */
         .history-section {
             width: 100%;
@@ -313,7 +313,7 @@
 
 <body>
 
-    <h1>【乐出东方】APP 数据通报·日更·海报生成器</h1>
+    <h1><img class="bottom" src="https://choong.net.cn/tools/2026/logo-1.jpeg" height="25" width="25" />【乐出东方】APP 数据通报·日更·海报生成器</h1>
 
     <div class="container">
         <!-- 1. 输入控制区 -->
@@ -334,14 +334,13 @@
                 <input type="number" id="inputLiveViews" placeholder="0">
             </div>
 
-            <div class="section-title-control">📈 详细数据 (勾选/显示) <b style="color:#808080;text-decoration:none;">（ 来源：
-            						<img class="bottom" src="https://choong.net.cn/tools/2026/logo-1.jpeg" height="15"
-            							width="15" />
-            						<a href="https://ycdf.choong.net.cn/" style="color:#808080;text-decoration:none;" target="_blank" 
-            							title="【更新升级】乐出东方-APP下载" />
-            						乐出东方</a> ｜
-            						<a href="http://dsp.yiyuehuiyou.cn/admin/" style="color:#808080;text-decoration:none;" target="_blank" title="乐出东方-APP后台管理中心" />
-            						后台管理</a>&nbsp;）</b></div>
+            <div class="section-title-control">📈 详细数据 (勾选/显示)<b style="color:#808080;text-decoration:none;">（ <a href="https://cloud.tencent.com/" style="color:#808080;text-decoration:none;" target="_blank" 
+            							title="腾讯云 产业智变·云启未来 - 腾讯">腾讯云</a>：<a href="https://ycdf.net.cn/" style="color:#808080;text-decoration:none;" target="_blank" 
+            							title="【乐出东方】品牌官网 ycdf.net.cn">ycdf</a>.<a href="https://ycdf.choong.net.cn/" style="color:#808080;text-decoration:none;" target="_blank" 
+            							title="【更新升级】乐出东方-APP下载" />net</a>.cn｜<a href="http://dsp.yiyuehuiyou.cn/admin/" style="color:#808080;text-decoration:none;" target="_blank" title="乐出东方-APP后台管理中心" />
+            						APP后台</a>｜<a href="https://mp.weixin.qq.com/" style="color:#808080;text-decoration:none;" target="_blank" title="微信公众平台">MP</a>·<a href="https://m.sesunai.cn/sup/login.jsp" style="color:#808080;text-decoration:none;" target="_blank" 
+            							title="【陕西美赞】2+1推客云管理后台">小程序</a>）
+			</b></div>
             <div class="checkbox-group">
                 <label class="checkbox-item"><input type="checkbox" id="checkNewUser" onchange="generateCard()">新增用户</label>
                 <label class="checkbox-item"><input type="checkbox" id="checkActiveUser" onchange="generateCard()">回放用户</label>
@@ -377,11 +376,11 @@
             </div>
             <div class="form-group">
                 <label>直播具体时间</label>
-                <input type="text" id="inputLiveTime" placeholder="例如：昨晚 19:00" value="昨晚 / 2026年4月9日 周四 19:00">
+                <input type="text" id="inputLiveTime" placeholder="例如：昨晚 19:00" value="昨晚 / 2026年6月18日 周四 19:00">
             </div>
             <div class="form-group">
                 <label>直播主题</label>
-                <input type="text" id="inputTopic" value="2026丙午马年「大清之年」如何清？">
+                <input type="text" id="inputTopic" value="修心与环境的关系">
             </div>
             <div class="form-group">
                 <label>嘉宾姓名</label>
@@ -399,7 +398,7 @@
             <div class="section-title-control">🔗 下载链接</div>
             <div class="form-group">
                 <label>APP 下载链接</label>
-                <input type="text" id="inputLink" value="https://mobile.baidu.com/item?pid=5000109292&source=appbaidu">
+                <input type="text" id="inputLink" title="乐出东方 - 官方APP下载" value="https://www.ycdf.net.cn/download/down.html">
             </div>
 
             <button class="btn" onclick="generateCard()">🔄 更新预览</button>
@@ -459,8 +458,9 @@
                 <div class="card-footer">
                     <div id="qrcode"></div>
                     <div class="qr-info">
-                        <div class="qr-title">👈扫码:[普通下载]APP</div>
+                        <div class="qr-title">👈下载: [乐出东方] APP</div>
                         <div class="qr-sub">用我千年古方 · 护您百年健康</div>
+						<div class="qr-url">乐出东方 https://ycdf.net.cn</div>
                     </div>
                 </div>
             </div>
