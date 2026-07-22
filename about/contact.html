@@ -95,12 +95,21 @@
             gap: 6px;
             margin-bottom: 25px;
         }
+		
+	/* 已认证图标 */
+	 .profile_enterprise_item_main_showTip .profile_enterprise_item_main_showTip_icon_Auth {
+				display: inline-block;
+				width: 60px;
+				height: 18px;
+				background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAA2CAMAAABZa0PTAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABFUExURUdwTB+/Px28Qxy/Px+8QR28Qh69Qh29QR69Qh28Qh68Qh+9Px69Qh28Qh29Qh28Qh69Q////47eoanmuDDDU9Xz3HfXjSKgrNoAAAAQdFJOUwAg7xBA35+Av2BwMK/QUJB9tsTeAAAESklEQVRo3tWa54LbIAyAmQJsnHHr/R+1ZiRhCIyTa+PqT3sJtr8ILSQTgoiYYJGXt4vUdhJkSASwy4GEwSY3V4cijho3XeaJxV83nSgn7xa6mqncwqbaEytBDiRz4Ja0o2amODmaGIfNJuwr5X7QAZEfbPXn4PZgJgcV6pQNGDNwcljhtqZWuPqDnNVRTCQDmTrMdGn77j+nTryRrnHDdkM37rv/WFYTZg/trVYucXsWejAt9TJWvk1nKQsNjBYYfOXU9zi4MmH7z43eyqZcNWRKdzWDtKUlqviB0ZUU0WxODERiBs1PdeEk4VRsCG3WC1mwSm+vi6fx2wJV30XUZs34TdGytB7brEwXDbugK+oS2nu6+2gAmrPbxetNy43vV12b5mEzNfgQq1JogyQJtdZHUdY/l/A/jkQQ5n2tVvQ4dKNYKG4JaXBaami3ADIy3fJFFtQPSH78ZWgCC09D1amOZkCGoN13bunKPr8ATWldeddekixhtalm3/ehhbcPzDr2QCMmirl2du/TZuprQoffPCHWgUN/PQF9c6483qj0dJIsEFqrLWhwodoWsb8J/Xn93g8N1SXrzqZIkEZIExTYhfZK1piJoczX69cvQJ8u9wTxFPR6/eKcmQ5AO+aPhqY1FKLv0Mol4+wSlSeNuKCEDnEaO5NQtxgNYZUdp8wVdD8jkvwRLtNczjVHDh0E0zd3d+tCf1y/vyrm16DX3MJCVnsOmmxCf189dc5cQYOp5dSAdoqyhRsh0MwXeecONO9o2lEXzNuOiDwm9UNRRFm6xxH93fqO6KivBfNL0OCAZBo/dkL7xQuWoC4F9cflt6CZSwsqr053QQv3JWDJheXUOTMbguYodDgk8SxU74OeXMWIpvE0JPx8/uSBwQ5BgwSaQdNY4unqIBCg6Ri0V7IoVXfLtU0RQ9D6sYMeGlRUtIm1Gs+hZzkGLT0AWiraNjOQUWjxgObacbiTl6zPXA56ZuvyAeg56BjQY23zjFj2bVrQSZnurvKqhcttsUhbGNTlG7cxA9DxyJJvVXpaR2UmQ9A08b5wofGZDpKSJT8dr9oYgJZxAxnaEjM4s0HMAPBCfkkdhM0+r9z3SSQtDP+oZcgR7/WjQlWNUxu0RbxUXZYlUaoNSDPLziz24dLad2yN1s7ktf8npHFtEUWbopmwSW3IjkAjHpH1zIlg+ZHFPVWmPSi1UXbFlTLpmWKl61x4I95zV41R2vRwahHLO1XoJOqdL4IMQdNUb7rRgKQZ9dLo93KBVHkzr2+mum3ve68mkbkKaTJr9QLZUOPLnfWX5ww2a/V2muo0ZnT9/nFM0VTvji+EZUwfYLSIILrIZY88KILWeOsQoxW85EBHcu0B4xHU3GbzI6HnRyt/EZl1RlUhLEs41NxWhJc5dNtyTXxTASbxfvPm9DTFuc/GRNAc4DWgqiLYfs3g/3sdKHJPVh/hxasF8LnoH+CXtEQ9MSg2AAAAAElFTkSuQmCC);
+				background-size: 100%
+			}
 
         /* 模拟截图中的橙色标签 */
         .tag {
-            font-size: 11px;
+            font-size: 18px;
             color: #fa9d3b; /* 橙色字体 */
-            background-color: #fff0e0; /* 浅橙背景 */
+           /* background-color: #fff0e0; /* 浅橙背景 */ 
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 500;
@@ -241,12 +250,18 @@
 
         <!-- 2. 姓名部分 -->
         <!-- 【需替换】修改客服姓名 -->
-        <h1 class="user-name">张炜</h1>
+        <h1 class="user-name">张炜<span class="tag">@乐出东方</span></h1>
 
         <!-- 3. 标签部分 -->
         <div class="tag-container">
             <!-- 【需替换】修改标签文字 -->
-            <span class="tag">@乐出东方</span>
+            
+				   <svg class="verified-icon" class="bottom" viewBox="0 0 16 16" fill="#0D7BFF" height="15" width="15" >
+				                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.707-9.293l-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L7 8.586l3.293-3.293a1 1 0 1 1 1.414 1.414z"/>
+				                      </svg>
+				  <font color="#808080">已认证 | 上海清和云香文化艺术有限公司</font>	
+				  
+			
         </div>
 
         <!-- 4. 欢迎语/引用语 -->
