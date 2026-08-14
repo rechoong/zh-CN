@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rechoong",
+  "compatibility_date": "2026-08-14",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    // 关键配置：排除 .git 文件夹和所有的 pack 历史文件
+    "exclude": [
+      ".git/**",
+      "node_modules/**"
+    ]
+  }
+}
