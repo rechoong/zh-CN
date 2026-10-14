@@ -1,0 +1,3481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>乐出东方 · 数据可视化大屏系统</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 网站图标 -->
+   <link rel="shortcut icon" href="https://choong.net.cn/tools/2026/logo-1.jpeg" />
+   <meta name="description" content=".联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.a">
+  			<meta name="author" content="..联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.b">
+  			<!-- <meta property="og:title" content="...联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.c">-->
+   <meta property="og:description" content="乐哥📞130 2504 8639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.e">
+  			<meta property="og:site_name" content="微信公众平台">
+  			<meta property="og:type" content="article">
+  			<meta property="og:article:author" content="b联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.f">
+  			<meta property="twitter:card" content="summary">
+  			 <meta property="twitter:title" content="c联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.g">
+  			<meta property="twitter:creator" content="d联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.f">
+  			<meta property="twitter:site" content="微信公众平台">
+  			<meta property="twitter:description" content="e联系@创客乐哥 13025048639 ◎做时间的朋友，我们专注AI、互联网、产品、软硬件、健康与生活、内容创作、个人成长等，共同探索自媒体时代创业者的重生与赋能之路。 新生命，新精彩！我珍惜，我快乐，我感恩！.h">
+  
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <!-- FLV.js 用于 FLV 直播推流 -->
+  <script src="https://cdn.jsdelivr.net/npm/flv.js@latest"></script>
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <!-- SheetJS -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- 农历 lunar-javascript -->
+ <script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #e5e7eb;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(#111827 1px, transparent 1px),
+        linear-gradient(90deg, #111827 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .scan-line {
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(56,189,248,0.8), transparent);
+      animation: scan 6s linear infinite;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes scan {
+      0% { top: 0; }
+      50% { top: 100%; }
+      100% { top: 0; }
+    }
+
+    .dashboard {
+      width: 100vw;
+      height: 100vh;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* 顶部 15% */
+    .header {
+      flex: 0 0 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(15,23,42,0.6));
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+      border: 1px solid rgba(56,189,248,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: conic-gradient(from 180deg, rgba(56,189,248,0.3), rgba(248,113,113,0.3), rgba(250,204,21,0.4), rgba(56,189,248,0.3));
+      filter: blur(18px);
+      opacity: 0.35;
+      z-index: -1;
+    }
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 13px;
+    }
+    .header-left .gregorian {
+      color: #e5e7eb;
+      letter-spacing: 0.1px;
+    }
+    .header-left .lunar {
+      color: #facc15;
+      font-size: 13px;
+    }
+    .header-center {
+      text-align: center;
+      font-size: 26px;
+      letter-spacing: 4px;
+      font-weight: 600;
+      background: linear-gradient(90deg, #22d3ee, #f97316, #facc15);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 12px rgba(56,189,248,0.7);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .report-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid rgba(250,204,21,0.9);
+      background: radial-gradient(circle at 30% 30%, #facc15, #b45309);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #111827;
+      box-shadow: 0 0 16px rgba(250,204,21,0.7);
+      overflow: hidden;
+    }
+    .report-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .report-info {
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+    }
+    .report-info .name {
+      color: #f9fafb;
+      font-weight: 600;
+    }
+    .report-info .role {
+      color: #9ca3af;
+    }
+    .header-time {
+      margin-left: 5px;
+      font-size: 30px;
+      font-weight: 700;
+      color: #facc15;
+      text-shadow: 0 0 18px rgba(250,204,21,0.9);
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    /* 主体 90% */
+    .main {
+      flex: 1 1 auto;
+      display: flex;
+      gap: 8px;
+      min-height: 0;
+    }
+
+    /* 左侧 280px */
+    .left-panel {
+      flex: 0 0 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 0;
+    }
+    .card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(15,23,42,0.7));
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px solid rgba(31,41,55,0.9);
+      box-shadow: 0 0 16px rgba(0,0,0,0.7);
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(120deg, rgba(56,189,248,0.4), rgba(248,113,113,0.4), rgba(250,204,21,0.5));
+      opacity: 0.18;
+      z-index: -1;
+      filter: blur(12px);
+    }
+    .card-title {
+      font-size: 14px;
+      color: #e5e7eb;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title span {
+      border-left: 3px solid #22d3ee;
+      padding-left: 6px;
+    }
+    .card-title small {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    /* 主播卡片 */
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(15,23,42,0.8);
+    }
+    .tab.active {
+      color: #f9fafb;
+      border-color: rgba(56,189,248,0.9);
+      box-shadow: 0 0 10px rgba(56,189,248,0.7);
+      background: radial-gradient(circle at 20% 0, rgba(56,189,248,0.4), rgba(15,23,42,0.9));
+    }
+    .anchor-card {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .anchor-avatar {
+      flex: 0 0 70px;
+      height: 70px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(250,204,21,0.7);
+      box-shadow: 0 0 12px rgba(250,204,21,0.6);
+      background: radial-gradient(circle at 30% 30%, #facc15, #b45309);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+      font-weight: 700;
+      font-size: 20px;
+    }
+    .anchor-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .anchor-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+    .anchor-name {
+      font-size: 18px;
+      color: #f9fafb;
+      font-weight: 600;
+    }
+    .anchor-role {
+      color: #f97316;
+      font-size: 12px;
+    }
+    .anchor-desc {
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+    .anchor-time {
+      color: #22c55e;
+      font-size: 12px;
+    }
+    .countdown {
+      margin-top: 4px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(56,189,248,0.15), rgba(248,113,113,0.15));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .countdown-label {
+      color: #9ca3af;
+    }
+    .countdown-value {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+      color: #facc15;
+      font-size: 20px;
+      text-shadow: 0 0 10px rgba(250,204,21,0.8);
+    }
+
+    /* 核心指标卡片 */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .metric-item {
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.25), rgba(15,23,42,0.95));
+      border: 1px solid rgba(31,41,55,0.9);
+      box-shadow: 0 0 10px rgba(15,23,42,0.9);
+    }
+    .metric-label {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+    .metric-value {
+      margin-top: 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #f9fafb;
+      text-shadow: 0 0 10px rgba(56,189,248,0.7);
+    }
+
+    /* 语录 */
+    .quote-text {
+      font-size: 12px;
+      color: #e5e7eb;
+      line-height: 1.5;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+    }
+    .quote-text::before {
+      content: "“";
+      color: #22d3ee;
+      margin-right: 4px;
+      font-size: 16px;
+    }
+    .quote-text::after {
+      content: "”";
+      color: #22d3ee;
+      margin-left: 4px;
+      font-size: 16px;
+    }
+
+    /* 日志 */
+    .log-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+    .btn-log {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.8);
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.3), rgba(15,23,42,0.95));
+      color: #e5e7eb;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-log:hover {
+      box-shadow: 0 0 12px rgba(56,189,248,0.8);
+      transform: translateY(-1px);
+    }
+
+    /* 右侧 */
+    .right-panel {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* 折线图卡片 */
+    #onlineChart {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 表格卡片 */
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .table-toolbar-left {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .table-toolbar-right {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .input-search {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 12px;
+      outline: none;
+    }
+    .btn {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn.primary {
+      border-color: rgba(56,189,248,0.9);
+      color: #e0f2fe;
+    }
+    .btn:hover {
+      box-shadow: 0 0 10px rgba(56,189,248,0.7);
+      transform: translateY(-1px);
+    }
+
+    .table-wrapper {
+      position: relative;
+      border-radius: 10px;
+      border: 1px solid rgba(31,41,55,0.9);
+      overflow: hidden;
+      background: radial-gradient(circle at 0 0, rgba(56,189,248,0.15), rgba(15,23,42,0.98));
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 11px;
+    }
+    thead {
+      background: rgba(15,23,42,0.95);
+    }
+    thead th {
+      padding: 4px 6px;
+      border-bottom: 1px solid rgba(31,41,55,0.9);
+      color: #9ca3af;
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 4px 6px;
+      border-bottom: 1px solid rgba(31,41,55,0.6);
+      color: #e5e7eb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    tbody tr:nth-child(2n) {
+      background: rgba(15,23,42,0.9);
+    }
+    tbody tr:nth-child(2n+1) {
+      background: rgba(15,23,42,0.8);
+    }
+    tbody tr:hover {
+      background: rgba(56,189,248,0.15);
+    }
+
+    .table-body-container {
+      position: relative;
+      height: calc(100% - 24px);
+      overflow: hidden;
+    }
+    .table-body-scroll {
+      position: absolute;
+      left: 0;
+      right: 0;
+      will-change: transform;
+    }
+
+    .status-tag {
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      border: 1px solid rgba(34,197,94,0.8);
+      color: #bbf7d0;
+      background: rgba(22,163,74,0.2);
+    }
+    .status-replay {
+      border-color: rgba(56,189,248,0.8);
+      color: #e0f2fe;
+      background: rgba(37,99,235,0.25);
+    }
+    .status-end {
+      border-color: rgba(248,113,113,0.8);
+      color: #fecaca;
+      background: rgba(185,28,28,0.25);
+    }
+
+    /* 简单弹窗 */
+    .modal-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .modal {
+      width: 480px;
+      max-width: 90vw;
+      max-height: 80vh;
+      background: #020617;
+      border-radius: 12px;
+      border: 1px solid rgba(56,189,248,0.7);
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(31,41,55,0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .modal-body {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #e5e7eb;
+      overflow-y: auto;
+    }
+    .modal-close {
+      cursor: pointer;
+      color: #9ca3af;
+    }
+
+    /* 高度比例控制：左侧各模块 */
+    .left-anchor { flex: 0 0 40%; min-height: 0; }
+    .left-metrics { flex: 0 0 21%; min-height: 0; }
+    .left-quotes { flex: 0 0 12%; min-height: 0; }
+    .left-log { flex: 0 0 10%; min-height: 0; }
+
+    /* 右侧比例 */
+    .right-chart { flex: 0 0 20%; min-height: 0; }
+    .right-table { flex: 0 0 60%; min-height: 0; display: flex; flex-direction: column; }
+
+    /* 滚动暂停 */
+    .table-wrapper:hover {
+      cursor: default;
+    }
+	
+        /* ============ 页脚区域 ============ */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #95a5a6;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .beta-link {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .beta-link:hover {
+            background: #c0392b;
+        }
+
+        /* ============ 时间显示样式 ============ */
+        #full-time-display {
+            font-size: 16px;
+            color: #bdc3c7;
+            margin-right: 20px;
+        }
+        
+            a:link,
+			a:visited {
+				text-decoration: none;
+				/*超链接无下划线*/
+			}
+
+			a:hover {
+				text-decoration: underline;
+				/*鼠标放上去有下划线*/
+			}
+
+			.footer {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 30px;
+				line-height: 30px;
+				background: #000;
+				text-align: center;
+				color: white;
+				font-size: 14px;
+				font-weight: 600;
+			}
+			
+			/* 文本垂直对齐图像 https://www.w3cschool.cn/tryrun/showhtml/trycss_vertical-align */
+			img.top {
+				vertical-align: text-top;
+			}
+
+			img.bottom {
+				vertical-align: text-bottom;
+			}
+			
+			/* 右侧面板标签页样式 */
+			.right-tabs {
+			    display: flex;
+			    gap: 8px;
+			    margin-bottom: 8px;
+			}
+			.tab-item {
+			    flex: 1;
+			    text-align: center;
+			    font-size: 14px;
+			    padding: 8px 0;
+			    border-radius: 8px;
+			    border: 1px solid rgba(55, 65, 81, 0.9);
+			    color: #9ca3af;
+			    cursor: pointer;
+			    transition: all 0.2s ease;
+			    background: rgba(15, 23, 42, 0.8);
+			    font-weight: 500;
+			}
+			.tab-item.active {
+			    color: #f9fafb;
+			    border-color: rgba(56, 189, 248, 0.9);
+			    box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+			    background: radial-gradient(circle at 20% 0, rgba(56, 189, 248, 0.4), rgba(15, 23, 42, 0.9));
+			}
+  
+/* 左侧直播/录制/回放三合一标签页 */
+.left-tabs {
+  display:flex; gap:6px; margin-bottom:8px; flex:0 0 auto;
+}
+.left-tab-item {
+  flex:1; text-align:center; padding:5px 4px; font-size:12px;
+  border-radius:999px; border:1px solid rgba(55,65,81,.9);
+  color:#9ca3af; background:rgba(15,23,42,.8); cursor:pointer;
+}
+.left-tab-item.active {
+  color:#fff; border-color:rgba(56,189,248,.9);
+  box-shadow:0 0 10px rgba(56,189,248,.7);
+}
+.left-tab-content {
+  flex:1; min-height:0; display:flex; flex-direction:column; gap:8px;
+}
+.left-tab-content.hidden {display:none;}
+
+  
+/* 录制标签页竖屏播放器 */
+.record-player-wrap{display:flex;flex-direction:column;gap:8px;height:100%;}
+.record-config{font-size:11px;color:#9ca3af;}
+.record-config input{width:100%;margin:3px 0;padding:5px;border-radius:6px;border:1px solid #334155;background:#020617;color:#fff;}
+.vertical-player{position:relative;flex:1;min-height:300px;background:#000;border-radius:12px;overflow:hidden;display:flex;justify-content:center;}
+.vertical-player video{height:100%;max-width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;}
+.player-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+.player-controls{position:absolute;bottom:8px;left:8px;right:8px;display:flex;gap:6px;align-items:center;transition:.4s;opacity:1;}
+.player-controls.hide{opacity:0;pointer-events:none;}
+.player-controls button{background:#0f172a;color:#fff;border:1px solid #38bdf8;border-radius:999px;padding:4px 8px;font-size:11px;}
+.rainbow-progress{height:4px;flex:1;background:linear-gradient(90deg,#22d3ee,#a855f7,#facc15,#22c55e,#ef4444);border-radius:5px;}
+.spectrum{height:28px;display:flex;gap:2px;align-items:end;padding:4px;background:#020617;border-radius:8px;}
+.spectrum span{flex:1;background:#22d3ee;height:20%;transition:.1s;}
+</style>
+</head>
+<body>
+<div class="scan-line"></div>
+<div class="dashboard">
+  <!-- 顶部 -->
+  <div class="header">	
+	<div class="header-left">
+	    <div class="gregorian" id="gregorianText">2026年05月21日 周四</div>
+	    <div class="lunar" id="lunarText">农历 丙午（马年） 四月初五 · 小满</div>
+	    <div class="lunar-detail" id="lunarDetailText" style="font-size:8.5px;color:#9ca3af;line-height:1.4;margin-top:4px;"></div>
+	</div>
+
+    <div class="header-center">
+      『乐出东方』数据可视化大屏系统
+    </div>
+    <div class="header-right">
+      <div class="report-avatar" id="reportAvatar">
+        <!-- 默认首字母 -->
+        张
+      </div>
+      <div class="report-info">
+        <div class="name" id="reportName">张炜｜新媒体运营官</div>
+        <div class="role">乐出东方 · 数据汇报</div>
+      </div>
+      <div class="header-time" id="clockText">19:30:00</div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <div class="main">
+    <!-- 左侧 -->
+    <div class="left-panel">
+      <div class="left-tabs">
+        <div class="left-tab-item active" data-left-tab="live">总览</div>
+        <div class="left-tab-item" data-left-tab="record">直播</div>
+        <div class="left-tab-item" data-left-tab="replay">回放</div>
+      </div>
+
+      <div class="left-tab-content" data-left-content="live">
+      <!-- 主播/嘉宾 -->
+      <div class="card left-anchor">
+        <div class="card-title">
+			<small>
+						  <a href="https://ycdf.net.cn/" target="_blank" title="『乐出东方』品牌官网 ycdf.net.cn" class="nav_li_pb"
+						  										style="color:#990066;font-size:15px;text-decoration:none;text-align:left;">
+						  										<img class="bottom" src="logo.png" width="106" height="28"/></a>
+						  </small>
+          <span>直播天团·推荐</span>
+
+        </div>
+        <div class="tabs" id="anchorTabs">
+          <div class="tab active" data-key="anchor1">主播</div>
+          <div class="tab" data-key="anchor2">嘉宾</div>
+          <div class="tab" data-key="anchor3">嘉宾</div>
+          <div class="tab" data-key="anchor4" title="罗易 [简介]
+		  
+易呈书院·院长
+乐氏国际控股·首席品牌官
+上海交通大学·特聘教授
+香港国际商学院·客座教授
+第四届国际易学联合会·理事
+原凤凰卫视集团·记者主持人
+师从著名中医文化学者张其成教授
+
+出版：《家风》 华人文化出版社">嘉宾</div>
+				  </div>
+        <div class="anchor-card">
+          <div class="anchor-avatar" id="anchorAvatar">
+            吴
+          </div>
+          <div class="anchor-info">
+            <div class="anchor-name" id="anchorName">吴国玺</div>
+            <div class="anchor-role" id="anchorRole">中医香疗非遗传承人亲传弟子 ｜ 宫廷乐氏香佩总裁</div>
+            <div class="anchor-desc" id="anchorDesc">☯听流年运势，学古法香养，解锁一整年好状态！</div>
+            <div class="anchor-time" id="anchorTime">直播时间：周一至周五 每晚19:00-19:40（节假日除外）</div>
+          </div>
+        </div>
+        <div class="countdown">
+          <div class="countdown-label" id="countdownStatus">倒计时</div>
+          <div class="countdown-value" id="countdownValue" title="实时倒计时">00:00:00</div>
+        </div>
+      </div>
+
+      <!-- 核心指标 -->
+      <div class="card left-metrics">
+        <div class="card-title">
+          <span>核心指标</span>
+          <small><a href="http://dsp.yiyuehuiyou.cn/admin/index/index.html#/admin/live/index.html" title="直播管理：直播记录 | 乐出东方 后台管理中心" style="color:#808080;">自动统计</a></small>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <div class="metric-label">总直播场次</div>
+            <div class="metric-value" id="metricSessions">45+</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">累计观看人次</div>
+            <div class="metric-value" id="metricViews">55125+</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">平均在线人数</div>
+            <div class="metric-value" id="metricAvgOnline">1365+</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">总新增用户</div>
+            <div class="metric-value" id="metricNewUsers">12189+</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 企业语录 -->
+      <div class="card left-quotes">
+        <div class="card-title">
+          <span>每日语录</span>
+          <small><a href="/sh/" title="YCDF · Time | Desktop Wallpaper" style="color:#808080;">自动轮播</a></small>
+        </div>
+        <div class="quote-text" id="quoteText">
+          用直播链接东方智慧，让每一次陪伴都有温度。
+        </div>
+      </div>
+
+      <!-- 操作日志 -->
+      <div class="card left-log">
+        <div class="card-title">
+          <span><a href="/live" style="color:#fff;text-decoration:none;" target="_blank" 
+							title="新媒体·技术支持 :  乐哥在线 choong.net.cn">运行日志</a></span>
+          <small>系统记录</small>
+        </div>
+        <div class="log-footer">
+			<p>
+			<a target="_blank" href="https://choong.net.cn/"
+							style="color:#fff;text-decoration:none;" title="2026/5/8 官网·技术支持 : 乐哥在线 choong.net.cn"><span id="htmer_time"
+								style="color:#E0BC86;">载入中...</span> </a>
+						<script>
+							function secondToDate(second) {
+								if (!second) {
+									return 0;
+								}
+								var time = new Array(0, 0, 0, 0, 0);
+								if (second >= 365 * 24 * 3600) {
+									time[0] = parseInt(second / (365 * 24 * 3600));
+									second %= 365 * 24 * 3600;
+								}
+								if (second >= 24 * 3600) {
+									time[1] = parseInt(second / (24 * 3600));
+									second %= 24 * 3600;
+								}
+								if (second >= 3600) {
+									time[2] = parseInt(second / 3600);
+									second %= 3600;
+								}
+								if (second >= 60) {
+									time[3] = parseInt(second / 60);
+									second %= 60;
+								}
+								if (second > 0) {
+									time[4] = second;
+								}
+								return time;
+							}
+						</script>
+						<script type="text/javascript" language="javascript">
+							function setTime() {
+								var create_time = Math.round(new Date(Date.UTC(2026, 02, 10, 0, 0, 1)).getTime() / 1000);
+								var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+								currentTime = secondToDate((timestamp - create_time));
+								currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天' + currentTime[2] + '时' + currentTime[3] + '分' +
+									currentTime[4] + '秒';
+								document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+							}
+							setInterval(setTime, 1000);
+						</script>
+							&nbsp;&nbsp;	</p>
+          <button class="btn-log" id="btnShowLog">查看</button>
+        </div>
+      </div>
+      </div>
+
+      <div class="left-tab-content hidden" data-left-content="record" style="height:100%">
+        <div class="card record-player-wrap">
+          <div class="card-title"><span>实时监测·预览</span>
+		  <small><a href="http://dsp.yiyuehuiyou.cn/admin/index/index.html#/admin/monitor/index.html" title="直播管理：直播监控 | 乐出东方 后台管理中心" style="color:#808080;">⚙支持：HLS(.m3u8) / MP4 / FLV</a></small></div>
+
+          <div class="vertical-player">
+            <video id="recordVideo" muted autoplay playsinline poster=""></video>
+            <div class="player-controls" id="playerControls">
+              <button id="playBtn" title="播放">▶</button>
+			  <button id="loopBtn" title="循环">🔁</button>
+			  <button id="muteBtn" title="静音">🔇</button>
+			  <input id="volumeCtrl" type="range" min="0" max="1" step="0.05" value="0.5">
+			  <div class="rainbow-progress"></div>
+            </div>
+          </div>
+          <div class="spectrum" id="spectrum"></div>
+          <!-- <div class="quote-text">音频频谱：实时音频分析，无音频时自动模拟。</div> -->
+		  
+		  <div class="record-config">
+                  <!-- 流格式选择 -->
+                  <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+                    <label style="color:#9ca3af;font-size:11px;">流媒体：</label>
+                    <select id="streamFormat" style="background:#020617;color:#fff;border:1px solid #334155;border-radius:4px;padding:2px 6px;font-size:11px;">
+                      <option value="hls">HLS (.m3u8)</option>
+                      <option value="mp4">MP4 (回放流)</option>
+                      <option value="flv" selected>						  
+						  FLV (直播推流)</option>
+                    </select>
+					<a href="http://dsp.yiyuehuiyou.cn/admin/index/index.html#/admin/liveing/index.html" title="直播管理 - 直播监控 | 乐出东方·后台管理中心"><div id="flvStatus" style="font-size:10px;color:#6b7280;margin-top:2px;"></div></a>
+                 </div>
+                  <!-- FLV 专属输入 -->
+                  <div id="flvFields" style="display:flex;gap:6px;align-items:center;margin-bottom:6px;">
+                    <label style="color:#9ca3af;font-size:10px;">uid：</label>
+                    <input id="anchorId" type="text" value="1158" title="主播/会员ID" style="color:#808080;width:70px;margin:0;padding:3px 6px;border-radius:4px;border:1px solid #334155;background:#020617;color:#fff;font-size:11px;">
+                    <label style="color:#9ca3af;font-size:10px;">LiveID：</label>
+                    <input id="liveStreamId" type="text" value="1786705182" title="直播ID" style="color:#808080;width:110px;margin:0;padding:3px 6px;border-radius:4px;border:1px solid #334155;background:#020617;color:#fff;font-size:11px;">
+                    <!-- <span style="color:#6b7280;font-size:10px;">开播URL</span> -->
+                  </div>
+                  <!-- 直播封面 -->
+                  <div style="margin-bottom:4px;">
+                    直播封面：<input id="recordCover" placeholder="输入封面图片地址" style="color:#808080;" value="wgx.png">
+                  </div>
+                  <!-- 推流地址 -->
+                  <div style="margin-bottom:6px;">
+                    <a href="http://dsp.yiyuehuiyou.cn/admin/index/index.html#/admin/monitor/index.html" title="直播管理：直播监控 | 乐出东方 后台管理中心" style="color:#808080;font-size:11px;">推流地址</a>：<input id="recordUrl" style="color:#808080;" value="http://pull.yiyuehuiyou.cn/live/1158_1786705182.flv">
+                  </div>
+                 <button class="btn primary" id="applyRecord" title="添加应用">应用</button>
+                 </div>
+        </div>
+      </div>
+
+      <div class="left-tab-content hidden" data-left-content="replay">
+        <div class="card" style="flex:1">
+          <div class="card-title"><span>回放管理</span><small>Replay</small></div>
+          <div class="quote-text">历史直播、回放次数、热门片段等功能将在此展示。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧 -->
+    <div class="right-panel">
+     <!-- 新增：右侧面板标签页导航 -->
+         <div class="right-tabs">
+             <div class="tab-item active" data-tab="live">APP · 直播化数据</div>
+             <div class="tab-item" data-tab="community">小程序 · 社群新零售</div>
+             <div class="tab-item" data-tab="incense">小程序 · 自定制合香</div>
+         </div>
+     
+         <!-- 标签页 1: 直播数据 (默认显示) -->
+         <div class="tab-content active" data-tab="live" style="height: 100%; display: flex; flex-direction: column; gap: 8px;">
+             <!-- 折线图 -->
+             <div class="card right-chart">
+                 <div class="card-title">
+                     <span>在线人数趋势</span>
+                     <small>实时渲染</small>
+                 </div>
+                 <div id="onlineChart"></div>
+             </div>
+
+      <!-- 表格 -->
+      <div class="card right-table">
+        <div class="card-title">
+          <span>直播数据表格</span>
+          <small>固定26行 · 无缝滚动</small>
+        </div>
+        <div class="table-toolbar">
+          <div class="table-toolbar-left">
+            <span>搜索：</span>
+            <input type="text" class="input-search" id="searchInput" placeholder="按标题 / 场次 / ID 搜索" />
+          </div>
+          <div class="table-toolbar-right">
+            <label class="btn primary">
+              导入Excel/CSV
+              <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none" />
+            </label>
+            <button class="btn" id="btnExport">导出当前数据</button>
+          <button class="btn primary" id="btnConvertJSON">导出JSON</button>
+		  </div>
+        </div>
+        <div class="table-wrapper" id="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>场次</th>
+                <th>直播开始时间</th>
+                <th>星期</th>
+                <th>直播标题</th>
+				<th>直播结束时间</th>
+                <th>总注册量</th>
+                <th>直播在线人数</th>
+                <th>新增用户</th>
+                <th>回放次数</th>
+                <th>活跃用户</th>
+                <th>使用时长(分)</th>
+                <th>嘉宾/本站用户(ID)</th>
+                <th>直播ID</th>
+                <th>直播·流名</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+          </table>
+          <div class="table-body-container" id="tableBodyContainer">
+            <table>
+              <tbody id="tableBody" class="table-body-scroll">
+              <!-- JS 渲染 -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	   <!-- 标签页 2: 社群新零售 (占位内容) -->
+	    <div class="tab-content" data-tab="community" style="display: none; height: 100%; display: flex; flex-direction: column; gap: 8px;">
+	        <div class="card" style="flex: 1; display: flex; align-items: left; justify-content: center;">
+	            <div class="card-title"><span>社群新零售数据</span></div>				
+	            <p style="color: #9ca3af; text-align: center;">
+					<br><br>
+	                此区域可展示社群增长、订单量、转化率等新零售核心指标。<br>
+	                (功能待开发)
+	            </p>
+	        </div>
+	    </div>
+	
+	    <!-- 标签页 3: 合香定制 (占位内容) -->
+	    <div class="tab-content" data-tab="incense" style="display: none; height: 100%; display: flex; flex-direction: column; gap: 8px;">
+	        <div class="card" style="flex: 1; display: flex; align-items: left; justify-content: center;">
+	            <div class="card-title"><span>合香定制业务</span></div>
+	            <p style="color: #9ca3af; text-align: center;">
+					<br><br>
+	                此区域可展示定制订单、热门款式、用户反馈等业务数据。<br>
+	                (功能待开发)
+	            </p>
+	        </div>
+	    </div>
+	</div>
+	
+  </div>
+</div>
+
+<!-- 日志弹窗 -->
+<div class="modal-mask" id="logModalMask">
+  <div class="modal">
+    <div class="modal-header">
+      <span>操作日志</span>
+      <span class="modal-close" id="logModalClose">✕</span>
+    </div>
+    <div class="modal-body" id="logModalBody">
+      <p>· 系统启动成功。</p>
+      <p>· 默认数据加载完成。</p>
+      <p>· 等待导入 Excel / CSV 数据……</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  /***********************
+   * 1. 配置区（可自定义）
+   ***********************/
+  const CONFIG = {
+    colors: {
+      primaryBlue: "#22d3ee",
+      tmallRed: "#ff0036",
+      gold: "#facc15"
+    },
+    reporter: {
+      name: "张炜｜新媒体运营官",
+      avatarUrl: "zw.jpg", // 可填 zw.png 路径
+    },
+    anchors: {
+      anchor1: {
+        name: "吴国玺",
+        avatarUrl: "wgx.png", // wgx.png
+        role: "中医香疗非遗传承人亲传弟子 ｜ 宫廷乐氏香佩总裁",
+        desc: "☯听流年运势，学古法香养，解锁一整年好状态！",
+        time: "直播时间：周一至周五 每晚19:00-19:40（节假日除外）"
+      },
+      anchor2: {
+        name: "折翼天使 杨佩",
+        avatarUrl: "杨佩-9.jpg", // 杨佩-9.jpg
+        role: "乐出东方 · 公益形象大使",
+        desc: "无臂励志创业榜样、公益励志演讲家，被称作东方维纳斯。",
+        time: "特邀嘉宾 · 公益励志主题专场"
+      },
+      anchor3: {
+        name: "刘少玉 教授",
+        avatarUrl: "lsy.png", // lsy.jpg
+        role: "乐出东方 · 中医技术顾问",
+        desc: "中国民族卫生协会中医技术培训部主任，国家高级自然疗法师、国家健康宣传大使、中医传承之星。",
+        time: "特邀嘉宾 · 中医养生主题专场"
+      },
+      anchor4: {
+        name: "罗易 老师",		
+        avatarUrl: "ly.png", // ly.jpg
+        role: "乐氏国际控股·首席品牌官",
+        desc: "易呈书院·院长、上海交通大学·特聘教授、香港国际商学院·客座教授、第四届国际易学联合会·理事、原凤凰卫视集团·记者主持人",
+        time: "特邀嘉宾 · 养生主题专场"
+      }
+    },
+    quotes: [
+      "用直播链接东方智慧，让每一次陪伴都有温度。",
+      "让古法香养走进日常，让东方美学走进生活。",
+      "一场直播，一次疗愈，一次与自己的深度对话。",
+      "用内容点亮用户的夜晚，用真诚赢得长期的信任。"
+    ],
+    defaultTableData: [
+	// {
+	// 	    "场次": "0",
+	// 	    "直播开始时间": "3/25/26 10:58",
+	// 	    "星期": "周四",
+	// 	    "直播标题": "测试",
+	// 	    "直播结束时间": "3/25/26 19:42",
+	// 	    "总注册量": "235",
+	// 	    "直播在线人数": "8",
+	// 	    "新增用户": "",
+	// 	    "回放次数": "",
+	// 	    "活跃用户": "",
+	// 	    "使用时长(分)": "",
+	// 	    "嘉宾/本站用户(ID)": "@吴国玺 ( ID:1103 )",
+	// 	    "直播ID": "1774522681",
+	// 	    "直播·流名": "1103_1774522681",
+	// 	    "状态":"直播结束"
+	// 	  },
+ {
+      "场次": "1",
+      "直播开始时间": "3/26/26 18:58",
+      "星期": "周四",
+      "直播标题": "乐出东方看直播的福利",
+      "直播结束时间": "3/26/26 19:42",
+      "总注册量": "435",
+      "直播在线人数": "198",
+      "新增用户": "",
+      "回放次数": "",
+      "活跃用户": "",
+      "使用时长(分)": "",
+      "嘉宾/本站用户(ID)": "@吴国玺 ( ID:1103 )",
+      "直播ID": "1774522681",
+      "直播·流名": "1103_1774522681",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "2",
+      "直播开始时间": "3/27/26 18:58",
+      "星期": "周五",
+      "直播标题": "2026丙午马年为什么是大清之年？",
+      "直播结束时间": "3/27/26 19:41",
+      "总注册量": "835",
+      "直播在线人数": "299",
+      "新增用户": "400",
+      "回放次数": "268",
+      "活跃用户": "625",
+      "使用时长(分)": "42",
+      "嘉宾/本站用户(ID)": "@吴国玺 ( ID:1103 )",
+      "直播ID": "1774609128",
+      "直播·流名": "1103_1774609128",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "3",
+      "直播开始时间": "3/30/26 19:00",
+      "星期": "周一",
+      "直播标题": "2026丙午马年「大清之年」如何清？之①",
+      "直播结束时间": "3/30/26 19:41",
+      "总注册量": "1733",
+      "直播在线人数": "326",
+      "新增用户": "55",
+      "回放次数": "312",
+      "活跃用户": "674",
+      "使用时长(分)": "55",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1774868420",
+      "直播·流名": "1158_1774868420",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "4",
+      "直播开始时间": "3/31/26 18:59",
+      "星期": "周二",
+      "直播标题": "2026丙午马年「大清之年」如何清？之②",
+      "直播结束时间": "3/31/26 19:41",
+      "总注册量": "1743",
+      "直播在线人数": "448",
+      "新增用户": "10",
+      "回放次数": "323",
+      "活跃用户": "697",
+      "使用时长(分)": "58",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1774954791",
+      "直播·流名": "1158_1774954791",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "5",
+      "直播开始时间": "2026/4/1 18:59",
+      "星期": "周三",
+      "直播标题": "2026丙午马年「大清之年」如何清？之③",
+      "直播结束时间": "4/1/26 19:41",
+      "总注册量": "1788",
+      "直播在线人数": "337",
+      "新增用户": "45",
+      "回放次数": "560",
+      "活跃用户": "314",
+      "使用时长(分)": "47",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775041162",
+      "直播·流名": "1158_1775041162",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "6",
+      "直播开始时间": "2026/4/2 18:59",
+      "星期": "周四",
+      "直播标题": "2026丙午马年「大清之年」如何清？之④",
+      "直播结束时间": "2026/4/2 19:42:57",
+      "总注册量": "1938",
+      "直播在线人数": "639",
+      "新增用户": "150",
+      "回放次数": "342",
+      "活跃用户": "449",
+      "使用时长(分)": "43",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775127581",
+      "直播·流名": "1158_1775127581",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "7",
+      "直播开始时间": "2026/4/3 18:59:21",
+      "星期": "周五",
+      "直播标题": "2026丙午马年「大清之年」如何清？之⑤",
+      "直播结束时间": "2026/4/3 19:40:55",
+      "总注册量": "2,506",
+      "直播在线人数": "708",
+      "新增用户": "568",
+      "回放次数": "245",
+      "活跃用户": "673",
+      "使用时长(分)": "46",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775213961",
+      "直播·流名": "1158_1775213961",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "8",
+      "直播开始时间": "2026/4/7 18:59:35",
+      "星期": "周二",
+      "直播标题": "2026丙午马年「大清之年」如何清？之⑥",
+      "直播结束时间": "2026/4/7 19:41:21",
+      "总注册量": "2,739",
+      "直播在线人数": "877",
+      "新增用户": "#REF!",
+      "回放次数": "358",
+      "活跃用户": "454",
+      "使用时长(分)": "66",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775559575",
+      "直播·流名": "1158_1775559575",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "9",
+      "直播开始时间": "2026/4/8 18:59:58",
+      "星期": "周三",
+      "直播标题": "清身体/清环境/清运势，如何用香？之①",
+      "直播结束时间": "2026/4/8 19:41:20",
+      "总注册量": "2,820",
+      "直播在线人数": "953",
+      "新增用户": "81",
+      "回放次数": "330",
+      "活跃用户": "1597",
+      "使用时长(分)": "52",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775645998",
+      "直播·流名": "1158_1775645998",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "10",
+      "直播开始时间": "2026/4/9 18:59:39",
+      "星期": "周四",
+      "直播标题": "清身体/清环境/清运势，如何用香？之②",
+      "直播结束时间": "2026/4/9 19:41:24",
+      "总注册量": "2,867",
+      "直播在线人数": "1022",
+      "新增用户": "47",
+      "回放次数": "355",
+      "活跃用户": "453",
+      "使用时长(分)": "55",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775732379",
+      "直播·流名": "1158_1775732379",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "11",
+      "直播开始时间": "2026/4/10 18:59:48",
+      "星期": "周五",
+      "直播标题": "香的作用和价值",
+      "直播结束时间": "2026/4/10 19:41:14",
+      "总注册量": "2,916",
+      "直播在线人数": "1157",
+      "新增用户": "49",
+      "回放次数": "339",
+      "活跃用户": "422",
+      "使用时长(分)": "57",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1775818788",
+      "直播·流名": "1158_1775818788",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "12",
+      "直播开始时间": "2026/4/13 19:41:35",
+      "星期": "周一",
+      "直播标题": "中医香疗法的论述",
+      "直播结束时间": "4/13/26 19:41",
+      "总注册量": "3002",
+      "直播在线人数": "1243",
+      "新增用户": "#REF!",
+      "回放次数": "341",
+      "活跃用户": "1513",
+      "使用时长(分)": "39",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776077969",
+      "直播·流名": "1158_1776077969",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "13",
+      "直播开始时间": "2026/4/14 18:59:26",
+      "星期": "周二",
+      "直播标题": "中医香疗法的论述②",
+      "直播结束时间": "2026/4/14 19:40:38",
+      "总注册量": "3053",
+      "直播在线人数": "1354",
+      "新增用户": "51",
+      "回放次数": "347",
+      "活跃用户": "1567",
+      "使用时长(分)": "54",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776164366",
+      "直播·流名": "1158_1776164366",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "14",
+      "直播开始时间": "2026/4/15 19:00:03",
+      "星期": "周三",
+      "直播标题": "中医香疗法的论述③",
+      "直播结束时间": "2026/4/15 19:40:53",
+      "总注册量": "3084",
+      "直播在线人数": "1428",
+      "新增用户": "31",
+      "回放次数": "357",
+      "活跃用户": "1570",
+      "使用时长(分)": "55",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776250803",
+      "直播·流名": "1158_1776250803",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "15",
+      "直播开始时间": "2026/4/16 18:59:25",
+      "星期": "周四",
+      "直播标题": "香文化复兴对现代人的意义",
+      "直播结束时间": "2026/4/16 19:40:53",
+      "总注册量": "3095",
+      "直播在线人数": "1454",
+      "新增用户": "11",
+      "回放次数": "327",
+      "活跃用户": "1552",
+      "使用时长(分)": "56",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776337165",
+      "直播·流名": "1158_1776337165",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "16",
+      "直播开始时间": "2026/4/17 19:00:26",
+      "星期": "周五",
+      "直播标题": "香文化复兴对现代人的意义②",
+      "直播结束时间": "2026/4/17 19:41:04",
+      "总注册量": "3128",
+      "直播在线人数": "1529",
+      "新增用户": "33",
+      "回放次数": "360",
+      "活跃用户": "1515",
+      "使用时长(分)": "59",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776423626",
+      "直播·流名": "1158_1776423626",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "17",
+      "直播开始时间": "2026/4/20",
+      "星期": "周一",
+      "直播标题": "【录制】香文化复兴对人类精神层面的影响①",
+      "直播结束时间": "2026/4/20",
+      "总注册量": "3211",
+      "直播在线人数": "1530",
+      "新增用户": "10",
+      "回放次数": "582",
+      "活跃用户": "1476",
+      "使用时长(分)": "41",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776416500",
+      "直播·流名": "1158_1776416500",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "18",
+      "直播开始时间": "2026/4/21",
+      "星期": "周二",
+      "直播标题": "【录制】香文化复兴对人类精神层面的影响②",
+      "直播结束时间": "",
+      "总注册量": "3223",
+ 	  "直播在线人数": "1630",
+      "新增用户": "9",
+      "回放次数": "573",
+      "活跃用户": "1492",
+      "使用时长(分)": "59",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776419466",
+      "直播·流名": "1158_1776419466",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "19",
+      "直播开始时间": "2026/4/22 18:59:27",
+      "星期": "周三",
+      "直播标题": "香文化复兴对人类精神层面的影响③",
+      "直播结束时间": "2026/4/22 19:40:59",
+      "总注册量": "3237",
+      "直播在线人数": "1650",
+      "新增用户": "17",
+      "回放次数": "360",
+      "活跃用户": "1488",
+      "使用时长(分)": "62",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776855567",
+      "直播·流名": "1158_1776855567",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "20",
+      "直播开始时间": "2026/4/23 18:59:30",
+      "星期": "周四",
+      "直播标题": "合香对情绪的影响①",
+      "直播结束时间": "2026/4/23 19:41:11",
+      "总注册量": "3274",
+      "直播在线人数": "1733",
+      "新增用户": "37",
+      "回放次数": "353",
+      "活跃用户": "1491",
+      "使用时长(分)": "63",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1776941970",
+      "直播·流名": "1158_1776941970",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "21",
+      "直播开始时间": "2026/4/24 18:59:23",
+      "星期": "周五",
+      "直播标题": "合香对情绪的影响②",
+      "直播结束时间": "2026/4/24 19:41:58",
+      "总注册量": "3413",
+      "直播在线人数": "1759",
+      "新增用户": "139",
+      "回放次数": "362",
+      "活跃用户": "1664",
+      "使用时长(分)": "57",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777028363",
+      "直播·流名": "1158_1777028363",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "22",
+      "直播开始时间": "2026/4/27 18:59:51",
+      "星期": "周一",
+      "直播标题": "五行合香对健康的影响",
+      "直播结束时间": "2026/4/27 19:41:40",
+      "总注册量": "3691",
+      "直播在线人数": "1779",
+      "新增用户": "#REF!",
+      "回放次数": "361",
+      "活跃用户": "1705",
+      "使用时长(分)": "80",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777287591",
+      "直播·流名": "1158_1777287591",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "23",
+      "直播开始时间": "2026/4/28 18:59:38",
+      "星期": "周二",
+      "直播标题": "五行合香珠的作用①",
+      "直播结束时间": "2026/4/28 19:46:18",
+      "总注册量": "3735",
+      "直播在线人数": "1846",
+      "新增用户": "44",
+      "回放次数": "403",
+      "活跃用户": "1749",
+      "使用时长(分)": "74",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777373978",
+      "直播·流名": "1158_1777373978",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "24",
+      "直播开始时间": "2026/4/29 18:59:31",
+      "星期": "周三",
+      "直播标题": "五行合香珠的作用②",
+      "直播结束时间": "2026/4/29 19:41:39",
+      "总注册量": "3780",
+      "直播在线人数": "1933",
+      "新增用户": "45",
+      "回放次数": "417",
+      "活跃用户": "1770",
+      "使用时长(分)": "77",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777460371",
+      "直播·流名": "1158_1777460371",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "25",
+      "直播开始时间": "2026/4/30 18:59:59",
+      "星期": "周四",
+      "直播标题": "五行合香珠的作用③",
+      "直播结束时间": "2026/4/30 19:41:27",
+      "总注册量": "3814",
+      "直播在线人数": "1954",
+      "新增用户": "34",
+      "回放次数": "384",
+      "活跃用户": "1564",
+      "使用时长(分)": "79",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777546799",
+      "直播·流名": "1158_1777546799",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "26",
+      "直播开始时间": "2026/5/5 19:00:04",
+      "星期": "周二",
+      "直播标题": "五行合香与夏季养生①",
+      "直播结束时间": "2026/5/5 19:41:07",
+      "总注册量": "3988",
+      "直播在线人数": "2074",
+      "新增用户": "#REF!",
+      "回放次数": "507",
+      "活跃用户": "2023",
+      "使用时长(分)": "39",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1777978804",
+      "直播·流名": "1158_1777978804",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "27",
+      "直播开始时间": "2026/5/6 18:59:50",
+      "星期": "周三",
+      "直播标题": "五行合香与夏季养生②",
+      "直播结束时间": "2026/5/6 19:40:37",
+      "总注册量": "4092",
+      "直播在线人数": "2118",
+      "新增用户": "104",
+      "回放次数": "625",
+      "活跃用户": "2257",
+      "使用时长(分)": "56",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778065190",
+      "直播·流名": "1158_1778065190",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "28",
+      "直播开始时间": "2026/5/7 18:59:59",
+      "星期": "周四",
+      "直播标题": "五行合香与夏季养生③",
+      "直播结束时间": "2026/5/7 19:41:11",
+      "总注册量": "4200",
+      "直播在线人数": "2202",
+      "新增用户": "108",
+      "回放次数": "619",
+      "活跃用户": "2306",
+      "使用时长(分)": "57",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778151599",
+      "直播·流名": "1158_1778151599",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "29",
+      "直播开始时间": "2026/5/8 18:59:28",
+      "星期": "周五",
+      "直播标题": "夏季养心①",
+      "直播结束时间": "2026/5/8 19:41:09",
+      "总注册量": "4255",
+      "直播在线人数": "2304",
+      "新增用户": "55",
+      "回放次数": "555",
+      "活跃用户": "2227",
+      "使用时长(分)": "63",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778237968",
+      "直播·流名": " 1158_1778237968",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "30",
+      "直播开始时间": "2026/5/11 19:00:06",
+      "星期": "周一",
+      "直播标题": "夏季养心②",
+      "直播结束时间": "2026/5/11 19:40:40",
+      "总注册量": "4328",
+      "直播在线人数": "2414",
+      "新增用户": "#REF!",
+      "回放次数": "575",
+      "活跃用户": "2017",
+      "使用时长(分)": "49",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778497206",
+      "直播·流名": "1158_1778497206",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "31",
+      "直播开始时间": "2026/5/12 19:00:07",
+      "星期": "周二",
+      "直播标题": "夏季养心③",
+      "直播结束时间": "2026/5/12 19:40:07",
+      "总注册量": "4352",
+      "直播在线人数": "2521",
+      "新增用户": "24",
+      "回放次数": "599",
+      "活跃用户": "2059",
+      "使用时长(分)": "68",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778583607",
+      "直播·流名": "1158_1778583607",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "32",
+      "直播开始时间": "2026/5/13 19:00:02",
+      "星期": "周三",
+      "直播标题": "心神与情绪①",
+      "直播结束时间": "2026/5/13 19:42:08",
+      "总注册量": "4372",
+      "直播在线人数": "2688",
+      "新增用户": "20",
+      "回放次数": "612",
+      "活跃用户": "2180",
+      "使用时长(分)": "86",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778670002",
+      "直播·流名": "1158_1778670002",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "33",
+      "直播开始时间": "2026/5/14 18:59:45",
+      "星期": "周四",
+      "直播标题": "心神与情绪②",
+      "直播结束时间": "2026/5/14 19:41:05",
+      "总注册量": "4420",
+      "直播在线人数": "2749",
+      "新增用户": "48",
+      "回放次数": "644",
+      "活跃用户": "2196",
+      "使用时长(分)": "82",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778756385",
+      "直播·流名": "1158_1778756385",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "34",
+      "直播开始时间": "2026/5/15 19:00:18",
+      "星期": "周五",
+      "直播标题": "心神与情绪③",
+      "直播结束时间": "2026/5/15 19:41:40",
+      "总注册量": "4481",
+      "直播在线人数": "2846",
+      "新增用户": "61",
+      "回放次数": "623",
+      "活跃用户": "2169",
+      "使用时长(分)": "89",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1778842818",
+      "直播·流名": "1158_1778842818",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "35",
+      "直播开始时间": "2026/5/18 19:00:07",
+      "星期": "周一",
+      "直播标题": "如何养心神①",
+      "直播结束时间": "2026/5/18 19:41:08",
+      "总注册量": "4564",
+      "直播在线人数": "2902",
+      "新增用户": "#REF!",
+      "回放次数": "671",
+      "活跃用户": "2130",
+      "使用时长(分)": "54",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779102007",
+      "直播·流名": "1158_1779102007",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "36",
+      "直播开始时间": "2026/5/19 18:59:41",
+      "星期": "周二",
+      "直播标题": "如何养心神②",
+      "直播结束时间": "2026/5/19 19:41:01",
+      "总注册量": "4582",
+      "直播在线人数": "3043",
+      "新增用户": "18",
+      "回放次数": "593",
+      "活跃用户": "2188",
+      "使用时长(分)": "106",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779188381",
+      "直播·流名": "1158_1779188381",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "37",
+      "直播开始时间": "2026/5/20 18:59:36",
+      "星期": "周三",
+      "直播标题": "如何养心神③",
+      "直播结束时间": "2026/5/20 19:41:01",
+      "总注册量": "4599",
+      "直播在线人数": "3108",
+      "新增用户": "17",
+      "回放次数": "574",
+      "活跃用户": "2193",
+      "使用时长(分)": "103",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779274776",
+      "直播·流名": "1158_1779274776",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "38",
+      "直播开始时间": "2026/5/21 18:59:46",
+      "星期": "周四",
+      "直播标题": "如何养心神④",
+      "直播结束时间": "2026/5/21 19:41:46",
+      "总注册量": "4615",
+      "直播在线人数": "3287",
+      "新增用户": "16",
+      "回放次数": "608",
+      "活跃用户": "2155",
+      "使用时长(分)": "101",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779361186",
+      "直播·流名": "1158_1779361186",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "39",
+      "直播开始时间": "2026/5/22",
+      "星期": "周五",
+      "直播标题": "如何修心",
+      "直播结束时间": "2026/5/22 19:41:01",
+      "总注册量": "4634",
+      "直播在线人数": "3376",
+      "新增用户": "19",
+      "回放次数": "511",
+      "活跃用户": "2084",
+      "使用时长(分)": "89",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779447558",
+      "直播·流名": "1158_1779447558",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "40",
+      "直播开始时间": "2026/5/25 18:59:43",
+      "星期": "周一",
+      "直播标题": "如何修心②",
+      "直播结束时间": "2026/5/25 19:41:31",
+      "总注册量": "4974",
+      "直播在线人数": "3417",
+      "新增用户": "#REF!",
+      "回放次数": "684",
+      "活跃用户": "2322",
+      "使用时长(分)": "83",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779447558",
+      "直播·流名": "1158_1779447558",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "41",
+      "直播开始时间": "2026/5/26 18:59:59",
+      "星期": "周二",
+      "直播标题": "如何修心③",
+      "直播结束时间": "2026/5/26 19:41:07",
+      "总注册量": "5068",
+      "直播在线人数": "3781",
+      "新增用户": "94",
+      "回放次数": "763",
+      "活跃用户": "2568",
+      "使用时长(分)": "103",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779793199",
+      "直播·流名": "1158_1779793199",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "42",
+      "直播开始时间": "2026/5/27 18:55:07",
+      "星期": "周三",
+      "直播标题": "如何修心④",
+      "直播结束时间": "2026/5/27 19:41:01",
+      "总注册量": "5150",
+      "直播在线人数": "3801",
+      "新增用户": "82",
+      "回放次数": "788",
+      "活跃用户": "2530",
+      "使用时长(分)": "92",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779879307",
+      "直播·流名": "1158_1779879307",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "43",
+      "直播开始时间": "2026/5/28 18:59:59",
+      "星期": "周四",
+      "直播标题": "如何修心⑤",
+      "直播结束时间": "2026/5/28 19:41:49",
+      "总注册量": "5192",
+      "直播在线人数": "3995",
+      "新增用户": "42",
+      "回放次数": "744",
+      "活跃用户": "2484",
+      "使用时长(分)": "93",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1779965999",
+      "直播·流名": "1158_1779965999",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "44",
+      "直播开始时间": "2026/5/29",
+      "星期": "周五",
+      "直播标题": "修心如何用香",
+      "直播结束时间": "2026/5/29",
+      "总注册量": "5242",
+      "直播在线人数": "4759",
+      "新增用户": "50",
+      "回放次数": "746",
+      "活跃用户": "2495",
+      "使用时长(分)": "102",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780052358",
+      "直播·流名": "1158_1780052358",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "45",
+      "直播开始时间": "2026/6/1 18:59",
+      "星期": "周一",
+      "直播标题": "修心如何用香②",
+      "直播结束时间": "2026/6/1 19:41:11",
+      "总注册量": "5288",
+      "直播在线人数": "3653",
+      "新增用户": "13",
+      "回放次数": "652",
+      "活跃用户": "2216",
+      "使用时长(分)": "76",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780311594",
+      "直播·流名": "1158_1780311594",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "46",
+      "直播开始时间": "2026/6/2 18:59:41",
+      "星期": "周二",
+      "直播标题": "修心如何用香③",
+      "直播结束时间": "2026/6/2 19:41:12",
+      "总注册量": "5316",
+      "直播在线人数": "3717",
+      "新增用户": "28",
+      "回放次数": "689",
+      "活跃用户": "2391",
+      "使用时长(分)": "88",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780397981",
+      "直播·流名": "1158_1780397981",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "47",
+      "直播开始时间": "2026/6/3 19:00:17",
+      "星期": "周三",
+      "直播标题": "修心如何用香④",
+      "直播结束时间": "2026/6/3 19:41:29",
+      "总注册量": "5316",
+      "直播在线人数": "3764",
+      "新增用户": "23",
+      "回放次数": "630",
+      "活跃用户": "2516",
+      "使用时长(分)": "86",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780484417",
+      "直播·流名": "1158_1780484417",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "48",
+      "直播开始时间": "2026/6/4 18:59",
+      "星期": "周四",
+      "直播标题": "修心如何用香⑤",
+      "直播结束时间": "2026/6/4 19:40:56",
+      "总注册量": "5316",
+      "直播在线人数": "3744",
+      "新增用户": "28",
+      "回放次数": "773",
+      "活跃用户": "2391",
+      "使用时长(分)": "88",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780570778",
+      "直播·流名": "1158_1780570778",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "49",
+      "直播开始时间": "2026/6/5 18:59",
+      "星期": "周五",
+      "直播标题": "修心如何用香⑥",
+      "直播结束时间": "2026/6/5 19:40:56",
+      "总注册量": "5316",
+      "直播在线人数": "3737",
+      "新增用户": "28",
+      "回放次数": "719",
+      "活跃用户": "3212",
+      "使用时长(分)": "85",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780657164",
+      "直播·流名": "1158_1780657164",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "50",
+      "直播开始时间": "2026/6/8 19:00",
+      "星期": "周一",
+      "直播标题": "修心要清业力①",
+      "直播结束时间": "2026/6/8 19:41:26",
+      "总注册量": "5703",
+      "直播在线人数": "3793",
+      "新增用户": "119",
+      "回放次数": "785",
+      "活跃用户": "2681",
+      "使用时长(分)": "96",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1780916410",
+      "直播·流名": "1158_1780916410",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "51",
+      "直播开始时间": "2026/6/9 19:00:00",
+      "星期": "周二",
+      "直播标题": "修心要清业力②",
+      "直播结束时间": "2026/6/9 19:41:22",
+      "总注册量": "5800",
+      "直播在线人数": "3821",
+      "新增用户": "97",
+      "回放次数": "832",
+      "活跃用户": "2849",
+      "使用时长(分)": "87",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781002800",
+      "直播·流名": "1158_1781002800",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "52",
+      "直播开始时间": "2026/6/10 19:00:01",
+      "星期": "周三",
+      "直播标题": "修心要清业力③",
+      "直播结束时间": "2026/6/10 19:41:10",
+      "总注册量": "5873",
+      "直播在线人数": "3855",
+      "新增用户": "73",
+      "回放次数": "756",
+      "活跃用户": "2883",
+      "使用时长(分)": "115",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781089201",
+      "直播·流名": "1158_1781089201",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "53",
+      "直播开始时间": "2026/6/11 13:40",
+      "星期": "周四",
+      "直播标题": "【录制】修心要清业力④",
+      "直播结束时间": "2026/6/11 19:41:10",
+      "总注册量": "5920",
+      "直播在线人数": "3865",
+      "新增用户": "47",
+      "回放次数": "1492",
+      "活跃用户": "5015",
+      "使用时长(分)": "185",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781175602",
+      "直播·流名": "1158_1781175602",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "54",
+      "直播开始时间": "2026/6/12 19:00:11",
+      "星期": "周五",
+      "直播标题": "修心要清业力⑤",
+      "直播结束时间": "2026/6/12 19:43:10",
+      "总注册量": "5968",
+      "直播在线人数": "3857",
+      "新增用户": "48",
+      "回放次数": "870",
+      "活跃用户": "2830",
+      "使用时长(分)": "102",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781262011",
+      "直播·流名": "1158_1781262011",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "55",
+      "直播开始时间": "2026/6/15 18:59:38",
+      "星期": "周一",
+      "直播标题": "修心与环境的关系①",
+      "直播结束时间": "2026/6/15 19:40:47",
+      "总注册量": "6033",
+      "直播在线人数": "3843",
+      "新增用户": "31",
+      "回放次数": "855",
+      "活跃用户": "2713",
+      "使用时长(分)": "98",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781521178",
+      "直播·流名": "1158_1781521178",
+      "状态":"直播完成"
+    },
+      {
+      "场次": "56",
+      "直播开始时间": "2026/6/16 18:59:52",
+      "星期": "周二",
+      "直播标题": "修心与环境的关系②",
+      "直播结束时间": "2026/6/16 19:41:18",
+      "总注册量": "6061",
+      "直播在线人数": "3856",
+      "新增用户": "28",
+      "回放次数": "846",
+      "活跃用户": "2772",
+      "使用时长(分)": "134",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781607592",
+      "直播·流名": "1158_1781607592",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "57",
+      "直播开始时间": "2026/6/17 19:00:19",
+      "星期": "周三",
+      "直播标题": "修心与环境的关系③",
+      "直播结束时间": "2026/6/17 19:40:56",
+      "总注册量": "6093",
+      "直播在线人数": "3846",
+      "新增用户": "32",
+      "回放次数": "888",
+      "活跃用户": "2952",
+      "使用时长(分)": "122",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781694019",
+      "直播·流名": "1158_1781694019",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "58",
+      "直播开始时间": "2026/6/22 18:59:41",
+      "星期": "周一",
+      "直播标题": "环境与健康运势①",
+      "直播结束时间": "2026/6/22 19:40:45",
+      "总注册量": "6352",
+      "直播在线人数": "3843",
+      "新增用户": "27",
+      "回放次数": "899",
+      "活跃用户": "2838",
+      "使用时长(分)": "106",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782125981",
+      "直播·流名": "1158_1782125981",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "59",
+      "直播开始时间": "2026/6/23 19:00:02",
+      "星期": "周二",
+      "直播标题": "环境与健康运势②",
+      "直播结束时间": "2026/6/23 19:40:54",
+      "总注册量": "6390",
+      "直播在线人数": "3911",
+      "新增用户": "38",
+      "回放次数": "947",
+      "活跃用户": "3030",
+      "使用时长(分)": "110",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781002800",
+      "直播·流名": "1158_1781002800",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "60",
+      "直播开始时间": "2026/6/24 19:00:15",
+      "星期": "周三",
+      "直播标题": "环境与健康运势③",
+      "直播结束时间": "2026/6/24 19:41:15",
+      "总注册量": "6457",
+      "直播在线人数": "3944",
+      "新增用户": "67",
+      "回放次数": "953",
+      "活跃用户": "3062",
+      "使用时长(分)": "107",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782298815",
+      "直播·流名": "1158_1782298815",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "61",
+      "直播开始时间": "2026/6/25 18:59:50",
+      "星期": "周四",
+      "直播标题": "环境与健康运势④",
+      "直播结束时间": "2026/6/25 19:40:43",
+      "总注册量": "6520",
+      "直播在线人数": "3944",
+      "新增用户": "67",
+      "回放次数": "953",
+      "活跃用户": "3062",
+      "使用时长(分)": "107",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782385190",
+      "直播·流名": "1158_1782385190",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "62",
+      "直播开始时间": "2026/6/26 18:59:57",
+      "星期": "周五",
+      "直播标题": "环境与健康运势⑤",
+      "直播结束时间": "2026/6/26 19:41:19",
+      "总注册量": "6637",
+      "直播在线人数": "3943",
+      "新增用户": "117",
+      "回放次数": "1011",
+      "活跃用户": "3189",
+      "使用时长(分)": "121",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1781262011",
+      "直播·流名": "1158_1781262011",
+      "状态":"直播完成"
+    },
+    {
+      "场次": "63",
+      "直播开始时间": "2026/6/29 19:00:25",
+      "星期": "周一",
+      "直播标题": "环境与健康运势⑥",
+      "直播结束时间": "2026/6/29 19:41:10",
+      "总注册量": "6841",
+      "直播在线人数": "4001",
+      "新增用户": "79",
+      "回放次数": "1073",
+      "活跃用户": "3250",
+      "使用时长(分)": "100",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782730825",
+      "直播·流名": "1158_1782730825",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "64",
+      "直播开始时间": "2026/6/30 19:00:07",
+      "星期": "周二",
+      "直播标题": "环境与健康运势⑦",
+      "直播结束时间": "2026/6/30 19:41:09",
+      "总注册量": "6926",
+      "直播在线人数": "3993",
+      "新增用户": "85",
+      "回放次数": "1048",
+      "活跃用户": "3310",
+      "使用时长(分)": "116",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782817207",
+      "直播·流名": "1158_1782817207",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "65",
+      "直播开始时间": "2026/7/1 19:00:15",
+      "星期": "周三",
+      "直播标题": "【重播】环境与健康运势⑦",
+      "直播结束时间": "2026/7/2 9:00:19",
+      "总注册量": "6979",
+      "直播在线人数": "3995",
+      "新增用户": "53",
+      "回放次数": "1395",
+      "活跃用户": "3341",
+      "使用时长(分)": "99",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782903615",
+      "直播·流名": "1158_1782903615",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "66",
+      "直播开始时间": "2026/7/2 19:00:36",
+      "星期": "周四",
+      "直播标题": "环境与健康运势⑧",
+      "直播结束时间": "2026/7/2 19:40:46",
+      "总注册量": "7069",
+      "直播在线人数": "3987",
+      "新增用户": "90",
+      "回放次数": "1006",
+      "活跃用户": "3418",
+      "使用时长(分)": "97",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1782990036",
+      "直播·流名": "1158_1782990036",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "67",
+      "直播开始时间": "2026/7/3 19:00:15",
+      "星期": "周五",
+      "直播标题": "环境与健康运势⑨",
+      "直播结束时间": "2026/7/3 19:41:26",
+      "总注册量": "7142",
+      "直播在线人数": "4019",
+      "新增用户": "73",
+      "回放次数": "1994",
+      "活跃用户": "3449",
+      "使用时长(分)": "112",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1783076415",
+      "直播·流名": "1158_1783076415",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "68",
+      "直播开始时间": "2026/7/6 19:00:06",
+      "星期": "周一",
+      "直播标题": "环境、能量、心神①",
+      "直播结束时间": "2026/7/6 19:40:40",
+      "总注册量": "7281",
+      "直播在线人数": "4039",
+      "新增用户": "97",
+      "回放次数": "1069",
+      "活跃用户": "3361",
+      "使用时长(分)": "92",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1783335606",
+      "直播·流名": "1158_1783335606",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "69",
+      "直播开始时间": "2026/7/7 18:59:51",
+      "星期": "周二",
+      "直播标题": "环境、能量、心神②",
+      "直播结束时间": "2026/7/7 19:40:11",
+      "总注册量": "7410",
+      "直播在线人数": "4037",
+      "新增用户": "129",
+      "回放次数": "1130",
+      "活跃用户": "3531",
+      "使用时长(分)": "1196",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1783421991",
+      "直播·流名": "1158_1783421991",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "70",
+      "直播开始时间": "2026/7/8 19:00:02",
+      "星期": "周三",
+      "直播标题": "环境、能量、心神③",
+      "直播结束时间": "2026/7/8 19:40:35",
+      "总注册量": "7488",
+      "直播在线人数": "4063",
+      "新增用户": "78",
+      "回放次数": "1074",
+      "活跃用户": "3500",
+      "使用时长(分)": "131",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1783508402",
+      "直播·流名": "1158_1783508402",
+      "状态":"直播完成"
+    },
+       {
+      "场次": "71",
+      "直播开始时间": "2026/7/9 19:00:10",
+      "星期": "周四",
+      "直播标题": "环境、能量、心神④",
+      "直播结束时间": "2026/7/9 19:41:01",
+      "总注册量": "7573",
+      "直播在线人数": "4060",
+      "新增用户": "85",
+      "回放次数": "1179",
+      "活跃用户": "3568",
+      "使用时长(分)": "116",
+      "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+      "直播ID": "1783594810",
+      "直播·流名": "1158_1783594810",
+      "状态":"直播完成"
+    },
+   {
+     "场次": "72",
+     "直播开始时间": "2026/7/10 19:00:27",
+     "星期": "周五",
+     "直播标题": "【录播】环境、能量、心神⑤",
+     "直播结束时间": "2026/7/11 9:00:18",
+     "总注册量": "7631",
+     "直播在线人数": "4783",
+     "新增用户": "58",
+     "回放次数": "1783",
+     "活跃用户": "3549",
+     "使用时长(分)": "130",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1783681227",
+     "直播·流名": "1158_1783681227",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "73",
+     "直播开始时间": "2026/7/13 19:00:03",
+     "星期": "周一",
+     "直播标题": "环境、能量、心神⑥",
+     "直播结束时间": "2026/7/13 19:41:22",
+     "总注册量": "7833",
+     "直播在线人数": "4084",
+     "新增用户": "97",
+     "回放次数": "1175",
+     "活跃用户": "3515",
+     "使用时长(分)": "97",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1783940403",
+     "直播·流名": "1158_1783940403",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "74",
+     "直播开始时间": "2026/7/14 18:59:45",
+     "星期": "周二",
+     "直播标题": "环境、能量、心神⑦",
+     "直播结束时间": "2026/7/14 19:40:59",
+     "总注册量": "7921",
+     "直播在线人数": "4105",
+     "新增用户": "88",
+     "回放次数": "1200",
+     "活跃用户": "3617",
+     "使用时长(分)": "124",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784026785",
+     "直播·流名": "1158_1784026785",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "75",
+     "直播开始时间": "2026/7/15 19:00:10",
+     "星期": "周三",
+     "直播标题": "【录播】环境、能量、心神⑧",
+     "直播结束时间": "2026/7/16 9:00:19",
+     "总注册量": "7994",
+     "直播在线人数": "4931",
+     "新增用户": "73",
+     "回放次数": "1931",
+     "活跃用户": "3702",
+     "使用时长(分)": "123",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784109516",
+     "直播·流名": "1158_1784109516",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "76",
+     "直播开始时间": "2026/7/16 18:59:30",
+     "星期": "周四",
+     "直播标题": "环境、能量、心神⑨",
+     "直播结束时间": "2026/7/16 19:40:25",
+     "总注册量": "8036",
+     "直播在线人数": "4096",
+     "新增用户": "42",
+     "回放次数": "1178",
+     "活跃用户": "3636",
+     "使用时长(分)": "118",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784199570",
+     "直播·流名": "1158_1784199570",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "77",
+     "直播开始时间": "2026/7/17 18:59:56",
+     "星期": "周五",
+     "直播标题": "环境、能量、心神⑩",
+     "直播结束时间": "2026/7/17 19:41:38",
+     "总注册量": "8071",
+     "直播在线人数": "4169",
+     "新增用户": "35",
+     "回放次数": "1123",
+     "活跃用户": "3620",
+     "使用时长(分)": "141",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784285996",
+     "直播·流名": "1158_1784285996",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "78",
+     "直播开始时间": "2026/7/20 18:59:18",
+     "星期": "周一",
+     "直播标题": "【录播】用慈悲之心，重建精神世界①",
+     "直播结束时间": "2026/7/21 9:09:26",
+     "总注册量": "8144",
+     "直播在线人数": "4799",
+     "新增用户": "36",
+     "回放次数": "1799",
+     "活跃用户": "3458",
+     "使用时长(分)": "115",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784425002",
+     "直播·流名": "1158_1784425002",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "79",
+     "直播开始时间": "2026/7/21 18:59:28",
+     "星期": "周二",
+     "直播标题": "【录播】用慈悲之心，重建精神世界②",
+     "直播结束时间": "2026/7/22 9:00:30",
+     "总注册量": "8172",
+     "直播在线人数": "4839",
+     "新增用户": "28",
+     "回放次数": "1839",
+     "活跃用户": "3502",
+     "使用时长(分)": "125",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784631568",
+     "直播·流名": "1158_1784631568",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "80",
+     "直播开始时间": "2026/7/22 18:59:32",
+     "星期": "周三",
+     "直播标题": "用慈悲之心，重建精神世界③",
+     "直播结束时间": "2026/7/22 19:40:38",
+     "总注册量": "8206",
+     "直播在线人数": "4063",
+     "新增用户": "34",
+     "回放次数": "1108",
+     "活跃用户": "3521",
+     "使用时长(分)": "130",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784717972",
+     "直播·流名": "1158_1784717972",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "81",
+     "直播开始时间": "2026/7/23 18:59:41",
+     "星期": "周四",
+     "直播标题": "用慈悲之心，重建精神世界④",
+     "直播结束时间": "2026/7/23 19:39:59",
+     "总注册量": "8227",
+     "直播在线人数": "4060",
+     "新增用户": "21",
+     "回放次数": "1109",
+     "活跃用户": "3513",
+     "使用时长(分)": "130",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784804381",
+     "直播·流名": "1158_1784804381",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "82",
+     "直播开始时间": "2026/7/24 18:59:17",
+     "星期": "周五",
+     "直播标题": "【录播】用慈悲之心，重建精神世界⑤",
+     "直播结束时间": "2026/7/25 9:00:29",
+     "总注册量": "8243",
+     "直播在线人数": "4763",
+     "新增用户": "16",
+     "回放次数": "1763",
+     "活跃用户": "3372",
+     "使用时长(分)": "128",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1784880996",
+     "直播·流名": "1158_1784880996",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "83",
+     "直播开始时间": "2026/7/27 18:59:32",
+     "星期": "周一",
+     "直播标题": "用慈悲之心，重建精神世界⑥",
+     "直播结束时间": "2026/7/27 19:41:09",
+     "总注册量": "8470",
+     "直播在线人数": "4024",
+     "新增用户": "172",
+     "回放次数": "1056",
+     "活跃用户": "3736",
+     "使用时长(分)": "96",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785149972",
+     "直播·流名": "1158_1785149972",
+     "状态":"直播完成"
+     },
+   {
+     "场次": "84",
+     "直播开始时间": "2026/7/28 19:00:01",
+     "星期": "周二",
+     "直播标题": "用慈悲之心，重建精神世界⑦",
+     "直播结束时间": "2026/7/28 19:41:02",
+     "总注册量": "8528",
+     "直播在线人数": "4054",
+     "新增用户": "58",
+     "回放次数": "1115",
+     "活跃用户": "3646",
+     "使用时长(分)": "116",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785236401",
+     "直播·流名": "1158_1785236401",
+     "状态":"直播完成"
+ 	},
+   {
+     "场次": "85",
+     "直播开始时间": "2026/7/29 18:59:50",
+     "星期": "周三",
+     "直播标题": "用慈悲之心，重建精神世界⑧",
+     "直播结束时间": "2026/7/29 19:40:25",
+     "总注册量": "8619",
+     "直播在线人数": "4112",
+     "新增用户": "91",
+     "回放次数": "1068",
+     "活跃用户": "3662",
+     "使用时长(分)": "117",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785322790",
+     "直播·流名": "1158_1785322790",
+     "状态":"直播完成"
+ 	},
+   {
+     "场次": "86",
+     "直播开始时间": "2026/7/30 19:00:03",
+     "星期": "周四",
+     "直播标题": "用慈悲之心，重建精神世界⑨",
+     "直播结束时间": "2026/7/30 19:40:02",
+     "总注册量": "8724",
+     "直播在线人数": "4097",
+     "新增用户": "105",
+     "回放次数": "1043",
+     "活跃用户": "3652",
+     "使用时长(分)": "119",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785409203",
+     "直播·流名": "1158_1785409203",
+     "状态":"直播完成"
+ 	},
+   {
+     "场次": "87",
+     "直播开始时间": "2026/7/31 19:00:06",
+     "星期": "周五",
+     "直播标题": "用慈悲之心，重建精神世界⑩",
+     "直播结束时间": "2026/7/31 19:40:52",
+     "总注册量": "8855",
+     "直播在线人数": "4055",
+     "新增用户": "131",
+     "回放次数": "1053",
+     "活跃用户": "3741",
+     "使用时长(分)": "119",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785495606",
+     "直播·流名": "1158_1785495606",
+     "状态":"直播完成"
+ 	},
+   {
+     "场次": "88",
+     "直播开始时间": "2026/8/3 19:00:01",
+     "星期": "周一",
+     "直播标题": "【录播】格局的九重修养①",
+     "直播结束时间": "2026/8/4 9:02:04",
+     "总注册量": "8935",
+     "直播在线人数": "4846",
+     "新增用户": "36",
+     "回放次数": "1846",
+     "活跃用户": "3524",
+     "使用时长(分)": "101",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785749541",
+     "直播·流名": "1158_1785749541",
+     "状态":"直播完成"
+ 	},
+   {
+     "场次": "89",
+     "直播开始时间": "2026/8/4 19:00:04",
+     "星期": "周二",
+     "直播标题": "格局的九重修养②",
+     "直播结束时间": "2026/8/4 19:40:20",
+     "总注册量": "8965",
+     "直播在线人数": "4113",
+     "新增用户": "30",
+     "回放次数": "1134",
+     "活跃用户": "3700",
+     "使用时长(分)": "120",
+     "嘉宾/本站用户(ID)": "@吴国玺-主播号 ( ID:1158 )",
+     "直播ID": "1785841204",
+     "直播·流名": "1158_1785841204",
+     "状态":"直播完成"
+ 	}
+]
+  };
+
+  /***********************
+   * 2. 顶部时间 & 农历
+   ***********************/
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function getWeekdayText(d) {
+    const arr = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+    return arr[d.getDay()];
+  }
+  function updateDateTime() {
+    const now = new Date();
+    const gregorian = document.getElementById("gregorianText");
+    const lunarEl = document.getElementById("lunarText");
+    const clock = document.getElementById("clockText");
+
+    const y = now.getFullYear();
+    const m = now.getMonth() + 1;
+    const d = now.getDate();
+    gregorian.textContent = `公历 ${y}年${pad(m)}月${pad(d)}日 ${getWeekdayText(now)}`;
+
+/************************************
+ * 农历 + 节气 + 黄历宜忌（独立模块）
+ * 完全独立，不影响主流程
+ ************************************/
+function safeGetLunarInfo(date) {
+  try {
+    // lunar-javascript 的正确调用方式
+    
+      try {
+    
+        const lunarObj =
+          window.Lunar?.fromDate
+            ? Lunar.fromDate(date)
+            : window.Lunar?.Lunar?.fromDate
+              ? Lunar.Lunar.fromDate(date)
+              : null;
+    
+        if (!lunarObj) {
+          throw new Error("Lunar对象未加载");
+        }
+    
+        return {
+          gzYear: lunarObj.getYearInGanZhi(),
+          zodiac: lunarObj.getYearShengXiao(),
+          monthCn: lunarObj.getMonthInChinese(),
+          dayCn: lunarObj.getDayInChinese(),
+          jieqi: lunarObj.getJieQi() || "",
+          yi: lunarObj.getDayYi() || [],
+          ji: lunarObj.getDayJi() || [],
+          chong: lunarObj.getChongDesc() || "",
+          sha: lunarObj.getSha() || "",
+          taishen: lunarObj.getDayPositionTai() || "",
+          pengzu:
+            (lunarObj.getPengZuGan?.() || "") +
+            (lunarObj.getPengZuZhi?.() || "")
+        };
+    
+      } catch(e) {
+        console.error("农历模块加载失败", e);
+        return null;
+      }
+  
+
+    return {
+      gzYear: lunarObj.getYearInGanZhi(),          // 天干地支年
+      zodiac: lunarObj.getYearShengXiao(),         // 生肖
+      monthCn: lunarObj.getMonthInChinese(),       // 农历月
+      dayCn: lunarObj.getDayInChinese(),           // 农历日
+      jieqi: lunarObj.getJieQi() || "",            // 节气
+      yi: lunarObj.getDayYi(),                     // 宜
+      ji: lunarObj.getDayJi(),                     // 忌
+      chong: lunarObj.getChongDesc(),              // 冲
+      sha: lunarObj.getSha(),                      // 煞
+      taishen: lunarObj.getDayPositionTai(),       // 胎神
+      pengzu: lunarObj.getPengZuGan() + lunarObj.getPengZuZhi() // 彭祖百忌
+    };
+  } catch (e) {
+    console.error("农历模块加载失败：", e);
+    return null;
+  }
+}
+
+/************************************
+ * 渲染农历（不会阻塞主流程）
+ ************************************/
+function renderLunar(date) {
+  const lunarEl = document.getElementById("lunarText");
+  const lunarInfoEl = document.getElementById("lunarDetailText");
+
+  const info = safeGetLunarInfo(date);
+
+  if (!info) {
+    lunarEl.textContent = "农历加载中...";
+    lunarInfoEl.textContent = "";
+    return;
+  }
+
+  // 顶部主行
+  lunarEl.textContent =
+    `农历 ${info.gzYear}（${info.zodiac}年） ${info.monthCn}月${info.dayCn}` +
+    (info.jieqi ? ` · ${info.jieqi}` : "");
+
+  // 详细宜忌（第二行）
+  lunarInfoEl.innerHTML = `
+    <span style="color:#22d3ee">宜：</span>${info.yi.join(" ")} <br>
+    <span style="color:#f87171">忌：</span>${info.ji.join(" ")}   &nbsp;&nbsp; 
+    <span style="color:#fff00f">冲煞：</span>${info.chong} ${info.sha} &nbsp;&nbsp;   
+    <span style="color:#f023ff">胎神：</span>${info.taishen}<br>
+   	<span style="color:#ff770f">彭祖百忌：</span>${info.pengzu}
+  `;
+}
+
+const hh = pad(now.getHours());
+const mm = pad(now.getMinutes());
+const ss = pad(now.getSeconds());
+
+clock.textContent = `${hh}:${mm}:${ss}`;
+
+renderLunar(now);
+
+updateCountdown(now);
+  }
+
+  /***********************
+   * 3. 倒计时逻辑
+   ***********************/
+  function updateCountdown(now) {
+    const statusEl = document.getElementById("countdownStatus");
+    const valueEl = document.getElementById("countdownValue");
+
+    const day = now.getDay(); // 0-6
+    const minutes = now.getHours() * 60 + now.getMinutes();
+    const seconds = now.getSeconds();
+
+    // 周六/周日为：非直播日
+    if (day === 0 || day === 6) {
+      statusEl.textContent = "今日非直播日";
+      valueEl.textContent = "00:00:00";
+      return;
+    }
+
+    const startMinutes = 19 * 60;
+    const endMinutes = 19 * 60 + 40;
+    const countdownStart = 9 * 60;
+
+    if (minutes < countdownStart) {
+      statusEl.textContent = "倒计时未开始";
+      valueEl.textContent = "00:00:00";
+      return;
+    }
+
+    if (minutes >= countdownStart && minutes < startMinutes) {
+      statusEl.textContent = "倒计时 | 距离开播";
+      const totalNowSec = minutes * 60 + seconds;
+      const totalStartSec = startMinutes * 60;
+      let diff = totalStartSec - totalNowSec;
+      const h = Math.floor(diff / 3600);
+      diff %= 3600;
+      const m = Math.floor(diff / 60);
+      const s = diff % 60;
+      valueEl.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+      return;
+    }
+
+    if (minutes >= startMinutes && minutes < endMinutes) {
+      statusEl.textContent = "直播进行中";
+      valueEl.textContent = "LIVE";
+      return;
+    }
+
+    // 19:40 - 次日9:00
+    statusEl.textContent = "观看回放";
+    valueEl.textContent = "REPLAY";
+  }
+
+  /***********************
+   * 4. 主播 Tab 切换
+   ***********************/
+  function initAnchors() {
+    const tabs = document.querySelectorAll("#anchorTabs .tab");
+    const avatarEl = document.getElementById("anchorAvatar");
+    const nameEl = document.getElementById("anchorName");
+    const roleEl = document.getElementById("anchorRole");
+    const descEl = document.getElementById("anchorDesc");
+    const timeEl = document.getElementById("anchorTime");
+
+    function renderAnchor(key) {
+      const a = CONFIG.anchors[key];
+      if (!a) return;
+      nameEl.textContent = a.name;
+      roleEl.textContent = a.role;
+      descEl.textContent = a.desc;
+      timeEl.textContent = a.time;
+      avatarEl.innerHTML = "";
+      if (a.avatarUrl) {
+        const img = document.createElement("img");
+        img.src = a.avatarUrl;
+        avatarEl.appendChild(img);
+      } else {
+        avatarEl.textContent = a.name[0] || "主";
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const key = tab.getAttribute("data-key");
+        renderAnchor(key);
+      });
+    });
+
+    // 默认
+    renderAnchor("anchor1");
+  }
+
+  /***********************
+   * 5. 企业语录轮播
+   ***********************/
+  function initQuotes() {
+    const el = document.getElementById("quoteText");
+    let idx = 0;
+    el.textContent = CONFIG.quotes[0] || "";
+    setInterval(() => {
+      idx = (idx + 1) % CONFIG.quotes.length;
+      el.style.opacity = 0;
+      setTimeout(() => {
+        el.textContent = CONFIG.quotes[idx];
+        el.style.opacity = 1;
+      }, 300);
+    }, 6000);
+  }
+
+  /***********************
+   * 6. 指标统计
+   ***********************/
+  function updateMetricsFromData(data) {
+    if (!data || !data.length) return;
+    const sessions = data.length;
+    let totalOnline = 0;
+    let totalNew = 0;
+    data.forEach(row => {
+      totalOnline += Number(row["直播在线人数"] || 0);
+      totalNew += Number(row["新增用户"] || 0);
+    });
+    const avgOnline = Math.round(totalOnline / sessions);
+    const totalViews = totalOnline * 10;
+
+    document.getElementById("metricSessions").textContent = sessions + "+";
+    document.getElementById("metricViews").textContent = totalViews + "+";
+    document.getElementById("metricAvgOnline").textContent = avgOnline + "+";
+    document.getElementById("metricNewUsers").textContent = totalNew + "+";
+  }
+
+  /***********************
+   * 7. 表格渲染 + 无缝滚动
+   ***********************/
+  let tableData = [];
+  let filteredData = [];
+  let scrollTimer = null;
+  let scrollOffset = 0;
+
+  function renderTable(data) {
+    const tbody = document.getElementById("tableBody");
+    tbody.innerHTML = "";
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+
+      function td(text) {
+        const td = document.createElement("td");
+        td.textContent = text;
+        return td;
+      }
+
+      tr.appendChild(td(row["场次"] || ""));
+      tr.appendChild(td(row["直播开始时间"] || ""));
+      tr.appendChild(td(row["星期"] || ""));
+      tr.appendChild(td(row["直播结束时间"] || ""));
+      tr.appendChild(td(row["直播标题"] || ""));
+      tr.appendChild(td(row["总注册量"] || ""));
+      tr.appendChild(td(row["直播在线人数"] || ""));
+      tr.appendChild(td(row["新增用户"] || ""));
+      tr.appendChild(td(row["回放次数"] || ""));
+      tr.appendChild(td(row["活跃用户"] || ""));
+      tr.appendChild(td(row["使用时长(分)"] || row["使用时长"] || ""));
+      tr.appendChild(td(row["嘉宾/本站用户(ID)"] || row["嘉宾ID"] || ""));
+      tr.appendChild(td(row["直播ID"] || ""));
+      tr.appendChild(td(row["直播·流名"] || row["流名"] || ""));
+
+      const statusTd = document.createElement("td");
+      const status = (row["状态"] || "").toString();
+      const span = document.createElement("span");
+      span.classList.add("status-tag");
+      if (status.includes("回放")) span.classList.add("status-replay");
+      else if (status.includes("结束")) span.classList.add("status-end");
+      span.textContent = status || "未知";
+      statusTd.appendChild(span);
+      tr.appendChild(statusTd);
+
+      const opTd = document.createElement("td");
+      opTd.textContent = "编辑";
+      tr.appendChild(opTd);
+
+      tbody.appendChild(tr);
+    });
+
+    // 固定10行高度：通过容器高度 + 行高控制，这里用滚动实现
+    startTableScroll();
+  }
+
+  function startTableScroll() {
+    const container = document.getElementById("tableBodyContainer");
+    const tbody = document.getElementById("tableBody");
+    if (!container || !tbody) return;
+
+    // 复制一份内容实现无缝
+    const rows = Array.from(tbody.children);
+    if (!rows.length) return;
+    tbody.innerHTML = "";
+    rows.forEach(r => tbody.appendChild(r.cloneNode(true)));
+    rows.forEach(r => tbody.appendChild(r.cloneNode(true)));
+
+    scrollOffset = 0;
+    const rowHeight = rows[0].offsetHeight || 24;
+    const visibleRows = 26;
+    container.style.height = (rowHeight * visibleRows) + "px";
+
+    if (scrollTimer) clearInterval(scrollTimer);
+    scrollTimer = setInterval(() => {
+      scrollOffset -= 1;
+      const totalHeight = tbody.scrollHeight / 2;
+      if (Math.abs(scrollOffset) >= totalHeight) {
+        scrollOffset = 0;
+      }
+      tbody.style.transform = `translateY(${scrollOffset}px)`;
+    }, 40);
+
+    const wrapper = document.getElementById("tableWrapper");
+    wrapper.onmouseenter = () => {
+      if (scrollTimer) clearInterval(scrollTimer);
+    };
+    wrapper.onmouseleave = () => {
+      if (scrollTimer) clearInterval(scrollTimer);
+      scrollTimer = setInterval(() => {
+        scrollOffset -= 1;
+        const totalHeight = tbody.scrollHeight / 2;
+        if (Math.abs(scrollOffset) >= totalHeight) {
+          scrollOffset = 0;
+        }
+        tbody.style.transform = `translateY(${scrollOffset}px)`;
+      }, 40);
+    };
+  }
+
+  function applySearch(keyword) {
+    keyword = keyword.trim();
+    if (!keyword) {
+      filteredData = tableData.slice();
+    } else {
+      filteredData = tableData.filter(row => {
+        const fields = ["场次","直播标题","直播ID","嘉宾/本站用户(ID)","嘉宾ID"];
+        return fields.some(f => (row[f] || "").toString().includes(keyword));
+      });
+    }
+    renderTable(filteredData);
+    updateMetricsFromData(filteredData);
+    renderChart(filteredData);
+  }
+
+  /***********************
+   * 8. ECharts 折线图
+   ***********************/
+  let chartInstance = null;
+  function initChart() {
+    const dom = document.getElementById("onlineChart");
+    chartInstance = echarts.init(dom);
+    renderChart(tableData);
+    window.addEventListener("resize", () => {
+      chartInstance && chartInstance.resize();
+    });
+  }
+
+  function renderChart(data) {
+    if (!chartInstance) return;
+    if (!data || !data.length) data = [];
+
+    const xData = data.map(d => d["场次"] || "");
+    const yData = data.map(d => Number(d["直播在线人数"] || 0));
+
+    const option = {
+      grid: { left: 40, right: 20, top: 30, bottom: 30 },
+      tooltip: {
+        trigger: "axis"
+      },
+      xAxis: {
+        type: "category",
+        data: xData,
+        boundaryGap: false,
+        axisLine: { lineStyle: { color: "#4b5563" } },
+        axisLabel: { color: "#9ca3af" }
+      },
+      yAxis: {
+        type: "value",
+        axisLine: { lineStyle: { color: "#4b5563" } },
+        splitLine: { lineStyle: { color: "rgba(55,65,81,0.6)" } },
+        axisLabel: { color: "#9ca3af" }
+      },
+      series: [
+        {
+          name: "在线人数",
+          type: "line",
+          smooth: true,
+          data: yData,
+          symbol: "circle",
+          symbolSize: 6,
+          lineStyle: {
+            color: "#22d3ee",
+            width: 2
+          },
+          itemStyle: {
+            color: "#22d3ee",
+            borderColor: "#0ea5e9",
+            borderWidth: 1
+          },
+          areaStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "rgba(34,211,238,0.5)" },
+              { offset: 1, color: "rgba(15,23,42,0.1)" }
+            ])
+          }
+        }
+      ]
+    };
+    chartInstance.setOption(option);
+  }
+
+  /***********************
+   * 9. Excel / CSV 导入
+   ***********************/
+  function cleanNumber(v) {
+    if (v === null || v === undefined) return 0;
+    if (typeof v === "number") return v;
+    v = String(v).trim();
+    if (!v || v === "-") return 0;
+    v = v.replace(/,/g, "");
+    const n = parseFloat(v);
+    return isNaN(n) ? 0 : n;
+  }
+
+  function normalizeRow(row) {
+    const r = {};
+    const map = {
+      "场次": ["场次"],
+      "直播开始时间": ["直播开始时间","开始时间"],
+      "星期": ["星期","周"],
+	  "直播结束时间": ["直播结束时间","结束时间"],
+      "直播标题": ["直播标题","标题"],
+      "总注册量": ["总注册量","注册量"],
+      "直播在线人数": ["直播在线人数","在线人数"],
+      "新增用户": ["新增用户","新增"],
+      "回放次数": ["回放次数","回放"],
+      "活跃用户": ["活跃用户","活跃"],
+      "使用时长(分)": ["使用时长(分)","使用时长"],
+      "嘉宾/本站用户(ID)": ["嘉宾/本站用户(ID)","嘉宾ID","用户ID"],
+      "直播ID": ["直播ID","ID"],
+      "直播·流名": ["直播·流名","流名"],
+      "状态": ["状态"]
+    };
+    for (const key in map) {
+      const aliases = map[key];
+      let value = "";
+      for (const a of aliases) {
+        if (row.hasOwnProperty(a)) {
+          value = row[a];
+          break;
+        }
+      }
+      if (["总注册量","直播在线人数","新增用户","回放次数","活跃用户","使用时长(分)"].includes(key)) {
+        r[key] = cleanNumber(value);
+      } else {
+        r[key] = value || "";
+      }
+    }
+    return r;
+  }
+
+  function handleFile(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: "binary" });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      let json = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+      // 过滤明显空行
+      json = json.filter(row => {
+        return Object.values(row).some(v => String(v).trim() !== "");
+      });
+
+      // 兼容双行表头：如果第一行是表头说明，第二行才是正式表头，可根据需要调整
+      // 这里简单处理：直接用 SheetJS 的自动表头
+
+      tableData = json.map(normalizeRow);
+      filteredData = tableData.slice();
+      renderTable(filteredData);
+      updateMetricsFromData(filteredData);
+      renderChart(filteredData);
+      appendLog(`导入数据成功，共 ${tableData.length} 条记录。`);
+    };
+    reader.readAsBinaryString(file);
+  }
+
+  /***********************
+   * 10. 导出当前数据
+   ***********************/
+  function exportCurrentData() {
+    if (!filteredData || !filteredData.length) {
+      alert("当前没有可导出的数据");
+      return;
+    }
+    const ws = XLSX.utils.json_to_sheet(filteredData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "直播数据");
+    XLSX.writeFile(wb, "乐出东方直播数据.xlsx");
+  }
+
+  /***********************
+   * 11. 日志弹窗
+   ***********************/
+  function appendLog(text) {
+    const body = document.getElementById("logModalBody");
+    const p = document.createElement("p");
+    p.textContent = "· " + text;
+    body.appendChild(p);
+  }
+
+  function initLogModal() {
+    const mask = document.getElementById("logModalMask");
+    const btn = document.getElementById("btnShowLog");
+    const close = document.getElementById("logModalClose");
+    btn.onclick = () => { mask.style.display = "flex"; };
+    close.onclick = () => { mask.style.display = "none"; };
+    mask.onclick = (e) => {
+      if (e.target === mask) mask.style.display = "none";
+    };
+  }
+
+  /***********************
+   * 12. 初始化入口
+   ***********************/
+  window.addEventListener("DOMContentLoaded", () => {
+    // 汇报人
+    document.getElementById("reportName").textContent = CONFIG.reporter.name;
+    const avatar = document.getElementById("reportAvatar");
+    avatar.innerHTML = "";
+    if (CONFIG.reporter.avatarUrl) {
+      const img = document.createElement("img");
+      img.src = CONFIG.reporter.avatarUrl;
+      avatar.appendChild(img);
+    } else {
+      avatar.textContent = CONFIG.reporter.name[0] || "报";
+    }
+
+    // 默认表格数据
+    tableData = CONFIG.defaultTableData.map(normalizeRow);
+    filteredData = tableData.slice();
+    renderTable(filteredData);
+    updateMetricsFromData(filteredData);
+
+    // 时间 & 农历
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+
+    // 主播
+    initAnchors();
+
+    // 语录
+    initQuotes();
+
+    // 日志
+    initLogModal();
+
+    // 图表
+    initChart();
+    renderChart(filteredData);
+
+    // 搜索
+    document.getElementById("searchInput").addEventListener("input", (e) => {
+      applySearch(e.target.value);
+    });
+
+    // 导入
+    document.getElementById("fileInput").addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+      e.target.value = "";
+    });
+
+    // 导出
+    document.getElementById("btnExport").addEventListener("click", exportCurrentData);
+
+    appendLog("大屏初始化完成，默认数据已加载。");
+	
+	document.getElementById("btnConvertJSON").addEventListener("click", exportJSON);
+
+   // --- 右侧面板标签页切换逻辑 ---
+   const tabItems = document.querySelectorAll('.right-tabs .tab-item');
+   const tabContents = document.querySelectorAll('.right-panel .tab-content');
+   
+   tabItems.forEach(tab => {
+       tab.addEventListener('click', () => {
+           const targetTab = tab.getAttribute('data-tab');
+   
+           // 1. 更新标签样式
+           tabItems.forEach(t => t.classList.remove('active'));
+           tab.classList.add('active');
+   
+           // 2. 切换内容显示
+           tabContents.forEach(content => {
+               if (content.getAttribute('data-tab') === targetTab) {
+                   content.style.display = 'flex'; // 恢复为 flex 布局
+               } else {
+                   content.style.display = 'none';
+               }
+           });
+   
+           // 3. 如果切换到“直播”标签页，需要手动触发图表 resize，防止图表不显示
+           if (targetTab === 'live' && chartInstance) {
+               setTimeout(() => {
+                   chartInstance.resize();
+               }, 300);
+           }
+           
+           appendLog(`已切换到【${tab.textContent}】视图`);
+       });
+   });
+  });
+  
+  /***********************
+   * 13. 一键导出 JSON 文件
+   ***********************/
+  function exportJSON() {
+    if (!filteredData || !filteredData.length) {
+      alert("当前没有可导出的数据");
+      return;
+    }
+  
+    // 转成 JSON 字符串（格式化）
+    const jsonStr = JSON.stringify(filteredData, null, 2);
+  
+    // 创建 Blob
+    const blob = new Blob([jsonStr], { type: "application/json" });
+  
+    // 创建下载链接
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "lechudongfang.json";
+    document.body.appendChild(a);
+    a.click();
+  
+    // 清理
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  
+    appendLog("已成功导出 JSON 文件（lechudongfang.json）");
+  }
+
+</script>
+
+<!-- 页脚 -->
+       <div class="footer" style="color:#808080;text-decoration:none;">
+            <p>
+                <a href="https://live.vzan.com/education/ob/topic?zbid=1725393497" style="color:#808080;text-decoration:none;" target="_blank">技术支持</a>
+                <a href="https://choong.net" style="color:#808080;text-decoration:none;" target="_blank">@创客乐哥</a>               
+                &copy; <a href="https://go.choong.net/1949/" style="color:#808080;text-decoration:none;" title="我爱我的祖国">
+					<script>
+						// <![CDATA[
+						document.write(new Date().getFullYear());
+						// ]]>
+					
+
+  // 左侧直播/录制/回放标签切换
+  document.querySelectorAll('.left-tab-item').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.left-tab-item').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.left-tab-content').forEach(c=>c.classList.add('hidden'));
+      tab.classList.add('active');
+      const target=tab.dataset.leftTab;
+      const panel=document.querySelector('.left-tab-content[data-left-content="'+target+'"]');
+      if(panel) panel.classList.remove('hidden');
+    });
+  });
+
+// 录制播放器（支持 HLS / MP4 / FLV 三种格式）
+(function(){
+ var video = document.getElementById('recordVideo');
+ if(!video) return;
+
+ var urlInput = document.getElementById('recordUrl');
+ var coverInput = document.getElementById('recordCover');
+ var formatSelect = document.getElementById('streamFormat');
+ var anchorIdInput = document.getElementById('anchorId');
+ var liveStreamIdInput = document.getElementById('liveStreamId');
+ var flvFields = document.getElementById('flvFields');
+ var flvStatus = document.getElementById('flvStatus');
+
+ var hls = null;
+ var flvPlayer = null;
+ var currentFormat = 'flv';
+
+ // 自动拼接 FLV URL
+ function autoGenerateFlvUrl() {
+   var anchorId = anchorIdInput.value.trim();
+   var liveId = liveStreamIdInput.value.trim();
+   if (anchorId && liveId) {
+     urlInput.value = 'http://pull.yiyuehuiyou.cn/live/' + anchorId + '_' + liveId + '.flv';
+     if (flvStatus) flvStatus.textContent = 'FLV URL 已自动生成';
+   }
+ }
+
+ // 切换格式显示/隐藏 FLV 专属字段
+ function onFormatChange() {
+   currentFormat = formatSelect.value;
+   if (currentFormat === 'flv') {
+     flvFields.style.display = 'flex';
+     autoGenerateFlvUrl();
+   } else {
+     flvFields.style.display = 'none';
+   }
+ }
+
+ if (formatSelect) formatSelect.addEventListener('change', onFormatChange);
+ if (anchorIdInput) anchorIdInput.addEventListener('input', autoGenerateFlvUrl);
+ if (liveStreamIdInput) liveStreamIdInput.addEventListener('input', autoGenerateFlvUrl);
+
+ // 初始化时设置默认值
+ onFormatChange();
+
+ function destroyPlayers() {
+   if (hls) { hls.destroy(); hls = null; }
+   if (flvPlayer) {
+     try { flvPlayer.unload(); flvPlayer.detachMedia(); flvPlayer.destroy(); } catch(e) {}
+     flvPlayer = null;
+   }
+ }
+
+ function load() {
+   var url = urlInput.value.trim();
+   var poster = coverInput.value.trim();
+   video.poster = poster;
+   destroyPlayers();
+
+   if (currentFormat === 'flv') {
+     // FLV 直播推流
+     if (window.flvjs && flvjs.isSupported()) {
+       flvPlayer = flvjs.createPlayer({ type: 'flv', url: url });
+       flvPlayer.attachMediaElement(video);
+       flvPlayer.load();
+       video.muted = true;
+       video.play().catch(function() {});
+       if (flvStatus) flvStatus.textContent = 'FLV 推流已连接';
+     } else {
+       if (flvStatus) flvStatus.textContent = '错误：当前浏览器不支持 FLV 播放，请检查 flv.js 加载';
+       video.src = url;
+       video.play().catch(function() {});
+     }
+   } else if (currentFormat === 'hls') {
+     // HLS 直播
+     if (url.endsWith('.m3u8') && window.Hls && Hls.isSupported()) {
+       hls = new Hls();
+       hls.loadSource(url);
+       hls.attachMedia(video);
+       video.muted = true;
+       video.play().catch(function() {});
+     } else {
+       video.src = url;
+       video.play().catch(function() {});
+     }
+   } else {
+     // MP4 点播
+     video.src = url;
+     video.play().catch(function() {});
+   }
+ }
+
+ document.getElementById('applyRecord').onclick = load;
+
+ // 播放/暂停
+ document.getElementById('playBtn').onclick = function() {
+   video.paused ? video.play() : video.pause();
+ };
+ // 循环
+ document.getElementById('loopBtn').onclick = function() { video.loop = !video.loop; };
+ // 静音
+ document.getElementById('muteBtn').onclick = function() { video.muted = !video.muted; };
+ // 音量
+ document.getElementById('volumeCtrl').oninput = function(e) { video.volume = e.target.value; };
+
+ // 控制器自动隐藏
+ var controls = document.getElementById('playerControls');
+ var timer;
+ function hideControls() {
+   clearTimeout(timer);
+   controls.classList.remove('hide');
+   timer = setTimeout(function() { controls.classList.add('hide'); }, 3000);
+ }
+ document.querySelector('.vertical-player').onmousemove = hideControls;
+ hideControls();
+
+ // 音频频谱模拟
+ var sp = document.getElementById('spectrum');
+ var bars = [];
+ for (var i = 0; i < 32; i++) {
+   var b = document.createElement('span');
+   sp.appendChild(b);
+   bars.push(b);
+ }
+ function animate() {
+   bars.forEach(function(b) { b.style.height = (10 + Math.random() * 80) + '%'; });
+   requestAnimationFrame(function() { setTimeout(animate, 120); });
+ }
+ animate();
+
+ // 首次加载
+ load();
+})();
+</script>
+				</a>
+            </p>
+        </div>
+</body>
+</html>
